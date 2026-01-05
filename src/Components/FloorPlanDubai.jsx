@@ -132,7 +132,7 @@ const FloorPlanDubai = () => {
               color={colors.official}
               title={"Official\nSponsor"}
               subtitle="4 x 3"
-              textColor="#ffffff"
+              // textColor="#ffffff"
               fontSize={11}
               isReserved={reservedBooths[`OFFICIAL-01`] === true}
               onClick={setSelectedBooth}
@@ -150,6 +150,7 @@ const FloorPlanDubai = () => {
                 height={72}
                 color={colors.silver}
                 title={"Silver\nBooth"}
+                // textColor="#ffffff"
                 subtitle="3 x 2"
                 fontSize={10}
                 isReserved={reservedBooths[`SILVER-${i + 3}`] === true}
@@ -212,7 +213,7 @@ const FloorPlanDubai = () => {
               color={colors.exclusive}
               title="Exclusive Sponsor"
               subtitle="4 x 3"
-              textColor="#ffffff"
+              // textColor="#ffffff"
               fontSize={11}
               isReserved={reservedBooths[`EXCLUSIVE-01`] === true}
               onClick={setSelectedBooth}
@@ -271,6 +272,7 @@ const FloorPlanDubai = () => {
                 color={colors.gold}
                 title="Gold Booth"
                 subtitle="4 x 3"
+                // textColor="#ffffff"
                 fontSize={11}
                 isReserved={reservedBooths[`GOLD-${i + 1}`] === true}
                 onClick={setSelectedBooth}
@@ -291,6 +293,7 @@ const FloorPlanDubai = () => {
                 color={colors.gold}
                 title="Gold Booth"
                 subtitle="4 x 3"
+                // textColor="#ffffff"
                 fontSize={11}
                 isReserved={reservedBooths[`GOLD-${i + 5}`] === true}
                 onClick={setSelectedBooth}
@@ -310,6 +313,7 @@ const FloorPlanDubai = () => {
                 height={82}
                 color={colors.silver}
                 title={`Silver\nBooth`}
+                // textColor="#ffffff"
                 subtitle="3 x 2"
                 fontSize={10}
                 isReserved={reservedBooths[`SILVER-${i + 1}`] === true}
@@ -336,7 +340,7 @@ const FloorPlanDubai = () => {
                   subtitle="2 x 2"
                   subtitleOffsetY={8}
                   fontSize={8}
-                  textColor="#ffffff"
+                  // textColor="#ffffff"
                   isReserved={reservedBooths[`STANDARD-${i + 1}`] === true}
                   onClick={setSelectedBooth}
                 />
@@ -356,6 +360,7 @@ const FloorPlanDubai = () => {
                 height={55}
                 color={colors.standard}
                 title={"Standard\nBooth"}
+                // textColor="#ffffff"
                 subtitle="2 x 2"
                 subtitleOffsetY={8}
                 fontSize={8}
@@ -420,7 +425,7 @@ const FloorPlanDubai = () => {
                 color={colors.diamond}
                 title="Diamond Sponsor"
                 subtitle="4 x 3"
-                textColor="#ffffff"
+                // textColor="#ffffff"
                 fontSize={11}
                 isReserved={reservedBooths[`DIAMOND-${i + 1}`]}
                 onClick={setSelectedBooth}
@@ -438,6 +443,7 @@ const FloorPlanDubai = () => {
                 height={60}
                 color={colors.silver}
                 title="Silver Booth"
+                // textColor="#ffffff"
                 subtitle="3 x 2"
                 fontSize={9}
                 isReserved={reservedBooths[`SILVER-${i + 1}`]}

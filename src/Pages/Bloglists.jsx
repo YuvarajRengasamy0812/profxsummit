@@ -105,7 +105,7 @@ function Bloglists() {
                                             <h6 className="mb-1">Hi, Dawood Sha</h6>
                                             <p className="mb-0 w-80 m-auto">
                                                 <small>
-                                                    Dawood Sha is a blockchain enthusiast and organizer of the ProFin Blockchain Summit 2026,
+                                                    Dawood Sha is a blockchain enthusiast and organizer of the PROFIN BLOCKCHAIN SUMMIT Dubai 2026,
                                                     dedicated to fostering innovation and collaboration in the blockchain space.
                                                 </small>
                                             </p>
@@ -178,7 +178,7 @@ function Bloglists() {
                                                     <a href='https://x.com/profx_media' className="btn rounded-3 p-2 text-capitalize w-100 text-start"><i className="fa fa-twitter rounded mx-2 me-3" aria-hidden="true"></i>Twitter</a>
                                                 </div>
                                                 <div className="col-6">
-                                                    <a href='https://wa.me/+919629896298' className="btn rounded-3 p-2 text-capitalize w-100 text-start"><i className="fa fa-whatsapp rounded mx-2 me-3" aria-hidden="true"></i>WhatsApp</a>
+                                                    <a href='https://wa.me/+971588845033' className="btn rounded-3 p-2 text-capitalize w-100 text-start"><i className="fa fa-whatsapp rounded mx-2 me-3" aria-hidden="true"></i>WhatsApp</a>
                                                 </div>
                                                 <div className="col-6">
                                                     <a href='https://www.linkedin.com/company/profxmedia/' className="btn rounded-3 p-2 text-capitalize w-100 text-start"><i className="fa fa-linkedin-square rounded mx-2 me-3" aria-hidden="true"></i>LinkedIn</a>

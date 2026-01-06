@@ -11,7 +11,7 @@ function Booknow() {
       <Breadcrumb title="Book Tickets Now" />
 
       {/*--Book now Section start*/}
-      <section className="ticket-booking">
+      <section className="ticket-booking pb-0">
         <div className="container">
           <div className="booking-form w-lg-75 m-auto px-2">
             <div className="form-title mb-4">

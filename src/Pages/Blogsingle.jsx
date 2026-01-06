@@ -180,7 +180,7 @@ function Blogsingle() {
                           </a>
                         </div>
                         <div className="col-6">
-                          <a href="https://wa.me/+919629896298" className="btn rounded-3 p-2 text-capitalize w-100 text-start">
+                          <a href="https://wa.me/+971588845033" className="btn rounded-3 p-2 text-capitalize w-100 text-start">
                             <i className="fa fa-whatsapp rounded mx-2 me-3" aria-hidden="true"></i>WhatsApp
                           </a>
                         </div>

@@ -10,8 +10,8 @@ import ProfileDropdown from "../Pages/ProfileDropdown";
 import { useAuth } from "./AuthContext";
 
 const Header = () => {
- const [isScrolled, setIsScrolled] = useState(false);
- const { user, logout } = useAuth();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const { user, logout } = useAuth();
   const [social, setSocial] = useState([]);
   const [topbar, setTopBar] = useState([]);
   const [logo, setLogo] = useState([]);
@@ -20,7 +20,7 @@ const Header = () => {
     getSocialList();
     getTopBarList();
     getLogo();
-     const handleScroll = () => {
+    const handleScroll = () => {
       setIsScrolled(window.scrollY > 20); // change after 20px scroll
     };
 
@@ -69,23 +69,6 @@ const Header = () => {
             <div className="row align-items-center">
               <div className="col-lg-6">
                 <div className="social-links">
-                  {/* <ul className="m-0 p-0 d-flex gap-2">
-                    {[
-                      "facebook",
-                      "twitter",
-                      "google",
-                      "instagram",
-                      "youtube-play",
-                    ].map((icon, i) => (
-                      <li key={i} className="d-inline">
-                        <a href="#">
-                          <i
-                            className={`fa fa-${icon} border-social rounded-circle text-center`}
-                          ></i>
-                        </a>
-                      </li>
-                    ))}
-                  </ul> */}
                   <ul className="m-0 p-0 d-flex gap-2">
                     {[
                       {
@@ -152,18 +135,18 @@ const Header = () => {
         <div className="container">
           <nav className="navbar navbar-expand-lg py-2 w-100">
             <div className="row w-100 align-items-center">
-              <div className="col-lg-2 col-md-10 col-10">
+              <div className="col-lg-2 col-md-10 col-9">
                 <div className="navbar-brand m-0">
                   <Link to="/">
                     <img
-               src={
+                      src={
                         isScrolled
                           ? "assets/images/logo/profx-dark.png" // 👈 on scroll
                           : "assets/images/logo/profx-white.png" // 👈 top
                       }
                       alt="Logo"
                       className=""
-                     style={{ maxWidth: "125px", transition: "0.3s ease" }}
+                      style={{ maxWidth: "125px", transition: "0.3s ease" }}
                     />
                   </Link>
                 </div>
@@ -178,17 +161,22 @@ const Header = () => {
                 <div className="menu-search d-flex align-items-center gap-3">
                   {/* <Search className="d-md-none" /> */}
                   {user ? (
-                     <>
-                  <ProfileDropdown user={{ avatar: "/assets/images/resources/avatar.png" }} onLogout={logout} />
-                  <Link to="/Booknow" className="btn btn3">
-                    Buy Ticket <i className="fa fa-long-arrow-right ms-4"></i>
-                  </Link>
-                   </>
-                    ) : (
+                    <>
+                      <ProfileDropdown user={{ avatar: "/assets/images/resources/avatar.png" }} onLogout={logout} />
+                      <Link to="/Booknow" className="btn btn3">
+                        Buy Ticket <i className="fa fa-long-arrow-right ms-4"></i>
+                      </Link>
+                    </>
+                  ) : (
+                    <>
                       <Link to="/Register" className="btn btn3">
-                           Register
-                          </Link>
-                        )}
+                        Register
+                      </Link>
+                      <Link to="/Login" className="btn btn3">
+                        Login
+                      </Link>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

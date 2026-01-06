@@ -20,9 +20,9 @@ const Login = () => {
 
     try {
       const res = await axios.post(
-        "https://staging.profinsummit.com/adminpanel/api/v1/login", // Laravel API URL
+        "https://profxsummit.com/adminpanel/api/v1/login", // Laravel API URL
         {
-          api_key: "402784613679330", // Replace with your actual API key
+          api_key: "772414293281728", // Replace with your actual API key
           email: email,
           password: password
         },

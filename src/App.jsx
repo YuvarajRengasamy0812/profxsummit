@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Home from "./Pages/Home";
+import Login from "./Pages/Login";
+import Register from "./Pages/Register";
 import About from "./Pages/About";
+import AuthProvider from "./Components/AuthContext";
 import Contact from "./Pages/Contact";
 import Ourgallery from "./Pages/Ourgallery";
 import Bloglists from "./Pages/Bloglists";
@@ -31,7 +34,6 @@ import Aos from "aos";
 function App() {
   const location = useLocation();
   const hideHeaderFooter = location.pathname === "/Comingsoon";
-
   useEffect(() => {
     Aos.init({
       duration: 800,  // animation duration
@@ -49,8 +51,13 @@ function App() {
   return (
     <>
       <div>
-        {!hideHeaderFooter && <Header />}
+         <AuthProvider>
+            {!hideHeaderFooter && <Header key={location.pathname} />}
+        
+      
         <Routes>
+            <Route path="/Login" element={<Login />} />
+          <Route path="/Register" element={<Register />} />
           <Route path="/" element={<Home />} />
           <Route path="/About" element={<About />} />
           <Route path="/Contact" element={<Contact />} />
@@ -79,6 +86,7 @@ function App() {
           <Route path="*" element={<Navigate to="/Error" replace />} />
         </Routes>
         {!hideHeaderFooter && <Footer />}
+         </AuthProvider>
       </div>
     </>
   );

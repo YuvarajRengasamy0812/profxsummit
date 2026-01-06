@@ -1,23 +1,67 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import Search from "../Components/Search";
 import CustomNavbar from "./CustomNavbar";
+import { getAllSocial } from '../api/socialmedia';
+import { getAllTopBar } from '../api/topbar';
+import { getAllLog } from '../api/style';
+import ProfileDropdown from "../Pages/ProfileDropdown";
+import { useAuth } from "./AuthContext";
 
 const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+ const [isScrolled, setIsScrolled] = useState(false);
+ const { user, logout } = useAuth();
+  const [social, setSocial] = useState([]);
+  const [topbar, setTopBar] = useState([]);
+  const [logo, setLogo] = useState([]);
 
   useEffect(() => {
-    const handleScroll = () => {
+    getSocialList();
+    getTopBarList();
+    getLogo();
+     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20); // change after 20px scroll
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-  return (
-    <header className={`main_header_area w-100 site-header position-absolute ${isScrolled ? "scrolled" : ""}`}>
 
+  }, [])
+
+  const getSocialList = () => {
+    getAllSocial()
+      .then((res) => {
+
+        setSocial(res?.data?.details);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getTopBarList = () => {
+    getAllTopBar()
+      .then((res) => {
+
+        setTopBar(res?.data?.details);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const getLogo = () => {
+    getAllLog()
+      .then((res) => {
+
+        setLogo(res?.data?.details);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  return (
+    <header className={`main_header_area w-100 site-header position-absolute w-100 site-header ${isScrolled ? "scrolled" : ""}`}>
       {/* Top bar with social and contact info */}
       <div className="header-content text-white">
         <div className="container">
@@ -46,23 +90,23 @@ const Header = () => {
                     {[
                       {
                         icon: "facebook",
-                        url: "https://www.facebook.com/share/qVva5zrCuYdkqGJJ/?mibextid=qi2Omg",
+                        url: social.facebook || "#",
                       },
                       {
                         icon: "twitter",
-                        url: "https://x.com/profx_media",
+                        url: social.twitter || "#",
                       },
                       {
                         icon: "instagram",
-                        url: "https://www.instagram.com/profxmedia.official/",
+                        url: social.instagram || "#",
                       },
                       {
                         icon: "youtube",
-                        url: "https://www.youtube.com/@ProfxMedia",
+                        url: social.youtube || "#",
                       },
                       {
                         icon: "linkedin",
-                        url: "https://www.linkedin.com/company/profxmedia/",
+                        url: social.linkedin || "#",
                       },
                     ].map((item, i) => (
                       <li key={i} className="d-inline">
@@ -85,15 +129,15 @@ const Header = () => {
                   <ul className="m-0 p-0">
                     <li className="px-2 border-end border-lightgrey border-opacity-50 d-inline">
                       <i className="fa fa-phone pe-1"></i>
-                      <small><a className="social-url" href="tel:+971 58 884 5033">+971 58 884 5033</a></small>
+                      <small><a className="social-url" href={`tel:${topbar.phone}`}>{topbar.phone}</a></small>
                     </li>
                     <li className="px-2 border-end border-lightgrey border-opacity-50 d-inline">
                       <i className="fa fa-envelope-o pe-1"></i>
-                      <small><a className="social-url" href="mailto:proof@profxsummit.com">info@profxsummit.com</a></small>
+                      <small><a className="social-url" href={`mailto:${topbar.email}`}>{topbar.email}</a></small>
                     </li>
                     <li className="px-2 d-inline">
                       <i className="fa fa-clock-o pe-1"></i>
-                      <small>Mon - Fri: 9:00 - 18:30</small>
+                      <small>{topbar.working_time}</small>
                     </li>
                   </ul>
                 </div>
@@ -108,34 +152,22 @@ const Header = () => {
         <div className="container">
           <nav className="navbar navbar-expand-lg py-2 w-100">
             <div className="row w-100 align-items-center">
-              {/* <div className="col-lg-2 col-md-10 col-10">
-                <div className="navbar-brand m-0">
-                  <Link to="/">
-                    <img
-                      src="assets/images/logo/profx-white.png"
-                      alt="Logo"
-                      className=""
-                      style={{ maxWidth: "125px" }}
-                    />
-                  </Link>
-                </div>
-              </div> */}
               <div className="col-lg-2 col-md-10 col-10">
                 <div className="navbar-brand m-0">
                   <Link to="/">
                     <img
-                      src={
+               src={
                         isScrolled
                           ? "assets/images/logo/profx-dark.png" // 👈 on scroll
                           : "assets/images/logo/profx-white.png" // 👈 top
                       }
                       alt="Logo"
-                      style={{ maxWidth: "125px", transition: "0.3s ease" }}
+                      className=""
+                     style={{ maxWidth: "125px", transition: "0.3s ease" }}
                     />
                   </Link>
                 </div>
               </div>
-
 
               <div className="col-lg-7 col-md-2 col-2">
                 {/* <Navbar /> */}
@@ -143,11 +175,20 @@ const Header = () => {
               </div>
 
               <div className="col-lg-3 d-none d-lg-block">
-                <div className="menu-search">
-                  <Search className="d-md-none" />
+                <div className="menu-search d-flex align-items-center gap-3">
+                  {/* <Search className="d-md-none" /> */}
+                  {user ? (
+                     <>
+                  <ProfileDropdown user={{ avatar: "/assets/images/resources/avatar.png" }} onLogout={logout} />
                   <Link to="/Booknow" className="btn btn3">
-                    Book Free Ticket <i className="fa fa-long-arrow-right ms-4"></i>
+                    Buy Ticket <i className="fa fa-long-arrow-right ms-4"></i>
                   </Link>
+                   </>
+                    ) : (
+                      <Link to="/Login" className="btn btn3">
+                            Login
+                          </Link>
+                        )}
                 </div>
               </div>
             </div>
@@ -155,7 +196,6 @@ const Header = () => {
           <div id="slicknav-mobile"></div>
         </div>
       </div>
-
       {/* Search Overlay */}
       <div id="search1">
         <button type="button" className="close">

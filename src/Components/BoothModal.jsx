@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { X } from "lucide-react";
+import { Link, X } from "lucide-react";
 import Swal from "sweetalert2";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+
 
 const BoothModal = ({ booth, onClose, onReserve }) => {
+    const message = "Hello, I would like to book a booth.";
     const [step, setStep] = useState(1);
 
     /* ================= STEP 1 ================= */
@@ -15,9 +19,24 @@ const BoothModal = ({ booth, onClose, onReserve }) => {
     });
 
     /* ================= AMOUNT ================= */
-    const boothAmount = 500;
-    const tax = boothAmount * 0.18;
-    const total = boothAmount + tax;
+    const boothPrices = {
+        "Exclusive Sponsor": 15000,
+        "Diamond Sponsor": 10000,
+        "Gold Booth": 6500,
+        "Silver Booth": 4000,
+        "Standard Booth": 2500,
+    };
+    const boothAmount = boothPrices[booth.boothType] || 0; // default 0 if type not found
+    // const tax = boothAmount * 0.18;
+    // const total = boothAmount + tax;
+    const total = boothAmount;
+
+    const handlePhoneChange = (value) => {
+        setForm({ ...form, phone: value });
+    };
+
+
+
 
     /* ================= STEP 2 ================= */
     const [paymentMethod, setPaymentMethod] = useState(null);
@@ -110,20 +129,56 @@ const BoothModal = ({ booth, onClose, onReserve }) => {
                             {/* LEFT – FORM */}
                             <div className="col-md-7">
                                 <div className="row g-3">
-                                    {["name", "email", "company", "phone"].map((field, i) => (
+                                    {["name", "email", "company", "phone", "referal"].map((field, i) => (
                                         <div className="col-md-12" key={i}>
-                                            <input
-                                                type="text"
-                                                placeholder={
-                                                    field.charAt(0).toUpperCase() + field.slice(1)
-                                                }
-                                                value={form[field]}
-                                                onChange={(e) =>
-                                                    setForm({ ...form, [field]: e.target.value })
-                                                }
-                                            />
+                                            {field === "phone" ? (
+                                                <PhoneInput
+                                                    country={"ae"}
+                                                    value={form.phone}
+                                                    onChange={handlePhoneChange}
+                                                    inputProps={{
+                                                        name: "phone",
+                                                        required: true,
+                                                        placeholder: "Phone Number",
+                                                        style: {
+                                                            fontSize: "15px",
+                                                            fontWeight: "400",
+                                                            backgroundColor: "#F7F7F7",
+                                                            border: "none",
+                                                            borderRadius: "25px",
+                                                            padding: "3px 42px",
+                                                            color: "#707070",
+                                                            width: "100%",
+                                                            boxShadow: "none",
+                                                            height: "50px",
+                                                        },
+                                                    }}
+                                                    containerStyle={{ width: "100%" }}
+                                                    inputStyle={{
+                                                        width: "100%",
+                                                        height: "45px",
+                                                        fontSize: "14px",
+                                                    }}
+                                                    buttonStyle={{
+                                                        border: "none",
+                                                        background: "transparent",
+                                                    }}
+                                                    specialLabel=""
+                                                />
+                                            ) : (
+                                                <input
+                                                    type={field === "email" ? "email" : "text"}
+                                                    placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+                                                    value={form[field]}
+                                                    onChange={(e) =>
+                                                        setForm({ ...form, [field]: e.target.value })
+                                                    }
+                                                    required
+                                                />
+                                            )}
                                         </div>
                                     ))}
+
                                 </div>
                             </div>
 
@@ -134,10 +189,22 @@ const BoothModal = ({ booth, onClose, onReserve }) => {
                                     <p>
                                         Booth: <b>{booth.title}</b>
                                     </p>
-                                    <p>Base Amount: ₹{boothAmount}</p>
-                                    <p>Tax (18%): ₹{tax.toFixed(2)}</p>
+                                    <p>Booth Amount: ₹{boothAmount}</p>
                                     <hr />
-                                    <h5>Total: ₹{total.toFixed(2)}</h5>
+                                    <h5>Total Payable: ₹{total}</h5>
+                                </div>
+                                <div className="summary-box bg-lightgrey p-4 rounded mt-5">
+                                    <h6 className="black">Contact us for Booking support</h6>
+                                    <p className="mt-3">
+                                        Whatsapp: <b><a
+                                        className="black"
+                                            href={`https://wa.me/971588845033?text=${encodeURIComponent(message)}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            +971 58 884 5033
+                                        </a></b>
+                                    </p>
                                 </div>
                             </div>
                         </div>

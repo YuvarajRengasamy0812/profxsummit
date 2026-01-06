@@ -1,6 +1,7 @@
+import { Lock } from "lucide-react";
 import React, { useState } from "react";
 
-const Booth = ({boothId, boothType, x, y, width, height, color, title, subtitle, borderRadius = 6, textColor = "#1a1a2e", fontSize = 14, subtitleOffsetY = 0, onClick, isReserved = false }) => {
+const Booth = ({ boothId, boothType, x, y, width, height, color, title, subtitle, borderRadius = 6, textColor = "#1a1a2e", fontSize = 14, subtitleOffsetY = 0, onClick, isReserved = false }) => {
   const [hover, setHover] = useState(false);
   const tooltipWidth = 160;
   const tooltipHeight = 60;
@@ -10,11 +11,18 @@ const Booth = ({boothId, boothType, x, y, width, height, color, title, subtitle,
 
   return (
     <g
-      onMouseEnter={() => setHover(true)}
+      onMouseEnter={() => {
+        if (!isReserved) setHover(true);
+      }}
       onMouseLeave={() => setHover(false)}
-      onClick={() => onClick && onClick({ boothId, boothType, title, subtitle })}
-      style={{ cursor: "pointer" }}
+      onClick={() => {
+        if (!isReserved && onClick) {
+          onClick({ boothId, boothType, title, subtitle });
+        }
+      }}
+      style={{ cursor: isReserved ? "not-allowed" : "pointer" }}
     >
+
       {/* RESERVED overlay */}
       {isReserved && (
         <text
@@ -65,27 +73,65 @@ const Booth = ({boothId, boothType, x, y, width, height, color, title, subtitle,
         fill="rgba(255,255,255,0.2)"
       />
 
+      {/* RESERVED overlay with shaded bg */}
+      {isReserved && (
+        <>
+          {/* Shaded overlay */}
+          <rect
+            x={x}
+            y={y}
+            width={width}
+            height={height}
+            rx={borderRadius}
+            fill="rgba(0,0,0,0.3)"
+          />
+
+          {/* Lock icon in center */}
+          <Lock
+            x={x + width / 2 - 8} // center horizontally (adjust if Lock uses its own width)
+            y={y + height / 2 - 8} // center vertically
+            size={16}
+            color="#fff"
+          />
+
+          {/* Optional RESERVED text */}
+          <text
+            x={x + width / 2}
+            y={y + height / 2 + 18} // below lock
+            textAnchor="middle"
+            fontSize={fontSize - 2}
+            fill="#fff"
+            fontWeight="bold"
+          >
+            RESERVED
+          </text>
+        </>
+      )}
+
+
       {/* Title */}
-      <text
-        x={x + width / 2}
-        y={y + height / 2 - (subtitle ? 8 : 0)}
-        textAnchor="middle"
-        dominantBaseline="middle"
-        fill={hover ? "#ffffff" : textColor}
-        fontSize={fontSize}
-        fontWeight="600"
-        fontFamily="Inter, system-ui, sans-serif"
-        style={{ transition: "fill 0.2s ease" }}
-      >
-        {title.split("\n").map((line, i) => (
-          <tspan key={i} x={x + width / 2} dy={i === 0 ? 0 : fontSize + 2}>
-            {line}
-          </tspan>
-        ))}
-      </text>
+      {!isReserved && (
+        <text
+          x={x + width / 2}
+          y={y + height / 2 - (subtitle ? 8 : 0)}
+          textAnchor="middle"
+          dominantBaseline="middle"
+          fill={hover ? "#ffffff" : textColor}
+          fontSize={fontSize}
+          fontWeight="600"
+          fontFamily="Inter, system-ui, sans-serif"
+          style={{ transition: "fill 0.2s ease" }}
+        >
+          {title.split("\n").map((line, i) => (
+            <tspan key={i} x={x + width / 2} dy={i === 0 ? 0 : fontSize + 2}>
+              {line}
+            </tspan>
+          ))}
+        </text>
+      )}
 
       {/* Subtitle */}
-      {subtitle && (
+      {!isReserved && subtitle && (
         <text
           x={x + width / 2}
           y={y + height - 12 + subtitleOffsetY}
@@ -115,18 +161,71 @@ const Booth = ({boothId, boothType, x, y, width, height, color, title, subtitle,
             filter="drop-shadow(0 4px 6px rgba(0,0,0,0.15))"
           />
 
+          {/* Tooltip on hover */}
+          {!isReserved && hover && (
+            <g style={{ pointerEvents: "none" }}>
+              {/* Tooltip background */}
+              <rect
+                x={x + width / 2 - tooltipWidth / 2}
+                y={showTooltipBelow ? y + height + 12 : y - tooltipHeight - 12}
+                width={tooltipWidth}
+                height={tooltipHeight}
+                rx={8}
+                fill="#ffffff"
+                stroke="#e0e0e0"
+                strokeWidth="1"
+                filter="drop-shadow(0 4px 6px rgba(0,0,0,0.15))"
+              />
+
+              {/* Tooltip arrow */}
+              <polygon
+                points={
+                  showTooltipBelow
+                    ? `${x + width / 2 - 8},${y + height + 12} ${x + width / 2 + 8},${y + height + 12} ${x + width / 2},${y + height + 4}`
+                    : `${x + width / 2 - 8},${y - 12} ${x + width / 2 + 8},${y - 12} ${x + width / 2},${y - 4}`
+                }
+                fill="#ffffff"
+              />
+
+              {/* Tooltip text */}
+              <text
+                x={x + width / 2}
+                y={showTooltipBelow ? y + height + 32 : y - tooltipHeight + 8}
+                textAnchor="middle"
+                fontSize="13"
+                fontWeight="bold"
+                fill="#1a1a2e"
+              >
+                {title.replace("\n", " ")}
+              </text>
+
+              {subtitle && (
+                <text
+                  x={x + width / 2}
+                  y={showTooltipBelow ? y + height + 50 : y - tooltipHeight + 28}
+                  textAnchor="middle"
+                  fontSize="11"
+                  fill="#666"
+                >
+                  Size: {subtitle}
+                </text>
+              )}
+            </g>
+          )}
+
+
           {/* Tooltip arrow */}
-          <polygon
+          {/* <polygon
             points={
               showTooltipBelow
                 ? `${x + width / 2 - 8},${y + height + 12} ${x + width / 2 + 8},${y + height + 12} ${x + width / 2},${y + height + 4}`
                 : `${x + width / 2 - 8},${y - 12} ${x + width / 2 + 8},${y - 12} ${x + width / 2},${y - 4}`
             }
             fill="#ffffff"
-          />
+          /> */}
 
           {/* Tooltip text */}
-          <text
+          {/* <text
             x={x + width / 2}
             y={showTooltipBelow ? y + height + 32 : y - tooltipHeight + 8}
             textAnchor="middle"
@@ -149,7 +248,7 @@ const Booth = ({boothId, boothType, x, y, width, height, color, title, subtitle,
             >
               Size: {subtitle}
             </text>
-          )}
+          )} */}
         </g>
       )}
     </g>

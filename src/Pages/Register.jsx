@@ -1,13 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PageHelmet from "../Components/Pagehelmet";
 import Breadcrumb from "../Components/Breadcrumb";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import Select from "react-select";
+import countryList from "react-select-country-list";
 import axios from "axios";
 import Swal from "sweetalert2";
 import 'sweetalert2/dist/sweetalert2.min.css';
 import { Eye, EyeOff, Globe, Mail, PhoneCall, Pin } from "lucide-react";
 
 const Register = () => {
+  const countryOptions = countryList().getData();
+  const handlePhoneChange = (value, country) => {
+    setPhone(value);
+
+    if (country?.name) {
+      const matchedCountry = countryOptions.find(
+        (c) => c.label === country.name
+      );
+
+      if (matchedCountry) {
+        setNationality(matchedCountry);
+      }
+    }
+  };
+
+
+  useEffect(() => {
+    const defaultCountry = countryOptions.find(
+      (c) => c.value === "AE"
+    );
+    if (defaultCountry && !nationality) {
+      setNationality(defaultCountry);
+    }
+  }, []);
+
+
+
+
   const navigate = useNavigate();
 
   const [fullName, setFullName] = useState("");
@@ -15,7 +47,7 @@ const Register = () => {
   const [companyName, setCompanyName] = useState("");
   const [phone, setPhone] = useState("");
   const [userType, setUserType] = useState("");
-  const [nationality, setNationality] = useState("");
+  const [nationality, setNationality] = useState(null);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [specialReq, setSpecialReq] = useState("");
@@ -36,6 +68,17 @@ const Register = () => {
         text: "Password and Confirm Password do not match",
       });
     }
+    const digitsOnly = phone.replace(/\D/g, "");
+
+    if (digitsOnly.length < 10) {
+      setLoading(false);
+      return Swal.fire({
+        icon: "error",
+        title: "Invalid Phone",
+        text: "Please enter a valid phone number",
+      });
+    }
+
 
     setLoading(true);
 
@@ -47,9 +90,9 @@ const Register = () => {
           full_name: fullName,
           email: email,
           company_name: companyName,
-          phone: phone,
+          phone: digitsOnly,
           user_type: userType,
-          nationality: nationality,
+          nationality: nationality?.label || "",
           password: password,
           password_confirmation: confirmPassword, // ✅ important fix
           special_requirements: specialReq,
@@ -91,6 +134,56 @@ const Register = () => {
       setLoading(false);
     }
   };
+
+  const customSelectStyles = {
+    control: (provided) => ({
+      ...provided,
+      backgroundColor: "#F7F7F7",
+      border: "none",
+      borderRadius: "25px",
+      minHeight: "50px",
+      boxShadow: "none",
+      paddingLeft: "30px",
+      fontSize: "15px",
+      fontWeight: "400",
+      color: "#707070",
+    }),
+    valueContainer: (provided) => ({
+      ...provided,
+      padding: "0",
+    }),
+    input: (provided) => ({
+      ...provided,
+      margin: "0",
+      padding: "0",
+      color: "#707070",
+    }),
+    placeholder: (provided) => ({
+      ...provided,
+      color: "#707070",
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      color: "#707070",
+    }),
+    indicatorsContainer: (provided) => ({
+      ...provided,
+      paddingRight: "15px",
+    }),
+    dropdownIndicator: (provided) => ({
+      ...provided,
+      color: "#707070",
+    }),
+    indicatorSeparator: () => ({
+      display: "none",
+    }),
+    menu: (provided) => ({
+      ...provided,
+      borderRadius: "15px",
+      fontSize: "14px",
+    }),
+  };
+
 
   return (
     <>
@@ -139,7 +232,41 @@ const Register = () => {
                   </div>
 
                   <div className="col-md-6">
-                    <input type="text" className="form-control" placeholder="Phone" value={phone} onChange={(e) => setPhone(e.target.value)} required />
+                    <div className="phone-no mb-3">
+                      <PhoneInput
+                        country={"ae"}
+                        value={phone}
+                        onChange={handlePhoneChange}
+                        inputProps={{
+                          name: "phone",
+                          required: true,
+                          placeholder: "Phone No.",
+                          style: {
+                            fontSize: "15px",
+                            fontWeight: "400",
+                            backgroundColor: "#F7F7F7",
+                            border: "none",
+                            borderRadius: "25px",
+                            padding: "3px 42px",
+                            color: "#707070",
+                            width: "100%",
+                            boxShadow: "none",
+                            height: "50px",
+                          },
+                        }}
+                        containerStyle={{ width: "100%" }}
+                        inputStyle={{ width: "100%", height: "50px" }}
+                        buttonStyle={{
+                          border: "none",
+                          backgroundColor: "transparent",
+                          borderRadius: "25px 0 0 25px",
+                        }}
+                        dropdownStyle={{ fontSize: "15px" }}
+                        specialLabel=""
+                      />
+
+                    </div>
+                    {/* <input type="text" className="form-control" placeholder="Phone" value={phone} onChange={(e) => setPhone(e.target.value)} required /> */}
                   </div>
 
                   <div className="col-md-6">
@@ -152,7 +279,18 @@ const Register = () => {
                   </div>
 
                   <div className="col-md-6">
-                    <input type="text" className="form-control" placeholder="Nationality" value={nationality} onChange={(e) => setNationality(e.target.value)} required />
+                    <Select
+                      options={countryOptions}
+                      value={nationality}
+                      onChange={setNationality}
+                      placeholder="Nationality"
+                      isSearchable
+                      styles={customSelectStyles}
+                      classNamePrefix="react-select"
+                      required
+                    />
+
+                    {/* <input type="text" className="form-control" placeholder="Nationality" value={nationality} onChange={(e) => setNationality(e.target.value)} required /> */}
                   </div>
 
                   <div className="col-md-6 position-relative">
@@ -208,10 +346,12 @@ const Register = () => {
                   <div className="col-md-6">
                     <select value={sponsorPackage} onChange={(e) => setSponsorPackage(e.target.value)}>
                       <option value="">Sponsor Package</option>
-                      <option value="Summit Partner">Summit Partner</option>
-                      <option value="Track Sponsor">Track Sponsor</option>
-                      <option value="Session Ally">Session Ally</option>
-                      <option value="Content Collaborator">Content Collaborator</option>
+                      <option value="Exclusive">Exclusive</option>
+                      <option value="Diamond">Diamond</option>
+                      <option value="Official">Official</option>
+                      <option value="Gold">Gold</option>
+                      <option value="Silver">Silver</option>
+                      <option value="Standard">Standard</option>
                     </select>
                   </div>
 

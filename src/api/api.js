@@ -6,6 +6,7 @@ const API = axios.create({
   baseURL: "https://profxsummit.com/adminpanel/api/v1",
 });
 
+
 API.interceptors.request.use((request) => {
   const token = localStorage.getItem("token");
   const basicAuth = `Basic ` + btoa("profxsummit:772414293281728");

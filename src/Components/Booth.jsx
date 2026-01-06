@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Booth = ({boothId, boothType, x, y, width, height, color, title, subtitle, borderRadius = 6, textColor = "#1a1a2e", fontSize = 14, subtitleOffsetY = 0, onClick, isReserved = false }) => {
+const Booth = ({ x, y, width, height, color, title, subtitle, borderRadius = 6, textColor = "#1a1a2e", fontSize = 14, subtitleOffsetY = 0, }) => {
   const [hover, setHover] = useState(false);
   const tooltipWidth = 160;
   const tooltipHeight = 60;
@@ -12,23 +12,8 @@ const Booth = ({boothId, boothType, x, y, width, height, color, title, subtitle,
     <g
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      onClick={() => onClick && onClick({ boothId, boothType, title, subtitle })}
       style={{ cursor: "pointer" }}
     >
-      {/* RESERVED overlay */}
-      {isReserved && (
-        <text
-          x={x + width / 2}
-          y={y + height / 2 + 18}
-          textAnchor="middle"
-          fontSize={fontSize - 2}
-          fill="#fff"
-          fontWeight="bold"
-        >
-          RESERVED
-        </text>
-      )}
-
       {/* Shadow */}
       <rect
         x={x + 3}

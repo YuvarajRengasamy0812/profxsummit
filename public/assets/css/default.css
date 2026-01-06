@@ -1358,59 +1358,187 @@ p.text-grey {
   }
 }
 
-/* Floor Plan  */
-/* Overlay background */
-.booth-modal-overlay {
+/* sweetalert2 css */
+.my-swal-btn {
+  display: block;
+  margin: 0 auto !important; /* centers the button horizontally */
+  background: #e91e63;
+  border: none;
+}
+
+.my-swal-btn:hover {
+  background: rgba(233, 30, 99, 0.8);
+  border: none;
+}
+
+/* Ticket Booking Modal Styles */
+
+.visitor-forms {
+  max-height: 60vh;
+}
+
+.ticket-custom-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1050; /* Bootstrap modal z-index */
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
-/* Modal box */
-.booth-modal {
+/* SweetAlert2 toasts modal overlay */
+.swal2-toast-container-high-z {
+  z-index: 10001 !important;
+}
+
+.ticket-custom-modal {
+  background: #fff;
+  width: 90%;
+  max-width: 1100px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  /* font-size: 28px; */
+  cursor: pointer;
+}
+
+.steps .step {
+  margin: 0 10px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: #eee;
+}
+
+.steps .step.active {
+  background: #e91e63;
+  color: #fff;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.payment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.payment-card {
+  border: 1px dashed #e91e63;
+  padding: 18px;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 12px;
+  transition: all 0.25s ease;
+  background: #fff;
+}
+
+.payment-card img {
+  max-height: 40px;
+  /* margin-bottom: 10px; */
+  object-fit: contain;
+}
+
+.payment-card span {
+  display: block;
+  font-size: 14px;
+  color: #223645;
+  font-weight: 500;
+}
+
+.payment-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ✅ Selected State */
+.payment-card.active {
+  border: 2.5px solid #e91e63;
+  box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.15);
+}
+
+.bank-deposit-box {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 24px;
+}
+
+.bank-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 24px;
+}
+
+.bank-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bank-details {
+  background: #fdf2f8;
+  border: 1px dashed #e91e63;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .bank-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Custom File Input Styles */
+
+input[type="file"] {
   width: 100%;
-  max-width: 400px;
-  border-radius: 1rem;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
-  animation: modalFadeIn 0.25s ease;
+  max-width: 320px;
+  font-size: 14px;
+  color: #374151;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 6px;
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
 
-/* Modal Title */
-.booth-modal-title {
-  font-size: 1.25rem;
-  font-weight: 600;
+/* File button */
+input[type="file"]::file-selector-button {
+  margin-right: 12px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #e91e63;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
 
-/* Modal Subtitle */
-.booth-modal-subtitle {
-  font-size: 0.9rem;
-  color: #555;
+/* Hover */
+input[type="file"]::file-selector-button:hover {
+  background: #e91e63;
+  opacity: 0.95;
 }
 
-/* Pink button */
-.btn-pink {
-  background-color: #ff4081;
-  border-color: #ff4081;
+/* Disabled */
+input[type="file"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
-
-.btn-pink:hover {
-  background-color: #e73370;
-  border-color: #e73370;
-}
-
-/* Modal animation */
-@keyframes modalFadeIn {
-  from {
-    transform: scale(0.95);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
 /* Tickets*/
 
 .tic-text {

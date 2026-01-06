@@ -53,7 +53,7 @@ const CustomNavbar = () => {
           <Link to="/" onClick={() => setMobileOpen(false)}>Home</Link>
           <Link to="/About" onClick={() => setMobileOpen(false)}>About</Link>
           <Link to="/Eventlists" onClick={() => setMobileOpen(false)}>Agenda</Link>
-          <Link to="/pricing" onClick={() => setMobileOpen(false)}>Tickets</Link>
+          {/* <Link to="/pricing" onClick={() => setMobileOpen(false)}>Tickets</Link> */}
           <Link to="/Exhibitors" onClick={() => setMobileOpen(false)}>Exhibitors</Link>
           <Link to="/Sponsers" onClick={() => setMobileOpen(false)}>Sponsors</Link>
 

@@ -227,7 +227,9 @@ const Register = () => {
                     <input type="email" className="form-control" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                   </div>
 
-                
+                  <div className="col-md-6">
+                    <input type="text" className="form-control" placeholder="Company Name" value={companyName} onChange={(e) => setCompanyName(e.target.value)} required />
+                  </div>
 
                   <div className="col-md-6">
                     <div className="phone-no mb-3">
@@ -267,7 +269,14 @@ const Register = () => {
                     {/* <input type="text" className="form-control" placeholder="Phone" value={phone} onChange={(e) => setPhone(e.target.value)} required /> */}
                   </div>
 
-                
+                  <div className="col-md-6">
+                    <select value={userType} onChange={(e) => setUserType(e.target.value)} required>
+                      <option value="">User Type</option>
+                      <option value="Visitor">Visitor</option>
+                      <option value="Exhibitor">Exhibitor</option>
+                      <option value="Sponsor">Sponsor</option>
+                    </select>
+                  </div>
 
                   <div className="col-md-6">
                     <Select
@@ -329,21 +338,11 @@ const Register = () => {
                       {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                     </span>
                   </div>
-                  <div className="col-md-6">
-                    <input type="text" className="form-control" placeholder="Company Name" value={companyName} onChange={(e) => setCompanyName(e.target.value)} required />
-                  </div>
 
                   <div className="col-md-6">
-                    <input type="text" className="form-control" placeholder="Enter The Position" value={specialReq} onChange={(e) => setSpecialReq(e.target.value)} />
+                    <input type="text" className="form-control" placeholder="Special Requirements (Optional)" value={specialReq} onChange={(e) => setSpecialReq(e.target.value)} />
                   </div>
-  <div className="col-md-6">
-                    <select value={userType} onChange={(e) => setUserType(e.target.value)} required>
-                      <option value="">User Type</option>
-                      <option value="ib1">IB 1</option>
-                      <option value="IB2">IB 2</option>
-                      <option value="IB3">IB 3</option>
-                    </select>
-                  </div>
+
                   <div className="col-md-6">
                     <select value={sponsorPackage} onChange={(e) => setSponsorPackage(e.target.value)}>
                       <option value="">Refferal Source</option>
@@ -356,9 +355,9 @@ const Register = () => {
                     </select>
                   </div>
 
-                  {/* <div className="col-12">
+                  <div className="col-12">
                     <textarea rows="3" placeholder="Products / Services to Showcase" value={products} onChange={(e) => setProducts(e.target.value)} />
-                  </div> */}
+                  </div>
 
                   <div className="col-12">
                     <div className="form-check">

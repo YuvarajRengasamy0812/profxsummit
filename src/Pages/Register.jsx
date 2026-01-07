@@ -227,7 +227,7 @@ const Register = () => {
                     <input type="email" className="form-control" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                   </div>
 
-                
+
 
                   <div className="col-md-6">
                     <div className="phone-no mb-3">
@@ -267,7 +267,7 @@ const Register = () => {
                     {/* <input type="text" className="form-control" placeholder="Phone" value={phone} onChange={(e) => setPhone(e.target.value)} required /> */}
                   </div>
 
-                
+
 
                   <div className="col-md-6">
                     <Select
@@ -336,13 +336,21 @@ const Register = () => {
                   <div className="col-md-6">
                     <input type="text" className="form-control" placeholder="Enter The Position" value={specialReq} onChange={(e) => setSpecialReq(e.target.value)} />
                   </div>
-  <div className="col-md-6">
+                  <div className="col-md-6">
                     <select value={userType} onChange={(e) => setUserType(e.target.value)} required>
                       <option value="">User Type</option>
-                      <option value="ib1">IB 1</option>
-                      <option value="IB2">IB 2</option>
-                      <option value="IB3">IB 3</option>
+                      <option value="trader">Trader</option>
+                      <option value="visitor">Visitor</option>
+                      <option value="investor">Investor</option>
+                      <option value="ib">IB</option>
+                      <option value="liquidity_provider">Liquidity Provider</option>
+                      <option value="influencer">Influencer</option>
+                      <option value="media_companies">Media Companies</option>
+                      <option value="technology_provider">Technology Provider</option>
+                      <option value="payment_solution">Payment Solution</option>
+                      <option value="fund_manager">Fund Manager & Institutional Traders</option>
                     </select>
+
                   </div>
                   <div className="col-md-6">
                     <select value={sponsorPackage} onChange={(e) => setSponsorPackage(e.target.value)}>

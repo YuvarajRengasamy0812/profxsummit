@@ -26,6 +26,7 @@ import Testimonials from "./Pages/Testimonials";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import Exhibitors from "./Pages/Exhibitors";
+import ExhibitorsForm from "./Pages/ExhibitorsForm";
 // import Blogs from "./Pages/Blogs";
 // import TopicPhotos from "./Pages/TopicPhotos";
 
@@ -86,6 +87,7 @@ function App() {
           <Route path="/Bloglists" element={<Bloglists />} />
           <Route path="/Blogsingle" element={<Blogsingle />} />
           <Route path="/Exhibitors" element={<Exhibitors />} />
+           <Route path="/ExhibitorsForm" element={<ExhibitorsForm />} />
           {/* <Route path="/TopicPhotos" element={<TopicPhotos />} /> */}
 
           {/* Catch-all route for 404 */}

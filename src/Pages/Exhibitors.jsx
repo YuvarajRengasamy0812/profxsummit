@@ -38,7 +38,7 @@ const Exhibitors = () => {
                 </p>
 
                 <div className="">
-                  <a href="/Booknow" className="btn col-lg-6">
+                  <a href="/ExhibitorsForm" className="btn col-lg-6">
                     Reserve Your Exhibit Space
                   </a>
                 </div>

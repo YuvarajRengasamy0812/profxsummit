@@ -118,7 +118,7 @@ function Booknow() {
         });
 
         // ✅ Redirect to Login page
-        navigate("/login");
+        navigate("/Exhibitors");
       } else {
         Swal.fire({
           icon: "error",
@@ -272,14 +272,7 @@ function Booknow() {
                         {/* <input type="text" className="form-control" placeholder="Phone" value={phone} onChange={(e) => setPhone(e.target.value)} required /> */}
                       </div>
     
-                      <div className="col-md-6">
-                        <select value={userType} onChange={(e) => setUserType(e.target.value)} required>
-                          <option value="">User Type</option>
-                          <option value="Visitor">Visitor</option>
-                          <option value="Exhibitor">Exhibitor</option>
-                          <option value="Sponsor">Sponsor</option>
-                        </select>
-                      </div>
+                      
     
                       <div className="col-md-6">
                         <Select
@@ -347,7 +340,14 @@ function Booknow() {
                       <div className="col-md-6">
                         <input type="text" className="form-control" placeholder="Position" value={specialReq} onChange={(e) => setSpecialReq(e.target.value)} />
                       </div>
-    
+    <div className="col-md-6">
+                        <select value={userType} onChange={(e) => setUserType(e.target.value)} required>
+                          <option value="">User Type</option>
+                          <option value="Visitor">Visitor</option>
+                          <option value="Exhibitor">Exhibitor</option>
+                          <option value="Sponsor">Sponsor</option>
+                        </select>
+                      </div>
                       <div className="col-md-6">
                         <select value={sponsorPackage} onChange={(e) => setSponsorPackage(e.target.value)}>
                           <option value="">Refferal Source</option>

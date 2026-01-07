@@ -50,9 +50,9 @@ const Register = () => {
     nationality: nationality,
     password: password,
     password_confirmation: confirmPassword, // ✅ important fix
-    special_requirements: specialReq,
-    sponsor_package: sponsorPackage,
-    products_services: products
+    // special_requirements: specialReq,
+    // sponsor_package: sponsorPackage,
+    // products_services: products
   },
   {
     headers: { "Content-Type": "application/json" }

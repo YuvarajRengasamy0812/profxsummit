@@ -17,6 +17,8 @@ import BlogSection from "../Components/BlogSection";
 // import Speakersection from "../Components/Speakersection";
 import { getBrochure } from "../api/brochure";
 import { useEffect, useState } from "react";
+import TrustedPartners from "../Components/TrustedPartners";
+import FloorPlanDubai from "../Components/FloorPlanDubai";
 function Home() {
   const [brochure, setBrochure] = useState([]);
 
@@ -302,6 +304,7 @@ function Home() {
 
       {/*--Partners Section start--*/}
       {/* <MediaPartners /> */}
+      <TrustedPartners />
       {/*--Partners Section end--*/}
 
       {/*--Features Section start--*/}
@@ -471,6 +474,10 @@ function Home() {
       {/*--Pricing Section start--*/}
       {/* <TicketSection /> */}
       {/*--Pricing Section end--*/}
+
+      {/* Floorplan Component */}
+      <FloorPlanDubai />
+      {/* Floorplan Component */}
 
       {/*--Gallery Section end--*/}
       <section className="gallery">

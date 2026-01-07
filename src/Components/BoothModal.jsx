@@ -20,13 +20,16 @@ const BoothModal = ({ booth, onClose, onReserve }) => {
 
     /* ================= AMOUNT ================= */
     const boothPrices = {
-        "Exclusive Sponsor": 15000,
-        "Diamond Sponsor": 10000,
-        "Gold Booth": 6500,
-        "Silver Booth": 4000,
-        "Standard Booth": 2500,
+        exclusive: 15000,
+        official: 20000,
+        diamond: 10000,
+        gold: 6500,
+        silver: 4000,
+        standard: 2500,
     };
-    const boothAmount = boothPrices[booth.boothType] || 0; // default 0 if type not found
+
+    const boothAmount = boothPrices[booth.boothType] ?? 0;
+
     // const tax = boothAmount * 0.18;
     // const total = boothAmount + tax;
     const total = boothAmount;
@@ -197,7 +200,7 @@ const BoothModal = ({ booth, onClose, onReserve }) => {
                                     <h6 className="black">Contact us for Booking support</h6>
                                     <p className="mt-3">
                                         Whatsapp: <b><a
-                                        className="black"
+                                            className="black"
                                             href={`https://wa.me/971588845033?text=${encodeURIComponent(message)}`}
                                             target="_blank"
                                             rel="noopener noreferrer"

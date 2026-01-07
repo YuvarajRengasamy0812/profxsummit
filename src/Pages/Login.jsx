@@ -5,7 +5,7 @@ import Breadcrumb from "../Components/Breadcrumb";
 import axios from "axios";
 import Swal from "sweetalert2";
 import 'sweetalert2/dist/sweetalert2.min.css';
-import { Globe, Mail, PhoneCall, Pin } from "lucide-react";
+import { Eye, EyeOff, Globe, Mail, PhoneCall, Pin } from "lucide-react";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -13,6 +13,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -47,12 +49,12 @@ const Login = () => {
           timer: 2000
         });
 
-     
 
-  navigate("/");
 
-  // 🔥 FORCE REFRESH (not recommended usually)
-  window.location.reload();
+        navigate("/");
+
+        // 🔥 FORCE REFRESH (not recommended usually)
+        window.location.reload();
       } else {
         Swal.fire({
           icon: "error",
@@ -84,15 +86,15 @@ const Login = () => {
             <div className="col-12 col-lg-5">
               <div className="h-100 bg-white rounded shadow p-4 d-flex flex-column gap-3">
                 <h5 className="pink mb-2">Contact Info:</h5>
-                <p className="mb-1 fw-semibold d-flex align-items-center gap-1"><Pin /> Yashobhoomi, New Delhi</p>
-                <Link className="text-grey d-flex align-items-center gap-1" to="https://www.profinsummit.com" target="_blank"><Globe /> www.profinsummit.com</Link>
-                <Link className="text-grey d-flex align-items-center gap-1" to="tel:+919629896298"><PhoneCall /> +91 9629896298</Link>
-                <Link className="text-grey d-flex align-items-center gap-1" to="mailto:info@profinsummit.com"><Mail /> info@profinsummit.com</Link>
+                <p className="mb-1 fw-semibold d-flex align-items-center gap-1"><Pin /> Le Meridian, Airport Road, Dubai UAE</p>
+                <Link className="text-grey d-flex align-items-center gap-1" to="https://www.profxsummit.com" target="_blank"><Globe /> www.profxsummit.com</Link>
+                <Link className="text-grey d-flex align-items-center gap-1" to="tel:+971588845033"><PhoneCall /> +971 58 884 5033</Link>
+                <Link className="text-grey d-flex align-items-center gap-1" to="mailto:info@profxsummit.com"><Mail /> info@profxsummit.com</Link>
                 <div className="ratio ratio-16x9 rounded overflow-hidden mt-2">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12685.506297821054!2d77.03068256378171!3d28.555189676178713!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1b86c10b12cf%3A0xa6d41303342b088c!2sYashobhoomi!5e1!3m2!1sen!2sus!4v1766669955282!5m2!1sen!2sus"
+                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d209000.25475612728!2d55.264738!3d25.249132!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f5d052da27f4b%3A0x1e08c07158e27b01!2sLe%20M%C3%A9ridien%20Dubai%20Hotel%20%26%20Conference%20Centre!5e1!3m2!1sen!2sae!4v1766667195286!5m2!1sen!2sae"
                     loading="lazy"
-                    title="Yashobhoomi Map"
+                    title="Le Meridian Map"
                   />
                 </div>
               </div>
@@ -101,7 +103,7 @@ const Login = () => {
             {/* RIGHT SIDE – LOGIN FORM */}
             <div className="col-12 col-lg-7">
               <div className="h-100 bg-white rounded shadow p-4 d-flex flex-column justify-content-center">
-                <h4 className="pink mb-4 text-center">Login to PROFIN BLOCKCHAIN SUMMIT 2026</h4>
+                <h4 className="pink mb-4 text-center">Login to PROFX SUMMIT Dubai 2026</h4>
 
                 <form onSubmit={handleLogin} className="row g-3">
 
@@ -116,15 +118,27 @@ const Login = () => {
                     />
                   </div>
 
-                  <div className="col-12">
+                  <div className="col-12 position-relative">
                     <input
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       className="form-control"
                       placeholder="Password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
                     />
+                    <span
+                      onClick={() => setShowPassword(!showPassword)}
+                      style={{
+                        position: "absolute",
+                        right: "20px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        cursor: "pointer",
+                      }}
+                    >
+                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </span>
                   </div>
 
                   <div className="col-12 text-end">

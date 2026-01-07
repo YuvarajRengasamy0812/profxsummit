@@ -1,13 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PageHelmet from "../Components/Pagehelmet";
 import Breadcrumb from "../Components/Breadcrumb";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import Select from "react-select";
+import countryList from "react-select-country-list";
 import axios from "axios";
 import Swal from "sweetalert2";
 import 'sweetalert2/dist/sweetalert2.min.css';
-import { Globe, Mail, PhoneCall, Pin } from "lucide-react";
+import { Eye, EyeOff, Globe, Mail, PhoneCall, Pin } from "lucide-react";
 
 const Register = () => {
+  const countryOptions = countryList().getData();
+  const handlePhoneChange = (value, country) => {
+    setPhone(value);
+
+    if (country?.name) {
+      const matchedCountry = countryOptions.find(
+        (c) => c.label === country.name
+      );
+
+      if (matchedCountry) {
+        setNationality(matchedCountry);
+      }
+    }
+  };
+
+
+  useEffect(() => {
+    const defaultCountry = countryOptions.find(
+      (c) => c.value === "AE"
+    );
+    if (defaultCountry && !nationality) {
+      setNationality(defaultCountry);
+    }
+  }, []);
+
+
+
+
   const navigate = useNavigate();
 
   const [fullName, setFullName] = useState("");
@@ -15,13 +47,15 @@ const Register = () => {
   const [companyName, setCompanyName] = useState("");
   const [phone, setPhone] = useState("");
   const [userType, setUserType] = useState("");
-  const [nationality, setNationality] = useState("");
+  const [nationality, setNationality] = useState(null);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [specialReq, setSpecialReq] = useState("");
   const [sponsorPackage, setSponsorPackage] = useState("");
   const [products, setProducts] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -34,30 +68,41 @@ const Register = () => {
         text: "Password and Confirm Password do not match",
       });
     }
+    const digitsOnly = phone.replace(/\D/g, "");
+
+    if (digitsOnly.length < 10) {
+      setLoading(false);
+      return Swal.fire({
+        icon: "error",
+        title: "Invalid Phone",
+        text: "Please enter a valid phone number",
+      });
+    }
+
 
     setLoading(true);
 
     try {
-    const res = await axios.post(
-  "https://profxsummit.com/adminpanel/api/v1/register",
-  {
-    api_key: "772414293281728",
-    full_name: fullName,
-    email: email,
-    company_name: companyName,
-    phone: phone,
-    user_type: userType,
-    nationality: nationality,
-    password: password,
-    password_confirmation: confirmPassword, // ✅ important fix
-    // special_requirements: specialReq,
-    // sponsor_package: sponsorPackage,
-    // products_services: products
-  },
-  {
-    headers: { "Content-Type": "application/json" }
-  }
-);
+      const res = await axios.post(
+        "https://profxsummit.com/adminpanel/api/v1/register",
+        {
+          api_key: "772414293281728",
+          full_name: fullName,
+          email: email,
+          company_name: companyName,
+          phone: digitsOnly,
+          user_type: userType,
+          nationality: nationality?.label || "",
+          password: password,
+          password_confirmation: confirmPassword, // ✅ important fix
+          special_requirements: specialReq,
+          sponsor_package: sponsorPackage,
+          products_services: products
+        },
+        {
+          headers: { "Content-Type": "application/json" }
+        }
+      );
 
       if (res.data.code === "1" || res.data.code === 1) {
         // ✅ Success SweetAlert
@@ -90,6 +135,56 @@ const Register = () => {
     }
   };
 
+  const customSelectStyles = {
+    control: (provided) => ({
+      ...provided,
+      backgroundColor: "#F7F7F7",
+      border: "none",
+      borderRadius: "25px",
+      minHeight: "50px",
+      boxShadow: "none",
+      paddingLeft: "30px",
+      fontSize: "15px",
+      fontWeight: "400",
+      color: "#707070",
+    }),
+    valueContainer: (provided) => ({
+      ...provided,
+      padding: "0",
+    }),
+    input: (provided) => ({
+      ...provided,
+      margin: "0",
+      padding: "0",
+      color: "#707070",
+    }),
+    placeholder: (provided) => ({
+      ...provided,
+      color: "#707070",
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      color: "#707070",
+    }),
+    indicatorsContainer: (provided) => ({
+      ...provided,
+      paddingRight: "15px",
+    }),
+    dropdownIndicator: (provided) => ({
+      ...provided,
+      color: "#707070",
+    }),
+    indicatorSeparator: () => ({
+      display: "none",
+    }),
+    menu: (provided) => ({
+      ...provided,
+      borderRadius: "15px",
+      fontSize: "14px",
+    }),
+  };
+
+
   return (
     <>
       <PageHelmet pageTitle="Register" />
@@ -102,17 +197,17 @@ const Register = () => {
             <div className="col-12 col-lg-5">
               <div className="h-100 bg-white rounded shadow p-4 d-flex flex-column gap-3">
                 <h5 className="pink mb-2">Contact Info:</h5>
-                <p className="mb-1 fw-semibold"><Pin /> Yashobhoomi, New Delhi</p>
-                <Link className="text-grey d-flex align-items-center gap-1" to="https://www.profinsummit.com" target="_blank" rel="noreferrer"><Globe /> www.profinsummit.com</Link>
-                <Link className="text-grey d-flex align-items-center gap-1" to="tel:+919629896298"><PhoneCall /> +91 9629896298</Link>
-                <Link className="text-grey d-flex align-items-center gap-1" to="mailto:info@profinsummit.com"><Mail /> info@profinsummit.com</Link>
+                <p className="mb-1 fw-semibold"><Pin /> Le Meridian, Airport Road, Dubai UAE</p>
+                <Link className="text-grey d-flex align-items-center gap-1" to="https://www.profxsummit.com" target="_blank" rel="noreferrer"><Globe /> www.profxsummit.com</Link>
+                <Link className="text-grey d-flex align-items-center gap-1" to="tel:+971588845033"><PhoneCall /> +971 58 884 5033</Link>
+                <Link className="text-grey d-flex align-items-center gap-1" to="mailto:info@profxsummit.com"><Mail /> info@profxsummit.com</Link>
                 <div className="ratio ratio-16x9 rounded overflow-hidden mt-2">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12685.506297821054!2d77.03068256378171!3d28.555189676178713!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1b86c10b12cf%3A0xa6d41303342b088c!2sYashobhoomi!5e1!3m2!1sen!2sus!4v1766669955282!5m2!1sen!2sus"
+                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d209000.25475612728!2d55.264738!3d25.249132!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f5d052da27f4b%3A0x1e08c07158e27b01!2sLe%20M%C3%A9ridien%20Dubai%20Hotel%20%26%20Conference%20Centre!5e1!3m2!1sen!2sae!4v1766667195286!5m2!1sen!2sae"
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                    title="Yashobhoomi Map"
+                    title="Le Meridian Map"
                   />
                 </div>
               </div>
@@ -121,7 +216,7 @@ const Register = () => {
             {/* RIGHT SIDE – REGISTER FORM */}
             <div className="col-12 col-lg-7">
               <div className="h-100 bg-white rounded shadow p-4">
-                <h4 className="pink mb-4 text-center">Register for PROFIN BLOCKCHAIN SUMMIT 2026</h4>
+                <h4 className="pink mb-4 text-center">Register for PROFX SUMMIT Dubai 2026</h4>
 
                 <form onSubmit={handleRegister} className="row g-3">
                   <div className="col-md-6">
@@ -137,27 +232,111 @@ const Register = () => {
                   </div>
 
                   <div className="col-md-6">
-                    <input type="text" className="form-control" placeholder="Phone" value={phone} onChange={(e) => setPhone(e.target.value)} required />
+                    <div className="phone-no mb-3">
+                      <PhoneInput
+                        country={"ae"}
+                        value={phone}
+                        onChange={handlePhoneChange}
+                        inputProps={{
+                          name: "phone",
+                          required: true,
+                          placeholder: "Phone No.",
+                          style: {
+                            fontSize: "15px",
+                            fontWeight: "400",
+                            backgroundColor: "#F7F7F7",
+                            border: "none",
+                            borderRadius: "25px",
+                            padding: "3px 42px",
+                            color: "#707070",
+                            width: "100%",
+                            boxShadow: "none",
+                            height: "50px",
+                          },
+                        }}
+                        containerStyle={{ width: "100%" }}
+                        inputStyle={{ width: "100%", height: "50px" }}
+                        buttonStyle={{
+                          border: "none",
+                          backgroundColor: "transparent",
+                          borderRadius: "25px 0 0 25px",
+                        }}
+                        dropdownStyle={{ fontSize: "15px" }}
+                        specialLabel=""
+                      />
+
+                    </div>
+                    {/* <input type="text" className="form-control" placeholder="Phone" value={phone} onChange={(e) => setPhone(e.target.value)} required /> */}
                   </div>
 
                   <div className="col-md-6">
                     <select value={userType} onChange={(e) => setUserType(e.target.value)} required>
                       <option value="">User Type</option>
+                      <option value="Visitor">Visitor</option>
                       <option value="Exhibitor">Exhibitor</option>
                       <option value="Sponsor">Sponsor</option>
                     </select>
                   </div>
 
                   <div className="col-md-6">
-                    <input type="text" className="form-control" placeholder="Nationality" value={nationality} onChange={(e) => setNationality(e.target.value)} required />
+                    <Select
+                      options={countryOptions}
+                      value={nationality}
+                      onChange={setNationality}
+                      placeholder="Nationality"
+                      isSearchable
+                      styles={customSelectStyles}
+                      classNamePrefix="react-select"
+                      required
+                    />
+
+                    {/* <input type="text" className="form-control" placeholder="Nationality" value={nationality} onChange={(e) => setNationality(e.target.value)} required /> */}
                   </div>
 
-                  <div className="col-md-6">
-                    <input type="password" className="form-control" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                  <div className="col-md-6 position-relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      className="form-control"
+                      placeholder="Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                    <span
+                      onClick={() => setShowPassword(!showPassword)}
+                      style={{
+                        position: "absolute",
+                        right: "20px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        cursor: "pointer",
+                      }}
+                    >
+                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </span>
                   </div>
 
-                  <div className="col-md-6">
-                    <input type="password" className="form-control" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+                  <div className="col-md-6 position-relative">
+                    <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      className="form-control"
+                      placeholder="Confirm Password"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      required
+                    />
+                    <span
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      style={{
+                        position: "absolute",
+                        right: "20px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        cursor: "pointer",
+                      }}
+                    >
+                      {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </span>
                   </div>
 
                   <div className="col-md-6">
@@ -167,10 +346,12 @@ const Register = () => {
                   <div className="col-md-6">
                     <select value={sponsorPackage} onChange={(e) => setSponsorPackage(e.target.value)}>
                       <option value="">Sponsor Package</option>
-                      <option value="Summit Partner">Summit Partner</option>
-                      <option value="Track Sponsor">Track Sponsor</option>
-                      <option value="Session Ally">Session Ally</option>
-                      <option value="Content Collaborator">Content Collaborator</option>
+                      <option value="Exclusive">Exclusive</option>
+                      <option value="Diamond">Diamond</option>
+                      <option value="Official">Official</option>
+                      <option value="Gold">Gold</option>
+                      <option value="Silver">Silver</option>
+                      <option value="Standard">Standard</option>
                     </select>
                   </div>
 

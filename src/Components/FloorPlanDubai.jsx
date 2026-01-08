@@ -63,7 +63,7 @@ const FloorPlanDubai = () => {
           className="mx-auto bg-white rounded shadow-xl py-lg-5 py-md-5 py-0 floor-plan-dubai"
           style={{
             width: "100%",
-            height: "calc(120vh - 220px)", // adjust header/footer space
+            // height: "calc(120vh - 220px)", 
             maxWidth: "2000px",
             overflow: "hidden",
             display: "flex",
@@ -77,7 +77,7 @@ const FloorPlanDubai = () => {
             height="100%"
             preserveAspectRatio="xMidYMid meet"
             style={{
-              background: "#e8f4fc",
+              background: "#fff",
               // transform: "scale(1.1)",     // increase size here
               transformOrigin: "center",
             }}

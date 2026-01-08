@@ -132,11 +132,11 @@ const Header = () => {
 
       {/* Navigation Bar */}
       <div className="header_menu" id="header_menu">
-        <div className="container">
+        <div className="container-fluid">
           <nav className="navbar navbar-expand-lg py-2 w-100">
             <div className="row w-100 align-items-center">
               <div className="col-lg-2 col-md-10 col-9">
-                <div className="navbar-brand m-0">
+                <div className="navbar-brand m-0 ps-5">
                   <Link to="/">
                     <img
                       src={
@@ -158,7 +158,7 @@ const Header = () => {
               </div>
 
               <div className="col-lg-3 d-none d-lg-block">
-                <div className="menu-search d-flex align-items-center gap-3">
+                <div className="menu-search d-flex align-items-center justify-content-center gap-3">
                   {/* <Search className="d-md-none" /> */}
                   {user ? (
                     <>

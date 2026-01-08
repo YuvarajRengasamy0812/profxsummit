@@ -23,7 +23,7 @@ function Eventlists() {
                 <span className="pink"> Speakers: 100+ Industry Leaders & Experts</span>
               </h2>
               <p className="m-0">
-                Curated from global finance, trading, FinTech, and blockchain companies - CEOs, founders, regulators, and innovators. Filter, connect, and collaborate with thought-leaders shaping the future of global finance.
+                Curated from global finance, trading, FinTech, and Forex companies - CEOs, founders, regulators, and innovators. Filter, connect, and collaborate with thought-leaders shaping the future of global finance.
               </p>
             </div>
           </div>

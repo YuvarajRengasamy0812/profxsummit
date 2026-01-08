@@ -28,7 +28,7 @@ const CustomNavbar = () => {
   return (
     <>
       {/* DESKTOP MENU */}
-      <ul className="cust-nav-desktop" style={{ marginBottom: 0 }}>
+      <ul className="cust-nav-desktop justify-content-center" style={{ marginBottom: 0 }}>
         {menuLinks.map((link) =>
           link.sub_links_count > 0 ? (
             // Dropdown menu

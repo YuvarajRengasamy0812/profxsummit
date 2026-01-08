@@ -63,7 +63,7 @@ const BoothCat = () => {
                                 Who Can Exhibit
                             </p>
                             <p className="m-0">
-                                Forex brokers, FinTech providers, blockchain companies, payment processors, CRM providers, influencers, and financial technology innovators.
+                                Forex brokers, FinTech providers, Forex companies, payment processors, CRM providers, influencers, and financial technology innovators.
                             </p>
                         </div>
                     </div>

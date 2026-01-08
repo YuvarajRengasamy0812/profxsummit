@@ -1644,10 +1644,18 @@ input[type="file"]:disabled {
   transform: scale(1.1);
 }
 
+.floor-plan-dubai{
+  height: calc(100vh - 220px)!important;
+}
+
 /* Less than or equal to 600px */
 @media (max-width: 600px) {
   .transform-floor {
     transform: scale(1);
+  }
+
+  .floor-plan-dubai{
+    height: calc(120vh - 365px)!important;
   }
 }
 

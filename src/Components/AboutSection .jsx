@@ -37,7 +37,7 @@ const AboutSection = () => {
             <div className="about-image text-center">
               <img
                 src="assets/images/resources/blockchain-hero.jpg"
-                alt="Blockchain Illustration"
+                alt="Forex Illustration"
                 className="img-fluid rounded shadow-sm animate-pulse"
               />
             </div>

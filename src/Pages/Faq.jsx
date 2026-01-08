@@ -51,7 +51,7 @@ function Faq() {
                                                 <div id="flush-collapseOne" className="accordion-collapse collapse"
                                                     data-bs-parent="#accordionFlushExample">
                                                     <div className="accordion-body bg-lightgrey p-6">
-                                                        ProFX Summit Dubai 2026 brings together global finance, trading, FinTech, and blockchain leaders for a two-day summit featuring expert-led sessions, live exhibition booths, networking opportunities, and the prestigious ProFX Awards.
+                                                        ProFX Summit Dubai 2026 brings together global finance, trading, FinTech, and Forex leaders for a two-day summit featuring expert-led sessions, live exhibition booths, networking opportunities, and the prestigious ProFX Awards.
                                                     </div>
                                                 </div>
                                             </div>

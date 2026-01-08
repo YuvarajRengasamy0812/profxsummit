@@ -15,9 +15,9 @@ const pillars = [
     icon: <Boxes size={40} />,
   },
   {
-    title: "Blockchain & Digital Assets",
+    title: "Forex & Digital Assets",
     description:
-      "Dive into blockchain applications, NFT marketplaces, DeFi protocols, and secure digital asset management for enterprise and retail.",
+      "Dive into Forex applications, NFT marketplaces, DeFi protocols, and secure digital asset management for enterprise and retail.",
     icon: <Layers size={40} />,
   },
   {

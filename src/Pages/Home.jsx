@@ -476,7 +476,7 @@ function Home() {
       {/*--Pricing Section end--*/}
 
       {/* Floorplan Component */}
-      <FloorPlanDubai />
+      <FloorPlanDubai id="floorplan"/>
       {/* Floorplan Component */}
 
       {/*--Gallery Section end--*/}

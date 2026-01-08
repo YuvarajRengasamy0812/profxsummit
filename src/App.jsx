@@ -35,6 +35,7 @@ import Aos from "aos";
 import ForgotPassword from "./Pages/ForgotPassword";
 import ResetPassword from "./Pages/ResetPassword";
 import Profile from "./Pages/Profile";
+import Floorplan from "./Pages/Floorplan";
 function App() {
   const location = useLocation();
   const hideHeaderFooter = location.pathname === "/Comingsoon";
@@ -65,6 +66,7 @@ function App() {
           <Route path="/ForgotPassword" element={<ForgotPassword />} />
           <Route path="/ResetPassword" element={<ResetPassword />} />
           <Route path="/MyProfile" element={<Profile />} />
+          <Route path="/Floorplan" element={<Floorplan />} />
           <Route path="/" element={<Home />} />
           <Route path="/About" element={<About />} />
           <Route path="/Contact" element={<Contact />} />

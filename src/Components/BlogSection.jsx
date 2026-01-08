@@ -42,13 +42,13 @@ const BlogSection = () => {
                                             <h5 className="p-4">
                                                 <Link to="/Bloglists" className="black">
                                                     How Dubai Is Becoming the Next Global Hub for
-                                                    Blockchain Innovation
+                                                    Forex Innovation
                                                 </Link>
                                             </h5>
                                             <p className="p-4 pt-0 m-0">
                                                 <small>
-                                                    Dubai blockchain adoption is accelerating across finance, governance,
-                                                    and emerging tech. Explore why Dubai is now positioned as a global blockchain powerhouse.
+                                                    Dubai Forex adoption is accelerating across finance, governance,
+                                                    and emerging tech. Explore why Dubai is now positioned as a global Forex powerhouse.
                                                 </small>
                                             </p>
                                         </div>
@@ -70,13 +70,13 @@ const BlogSection = () => {
                                         <div className="blog-content-area flex-grow-1">
                                             <h5 className="p-4">
                                                 <Link to="/Bloglists" className="black">
-                                                    Top Blockchain Use Cases Transforming Dubai in
+                                                    Top Forex Use Cases Transforming Dubai in
                                                     2025
                                                 </Link>
                                             </h5>
                                             <p className="p-4 pt-0 m-0">
                                                 <small>
-                                                    Explore real-use blockchain applications transforming Dubai across
+                                                    Explore real-use Forex applications transforming Dubai across
                                                     finance, healthcare, supply chain, elections, and business.
                                                 </small>
                                             </p>
@@ -105,8 +105,8 @@ const BlogSection = () => {
                                             </h5>
                                             <p className="p-4 pt-0 m-0">
                                                 <small>
-                                                    2025 marks a historic turning point for Dubai blockchain industry. Learn
-                                                    why this year is critical for investors, fintech, and blockchain enterprises.
+                                                    2025 marks a historic turning point for Dubai Forex industry. Learn
+                                                    why this year is critical for investors, fintech, and Forex enterprises.
                                                 </small>
                                             </p>
                                         </div>

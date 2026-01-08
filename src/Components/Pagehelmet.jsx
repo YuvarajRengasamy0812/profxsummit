@@ -14,7 +14,7 @@ class PageHelmet extends Component {
           </title>
           <meta
             name="description"
-            content="PROFX SUMMIT 2026 - Join industry leaders, innovators, and visionaries at the forefront of blockchain technology. Explore cutting-edge developments, network with experts, and shape the future of decentralized finance."
+            content="PROFX SUMMIT 2026 - Join industry leaders, innovators, and visionaries at the forefront of Forex technology. Explore cutting-edge developments, network with experts, and shape the future of decentralized finance."
           />
           {/* You can add other dynamic meta tags here as needed */}
         </Helmet>

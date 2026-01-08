@@ -18,7 +18,7 @@ function Blogs() {
                 Forex Wisdom from the <span className="pink">Frontlines</span>
               </h1>
               <p className="text-grey fs-5 mb-4">
-                Insider takes on Dubai blockchain pivot - tutorials, news, and
+                Insider takes on Dubai Forex pivot - tutorials, news, and
                 founder spotlights. Subscribe for weekly drops straight to your
                 inbox.
               </p>
@@ -55,7 +55,7 @@ function Blogs() {
             </h2>
 
             <p className="text-grey w-lg-60 mx-auto fs-5">
-              Explore expert insights on blockchain trends, startup spotlights,
+              Explore expert insights on Forex trends, startup spotlights,
               and more.
             </p>
           </div>

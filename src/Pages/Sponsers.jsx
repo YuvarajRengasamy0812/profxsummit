@@ -312,7 +312,7 @@ function Sponsers() {
                 Join hands with <b>PROFX SUMMIT 2026</b> to elevate your
                 brand in the dynamic world of Forex. Explore tailored sponsorship
                 packages designed to maximize your visibility and engagement at
-                Dubai premier blockchain event.
+                Dubai premier Forex event.
               </p>
               <div className="next-sponser-button">
                 <Link to="/Booknow" className="btn btn1">

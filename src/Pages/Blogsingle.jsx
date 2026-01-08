@@ -66,8 +66,8 @@ function Blogsingle() {
                     <div className="qoutation-info ms-4">
                       <h6 className="pink my-1">{blogData.author}</h6>
                       <p>
-                        {blogData.author} is a blockchain enthusiast and organizer, dedicated to fostering
-                        innovation and collaboration in the blockchain space.
+                        {blogData.author} is a Forex enthusiast and organizer, dedicated to fostering
+                        innovation and collaboration in the Forex space.
                       </p>
                     </div>
                   </div>
@@ -112,8 +112,8 @@ function Blogsingle() {
                       <h6 className="mb-1">{blogData.author}</h6>
                       <p className="mb-0 w-80 m-auto">
                         <small>
-                          {blogData.author} is a blockchain enthusiast and organizer of the ProFin Blockchain
-                          Summit 2026, dedicated to fostering innovation and collaboration in the blockchain space.
+                          {blogData.author} is a Forex enthusiast and organizer of the PROFX
+                          Summit 2026, dedicated to fostering innovation and collaboration in the Forex space.
                         </small>
                       </p>
                     </div>

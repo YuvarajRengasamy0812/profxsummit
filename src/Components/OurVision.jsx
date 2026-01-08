@@ -83,7 +83,7 @@ const OurVision = () => {
                 Our Vision - <span className="pink">Driving Forex Innovation</span>
               </h2>
               <p className="text-dark">
-                <b>PROFX SUMMIT DUBAI 2026</b> is designed as a complete financial ecosystem experience. The summit seamlessly integrates summit sessions, live exhibition booths, continuous networking, and the PROFX Awards ceremony. Participants engage with industry experts, decision-makers, and innovators shaping the future of global finance. From advanced trading discussions to blockchain innovation, Dubai emerges as the hub for scalable, compliant, and impactful financial solutions.
+                <b>PROFX SUMMIT DUBAI 2026</b> is designed as a complete financial ecosystem experience. The summit seamlessly integrates summit sessions, live exhibition booths, continuous networking, and the PROFX Awards ceremony. Participants engage with industry experts, decision-makers, and innovators shaping the future of global finance. From advanced trading discussions to Forex innovation, Dubai emerges as the hub for scalable, compliant, and impactful financial solutions.
               </p>
               <div className="vision-image mt-4 text-center text-lg-start">
                 <img

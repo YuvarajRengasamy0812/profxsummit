@@ -179,7 +179,7 @@ function About() {
                           </div>
                           <h5 className="mb-2 black">Global Insights</h5>
                           <p className="mb-3 text-grey">
-                            Gain knowledge on international finance, trading innovation, FinTech, and blockchain integration.
+                            Gain knowledge on international finance, trading innovation, FinTech, and Forex integration.
                           </p>
                           <Link
                             to="/Eventlists"

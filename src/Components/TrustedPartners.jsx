@@ -16,6 +16,8 @@ const partners = [
     { name: "Centroid Solutions", logo: "assets/images/partners/centroid.png", url: "https://centroidsol.com/" },
     { name: "CFI Financial", logo: "assets/images/partners/cfi.png", url: "https://cfi.trade/en/uae" },
     { name: "Codegene Technologies", logo: "assets/images/partners/codegene.png", url: "https://codegene.io/" },
+    { name: "Coins Telegram", logo: "assets/images/partners/coins-telegram.png", url: "https://coinstelegram.com/" },
+    { name: "Coin Gabbar", logo: "assets/images/partners/coin-gabbar.png", url: "https://www.coingabbar.com/?srsltid=AfmBOoohB4diKfxQ1cyobnAC4851gRkrf1l8RFhdGAoAo5AZe3JipX-B" },
     { name: "Dominion Funding", logo: "assets/images/partners/dominion-funding.png", url: "https://dominionfunding.trade/" },
     { name: "Dominion Markets", logo: "assets/images/partners/Dominion-Markets.png", url: "https://www.dominionmarkets.com/" },
     { name: "Dyntech", logo: "assets/images/partners/dyntech.png", url: "https://dyntech.io/" },

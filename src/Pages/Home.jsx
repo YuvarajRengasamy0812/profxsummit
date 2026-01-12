@@ -13,12 +13,12 @@ import SchedulesSection from "../Components/SchedulesSection";
 // import TicketSection from "../Components/TicketSection";
 import LetsDoIt from "../Components/LetsDoIt";
 import BlogSection from "../Components/BlogSection";
-// import MediaPartners from "../Components/MediaPartners";
 // import Speakersection from "../Components/Speakersection";
 import { getBrochure } from "../api/brochure";
 import { useEffect, useState } from "react";
 import TrustedPartners from "../Components/TrustedPartners";
 import FloorPlanDubai from "../Components/FloorPlanDubai";
+import MediaPartners from "../Components/MediaPartners";
 function Home() {
   const [brochure, setBrochure] = useState([]);
 
@@ -303,8 +303,8 @@ function Home() {
 
 
       {/*--Partners Section start--*/}
-      {/* <MediaPartners /> */}
       <TrustedPartners />
+      <MediaPartners />
       {/*--Partners Section end--*/}
 
       {/*--Features Section start--*/}

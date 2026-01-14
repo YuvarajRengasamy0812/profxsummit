@@ -26,6 +26,14 @@ const mediaPartners = [
     url: 'https://coinscapture.com/',
     img: 'assets/images/partners/coins-capture.png',
   },
+  {
+    url: '#',
+    img: 'assets/images/partners/cryptonomist.png',
+  },
+  {
+    url: '#',
+    img: 'assets/images/partners/coinnewsspan.png',
+  },
 ]
 
 const MediaPartners = () => {

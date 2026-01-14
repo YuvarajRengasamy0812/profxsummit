@@ -1,5 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { Link } from 'react-router-dom'
+import {getAllTrustedPartners } from "../api/trustedpartners";
+
+
 
 const partners = [
     { name: "Amana Capital Ltd", logo: "assets/images/partners/amana-capital.png", url: "https://amanacapital.com.cy/" },
@@ -65,8 +70,26 @@ const partners = [
 
 
 export default function TrustedPartners() {
+
     const [isPaused, setIsPaused] = React.useState(false);
     const duplicatedPartners = [...partners, ...partners];
+    const [trusted, setTrusted] = useState([]);
+
+  useEffect(() => {
+    getTrustedList();
+  }, [])
+
+
+  const getTrustedList = () => {
+    getAllTrustedPartners()
+      .then((res) => {
+        setTrusted(res?.data?.topics);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
 
     return (
         <section className="bg-white py-5 overflow-hidden">
@@ -127,16 +150,16 @@ export default function TrustedPartners() {
 
                 <div className="marquee-wrapper">
                     <div className="marquee-track">
-                        {duplicatedPartners.map((partner, index) => (
+                        {trusted.map((partner, index) => (
                             <a
-                                key={`${partner.name}-${index}`}
-                                href={partner.url}
+                                key={`${partner.title}-${index}`}
+                                href={partner.details}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="partner-card d-flex flex-column align-items-center justify-content-center px-4 px-md-5 py-4 rounded-4 text-decoration-none"
                             >
                                 <div className="logo-box d-flex align-items-center justify-content-center">
-                                    <img src={partner.logo} alt={partner.name} />
+                                    <img src={partner.photo_file} alt={partner.title} />
                                 </div>
                             </a>
                         ))}

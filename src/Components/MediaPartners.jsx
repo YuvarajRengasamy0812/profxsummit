@@ -1,42 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from 'react-router-dom'
 import {getAllMediaPartners } from "../api/mediapartners";
-const mediaPartners = [
-
- 
-  {
-    url: 'https://coinstelegram.com/',
-    img: 'assets/images/partners/coins-telegram.png',
-  },
-  {
-    url: 'https://www.coingabbar.com/?srsltid=AfmBOoohB4diKfxQ1cyobnAC4851gRkrf1l8RFhdGAoAo5AZe3JipX-B',
-    img: 'assets/images/partners/coin-gabbar.png',
-  },
-  {
-    url: 'https://www.financialmarkets.media/',
-    img: 'assets/images/partners/financial-markets-media.png',
-  },
-  {
-    url: 'https://cryptoken.media/',
-    img: 'assets/images/partners/cryptoken.png',
-  },
-  {
-    url: 'https://yourmindmedia.com/',
-    img: 'assets/images/partners/ymm.png',
-  },
-  {
-    url: 'https://coinscapture.com/',
-    img: 'assets/images/partners/coins-capture.png',
-  },
-  {
-    url: '#',
-    img: 'assets/images/partners/cryptonomist.png',
-  },
-  {
-    url: '#',
-    img: 'assets/images/partners/coinnewsspan.png',
-  },
-]
 
 const MediaPartners = () => {
 

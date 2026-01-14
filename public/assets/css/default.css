@@ -1156,7 +1156,7 @@ p.text-grey {
   display: flex;
   gap: 2rem;
   width: max-content;
-  animation: marquee 10s linear infinite;
+  animation: marquee 35s linear infinite;
 }
 
 /* pause on hover */

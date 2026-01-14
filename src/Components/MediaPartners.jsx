@@ -1,7 +1,9 @@
-import React from 'react'
+import { useEffect, useState } from "react";
 import { Link } from 'react-router-dom'
-
+import {getAllMediaPartners } from "../api/mediapartners";
 const mediaPartners = [
+
+ 
   {
     url: 'https://coinstelegram.com/',
     img: 'assets/images/partners/coins-telegram.png',
@@ -37,6 +39,24 @@ const mediaPartners = [
 ]
 
 const MediaPartners = () => {
+
+const [media, setMedia] = useState([]);
+
+  useEffect(() => {
+    getMediaList();
+  }, [])
+
+
+  const getMediaList = () => {
+    getAllMediaPartners()
+      .then((res) => {
+        setMedia(res?.data?.topics);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <section className="partners">
       <div className="container">
@@ -53,12 +73,12 @@ const MediaPartners = () => {
 
           <div className="partner-img pb-6">
             <div className="row row-cols-1 row-cols-lg-5 row-cols-md-5">
-              {mediaPartners.map((partner, index) => (
+              {media.map((partner, index) => (
                 <div className="col p-0" key={index}>
                   <div className="p-2 partner-img-box text-center rounded">
-                    <a href={partner.url} target="_blank" rel="noopener noreferrer">
+                    <a href={partner.details} target="_blank" rel="noopener noreferrer">
                       <img
-                        src={partner.img}
+                        src={partner.photo_file}
                         alt="partner-img"
                         className="opacity-75 w-lg-100 w-md-100 w-75"
                       />

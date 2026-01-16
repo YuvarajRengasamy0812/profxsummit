@@ -60,17 +60,20 @@ const FloorPlanDubai = () => {
         </div>
         {/* Floor Plan Container */}
         <div
-          className="mx-auto bg-white rounded shadow-xl py-lg-5 py-md-5 py-0 floor-plan-dubai"
+          className="mx-auto bg-white rounded shadow-xl floor-plan-dubai"
           style={{
-            width: "100%",
-            // height: "calc(120vh - 220px)", 
-            maxWidth: "2000px",
+            width: "95%",                         // almost full width
+            maxWidth: "2000px",                    // optional max width
+            height: "85vh",                        // scale with viewport height
+            minHeight: "750px",
+            paddingTop: "20px",                       // ensures it’s not too small on small screens
             overflow: "hidden",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
           }}
         >
+
           <svg
             viewBox="0 0 1220 1000"
             width="100%"
@@ -78,7 +81,7 @@ const FloorPlanDubai = () => {
             preserveAspectRatio="xMidYMid meet"
             style={{
               background: "#fff",
-              // transform: "scale(1.1)",     // increase size here
+              // transform: "scale(1.0)",     // increase size here
               transformOrigin: "center",
             }}
             className="transform-floor"
@@ -141,44 +144,43 @@ const FloorPlanDubai = () => {
             <Booth
               boothId="OFFICIAL-01"
               boothType="official"
+              boothNo="1"
+              size="4 x 3"
               x={startX + 180}
               y={startY + 50}
               width={120}
               height={90}
               color={colors.official}
               title={"Official\nSponsor"}
-              subtitle="1"
               // textColor="#ffffff"
-              fontSize={11}
+              fontSize={14}
               isReserved={reservedBooths[`OFFICIAL-01`] === true}
               onClick={setSelectedBooth}
             />
 
             {/* Silver Booths Row - 9 booths */}
             {Array.from({ length: 9 }).map((_, i) => {
-              const id = `SILVER-${i + 1}`;
-              const number = i + 1;
+              const number = i + 2;
+              const id = `SILVER-${number}`;
               return (
                 <Booth
                   key={id}
                   boothId={id}
                   boothType="silver"
+                  boothNo={number}
+                  size="3 x 2"
                   x={startX + 330 + i * 78}
                   y={startY + 52}
                   width={78}
                   height={72}
                   color={colors.silver}
                   title={"Silver\nBooth"}
-                  subtitle={number}
-                  fontSize={10}
+                  fontSize={12}
                   isReserved={reservedBooths[id] === true}
                   onClick={setSelectedBooth}
                 />
               );
             })}
-
-
-
 
             {/* LED Exposure Wall - Top Right */}
             <g>
@@ -226,15 +228,16 @@ const FloorPlanDubai = () => {
             <Booth
               boothId="EXCLUSIVE-01"
               boothType="exclusive"
+              boothNo="11"
+              size="4 x 3"
               x={startX + 180}
               y={startY + 180}
               width={120}
               height={90}
               color={colors.exclusive}
-              title="Exclusive Sponsor"
-              subtitle="1"
+              title={"Exclusive\nSponsor"}
               // textColor="#ffffff"
-              fontSize={11}
+              fontSize={14}
               isReserved={reservedBooths[`EXCLUSIVE-01`] === true}
               onClick={setSelectedBooth}
             />
@@ -281,7 +284,8 @@ const FloorPlanDubai = () => {
 
             {/* Gold Booths - 2x2 grid (4 booths) */}
             {[0, 1, 2, 3].map((i) => {
-              const num = i + 1;
+              const boothNumbers = [12, 14, 13, 15];
+              const num = boothNumbers[i];
               const id = `GOLD-${num}`;
 
               return (
@@ -289,25 +293,25 @@ const FloorPlanDubai = () => {
                   key={id}
                   boothId={id}
                   boothType="gold"
-                  subtitle={num}
+                  boothNo={num}
+                  size="4 x 3"
                   x={startX + 330 + (i % 2) * 104}
                   y={startY + 180 + Math.floor(i / 2) * 82}
                   width={104}
                   height={82}
                   color={colors.gold}
-                  title="Gold Booth"
-                  fontSize={11}
+                  title={"Gold\nBooth"}
+                  fontSize={12}
                   isReserved={reservedBooths[id] === true}
                   onClick={setSelectedBooth}
                 />
               );
             })}
 
-
-
             {/* Gold Booths - 2 vertical */}
             {[0, 1].map((i) => {
-              const num = i + 5;
+              const boothNumbers = [16, 17];
+              const num = boothNumbers[i];
               const id = `GOLD-${num}`;
 
               return (
@@ -315,14 +319,15 @@ const FloorPlanDubai = () => {
                   key={id}
                   boothId={id}
                   boothType="gold"
-                  subtitle={num}
+                  boothNo={num}
+                  size="4 x 3"
                   x={startX + 588}
                   y={startY + 180 + i * 82}
                   width={76}
                   height={82}
                   color={colors.gold}
-                  title="Gold Booth"
-                  fontSize={11}
+                  title={"Gold\nBooth"}
+                  fontSize={12}
                   isReserved={reservedBooths[id] === true}
                   onClick={setSelectedBooth}
                 />
@@ -333,21 +338,23 @@ const FloorPlanDubai = () => {
 
             {/* Silver Booths - 2 vertical */}
             {[0, 1].map((i) => {
-              const id = `SILVER-${i + 10}`;
-              const number = i + 10;
+              const boothNumbers = [18, 19];
+              const num = boothNumbers[i];
+              const id = `SILVER-${num}`;
               return (
                 <Booth
                   key={id}
                   boothId={id}
                   boothType="silver"
+                  boothNo={num}
+                  size="3 x 2"
                   x={startX + 725 - 60}
                   y={startY + 180 + i * 82}
                   width={76}
                   height={82}
                   color={colors.silver}
                   title={"Silver\nBooth"}
-                  subtitle={number}
-                  fontSize={10}
+                  fontSize={12}
                   isReserved={reservedBooths[id] === true}
                   onClick={setSelectedBooth}
                 />
@@ -357,9 +364,10 @@ const FloorPlanDubai = () => {
 
             {/* Standard Booths - Left 6 */}
             {Array.from({ length: 6 }).map((_, i) => {
-              const num = i + 1;
-              const col = i % 2;             // 2 columns
-              const row = Math.floor(i / 2); // 3 rows
+              const boothNumbers = [20, 23, 21, 24, 22, 25];
+              const num = boothNumbers[i];
+              const col = i % 2;              // 2 columns
+              const row = Math.floor(i / 2);  // 3 rows
               const id = `STANDARD-${num}`;
 
               return (
@@ -367,25 +375,26 @@ const FloorPlanDubai = () => {
                   key={id}
                   boothId={id}
                   boothType="standard"
-                  subtitle={num}
-                  x={startX + 790 + col * 60}   // step = width
-                  y={startY + 180 + row * 55}   // step = height
-                  width={60}                    // slightly smaller
+                  boothNo={num}
+                  size="2 x 2"
+                  x={startX + 790 + col * 65}
+                  y={startY + 180 + row * 55}
+                  width={67}
                   height={55}
                   color={colors.standard}
                   title={`Standard\nBooth`}
-                  fontSize={8}
+                  fontSize={10}
                   isReserved={reservedBooths[id] === true}
                   onClick={setSelectedBooth}
                 />
               );
             })}
-
 
 
             {/* Standard Booths - Right 3 */}
             {Array.from({ length: 3 }).map((_, i) => {
-              const num = i + 7; // continues from left 6
+              const boothNumbers = [26, 27, 28];
+              const num = boothNumbers[i];
               const id = `STANDARD-${num}`;
 
               return (
@@ -393,22 +402,20 @@ const FloorPlanDubai = () => {
                   key={id}
                   boothId={id}
                   boothType="standard"
-                  subtitle={num}
+                  boothNo={num}
+                  size="2 x 2"
                   x={startX + 845 + 2 * 60 + 8} // aligned to right of left grid
-                  y={startY + 180 + i * 55}      // step = height
-                  width={60}
+                  y={startY + 180 + i * 55}     // vertical stack
+                  width={67}
                   height={55}
                   color={colors.standard}
                   title={`Standard\nBooth`}
-                  fontSize={8}
+                  fontSize={10}
                   isReserved={reservedBooths[id] === true}
                   onClick={setSelectedBooth}
                 />
               );
             })}
-
-
-
 
             {/* LED Exposure Wall - Second Right */}
             <g>
@@ -454,7 +461,7 @@ const FloorPlanDubai = () => {
 
             {/* Diamond Sponsors - 2 horizontal */}
             {Array.from({ length: 2 }).map((_, i) => {
-              const num = i + 1;
+              const num = i + 29;
               const id = `DIAMOND-${num}`;
 
               return (
@@ -462,14 +469,15 @@ const FloorPlanDubai = () => {
                   key={id}
                   boothId={id}
                   boothType="diamond"
-                  subtitle={num}
+                  boothNo={num}
+                  size="2 x 2"
                   x={startX + 375 + i * 120}
                   y={startY + 410}
                   width={120}
                   height={95}
                   color={colors.diamond}
-                  title="Diamond Sponsor"
-                  fontSize={11}
+                  title={"Diamond\nBooth"}
+                  fontSize={14}
                   isReserved={reservedBooths[id] === true}
                   onClick={setSelectedBooth}
                 />
@@ -477,24 +485,24 @@ const FloorPlanDubai = () => {
             })}
 
 
-
             {/* Silver Booths after Diamond - 4 horizontal */}
             {Array.from({ length: 4 }).map((_, i) => {
-              const id = `SILVER-${i + 12}`;
-              const number = i + 12;
+              const num = i + 30;
+              const id = `SILVER-${num}`;
               return (
                 <Booth
                   key={id}
                   boothId={id}
                   boothType="silver"
+                  boothNo={num}
+                  size="3 x 2"
                   x={startX + 710 + i * 82}
                   y={startY + 410}
                   width={82}
                   height={60}
                   color={colors.silver}
-                  title="Silver Booth"
-                  subtitle={number}
-                  fontSize={9}
+                  title={"Silver\nBooth"}
+                  fontSize={11}
                   isReserved={reservedBooths[id] === true}
                   onClick={setSelectedBooth}
                 />
@@ -609,7 +617,7 @@ const FloorPlanDubai = () => {
               height={180}
               color={colors.networking}
               title={`Networking\nLounge`}
-              // subtitle="4 X 5"
+              size="4 x 5"
               textColor="#ffffff"
               borderRadius={6}
               fontSize={13}
@@ -621,7 +629,7 @@ const FloorPlanDubai = () => {
               height={50}
               color={colors.backdrop}
               title={`Backdrop`}
-              subtitle="4 X 5"
+              size="3.3 x 2.3"
               textColor="#ffffff"
               borderRadius={6}
               fontSize={13}

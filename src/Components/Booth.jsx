@@ -1,222 +1,232 @@
 import { Lock } from "lucide-react";
 import React, { useState } from "react";
 
-const Booth = ({ boothId, boothType, x, y, width, height, color, title, subtitle, borderRadius = 6, textColor = "#1a1a2e", fontSize = 14, subtitleOffsetY = 0, onClick, isReserved = false }) => {
+const Booth = ({
+  boothId,
+  boothNo,
+  boothType,
+  title,
+  size,
+  x,
+  y,
+  width,
+  height,
+  color,
+  borderRadius = 6,
+  textColor = "#1a1a2e",
+  fontSize = 14,
+  onClick,
+  isReserved = false,
+}) => {
   const [hover, setHover] = useState(false);
-  const tooltipWidth = 160;
-  const tooltipHeight = 60;
 
-  // Calculate if tooltip should flip (near top edge)
+  const tooltipWidth = 160;
+  const tooltipHeight = 70;
   const showTooltipBelow = y < 80;
 
   return (
-    <>
-      <g
-        onMouseEnter={() => {
-          if (!isReserved) setHover(true);
-        }}
-        onMouseLeave={() => setHover(false)}
-        onClick={() => {
-          if (!isReserved && onClick) {
-            onClick({ boothId, boothType, title, subtitle });
-          }
-        }}
-        style={{ cursor: isReserved ? "not-allowed" : "pointer" }}
-      >
+    <g
+      onMouseEnter={() => !isReserved && setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      onClick={() => {
+        if (!isReserved && onClick) {
+          onClick({ boothId, boothNo, boothType, title, size });
+        }
+      }}
+      style={{ cursor: isReserved ? "not-allowed" : "pointer" }}
+    >
+      {/* Shadow */}
+      <rect
+        x={x + 3}
+        y={y + 3}
+        width={width}
+        height={height}
+        rx={borderRadius}
+        fill="rgba(0,0,0,0.1)"
+      />
 
-        {/* RESERVED overlay */}
-        {isReserved && (
+      {/* Booth body */}
+      <rect
+        x={x}
+        y={y}
+        width={width}
+        height={height}
+        rx={borderRadius}
+        fill={hover ? "#e91e63" : color}
+        stroke={hover ? "#c2185b" : "rgba(0,0,0,0.15)"}
+        strokeWidth={hover ? 3 : 1.5}
+        style={{ transition: "all 0.2s ease" }}
+      />
+
+      {/* Highlight */}
+      <rect
+        x={x + 2}
+        y={y + 3}
+        width={width - 4}
+        height={height / 4}
+        rx={borderRadius + 3}
+        fill="rgba(255,255,255,0.2)"
+      />
+
+      {/* ===== RESERVED STATE ===== */}
+      {isReserved && (
+        <>
+          {/* Dark overlay */}
+          <rect
+            x={x}
+            y={y}
+            width={width}
+            height={height}
+            rx={borderRadius}
+            fill="rgba(0,0,0,0.35)"
+          />
+
+          {/* Lock icon */}
+          <Lock
+            x={x + width / 2 - 8}
+            y={y + height / 2 - 10}
+            size={16}
+            color="#fff"
+          />
+
+          {/* Reserved label */}
           <text
             x={x + width / 2}
-            y={y + height / 2 + 18}
+            y={y + height / 2 + 14}
             textAnchor="middle"
             fontSize={fontSize - 2}
             fill="#fff"
-            fontWeight="bold"
+            fontWeight="700"
           >
             RESERVED
           </text>
-        )}
+        </>
+      )}
 
-        {/* Shadow */}
-        <rect
-          x={x + 3}
-          y={y + 3}
-          width={width}
-          height={height}
-          rx={borderRadius}
-          fill="rgba(0,0,0,0.1)"
-        />
-
-        {/* Booth rectangle */}
-        <rect
-          x={x}
-          y={y}
-          width={width}
-          height={height}
-          rx={borderRadius}
-          fill={hover ? "#e91e63" : color}
-          stroke={hover ? "#c2185b" : "rgba(0,0,0,0.15)"}
-          strokeWidth={hover ? 3 : 1.5}
-          style={{
-            transition: "all 0.2s ease",
-            filter: hover ? "brightness(1.05)" : "none"
-          }}
-        />
-
-        {/* Inner highlight */}
-        <rect
-          x={x + 2}
-          y={y + 2}
-          width={width - 4}
-          height={height / 3}
-          rx={borderRadius - 1}
-          fill="rgba(255,255,255,0.2)"
-        />
-
-        {/* RESERVED overlay with shaded bg */}
-        {isReserved && (
-          <>
-            {/* Shaded overlay */}
-            <rect
-              x={x}
-              y={y}
-              width={width}
-              height={height}
-              rx={borderRadius}
-              fill="rgba(0,0,0,0.3)"
-            />
-
-            {/* Lock icon in center */}
-            <Lock
-              x={x + width / 2 - 8} // center horizontally (adjust if Lock uses its own width)
-              y={y + height / 2 - 8} // center vertically
-              size={16}
-              color="#fff"
-            />
-
-            {/* Optional RESERVED text */}
+      {/* ===== ACTIVE BOOTH CONTENT ===== */}
+      {!isReserved && (
+        <>
+          {/* Booth No (optional) */}
+          {boothNo && (
             <text
               x={x + width / 2}
-              y={y + height / 2 + 18} // below lock
+              y={y + 16}
               textAnchor="middle"
-              fontSize={fontSize - 2}
-              fill="#fff"
-              fontWeight="bold"
+              fontSize={fontSize - 3}
+              fill={hover ? "#fff" : "rgba(0,0,0,0.7)"}
+              fontWeight="600"
             >
-              RESERVED
+              Booth no: {boothNo}
             </text>
-          </>
-        )}
+          )}
 
 
-        {/* Title */}
-        {!isReserved && (
+          {/* Title (supports line breaks) */}
           <text
             x={x + width / 2}
-            y={y + height / 2 - (subtitle ? 8 : 0)}
+            y={y + height / 2.2}
             textAnchor="middle"
             dominantBaseline="middle"
-            fill={hover ? "#ffffff" : textColor}
             fontSize={fontSize}
-            fontWeight="600"
-            fontFamily="Inter, system-ui, sans-serif"
-            style={{ transition: "fill 0.2s ease" }}
+            fill={hover ? "#fff" : textColor}
+            fontWeight="700"
           >
-            {title.split("\n").map((line, i) => (
-              <tspan key={i} x={x + width / 2} dy={i === 0 ? 0 : fontSize + 2}>
+            {String(title).split("\n").map((line, index) => (
+              <tspan
+                key={index}
+                x={x + width / 2}
+                dy={index === 0 ? "0em" : "1.1em"}
+              >
                 {line}
               </tspan>
             ))}
           </text>
-        )}
 
-        {/* Subtitle */}
-        {!isReserved && subtitle && (
+
+          {/* Size */}
+          {/* Size (optional) */}
+          {size && (
+            <text
+              x={x + width / 2}
+              y={y + height - 10}
+              textAnchor="middle"
+              fontSize={fontSize - 3}
+              fill={hover ? "rgba(255,255,255,0.9)" : "rgba(0,0,0,0.6)"}
+            >
+              {size}
+            </text>
+          )}
+
+        </>
+      )}
+
+      {/* ===== TOOLTIP ===== */}
+      {hover && !isReserved && (
+        <g pointerEvents="none">
+          {/* Tooltip box */}
+          <rect
+            x={x + width / 2 - tooltipWidth / 2}
+            y={showTooltipBelow ? y + height + 12 : y - tooltipHeight - 12}
+            width={tooltipWidth}
+            height={tooltipHeight}
+            rx={8}
+            fill="#fff"
+            stroke="#e0e0e0"
+            filter="drop-shadow(0 4px 6px rgba(0,0,0,0.15))"
+          />
+
+          {/* Arrow */}
+          <polygon
+            points={
+              showTooltipBelow
+                ? `${x + width / 2 - 8},${y + height + 12}
+                   ${x + width / 2 + 8},${y + height + 12}
+                   ${x + width / 2},${y + height + 4}`
+                : `${x + width / 2 - 8},${y - 12}
+                   ${x + width / 2 + 8},${y - 12}
+                   ${x + width / 2},${y - 4}`
+            }
+            fill="#fff"
+          />
+
+          {/* Tooltip text */}
+          {boothNo && (
+            <text
+              x={x + width / 2}
+              y={showTooltipBelow ? y + height + 30 : y - tooltipHeight + 10}
+              textAnchor="middle"
+              fontSize="12"
+              fontWeight="700"
+            >
+              Booth no: {boothNo}
+            </text>
+          )}
+
+
           <text
             x={x + width / 2}
-            y={y + height - 12 + subtitleOffsetY}
+            y={showTooltipBelow ? y + height + 46 : y - tooltipHeight + 28}
             textAnchor="middle"
-            fill={hover ? "rgba(255,255,255,0.9)" : "rgba(0,0,0,0.6)"}
-            fontSize={11}
-            fontFamily="Inter, system-ui, sans-serif"
-            style={{ transition: "fill 0.2s ease" }}
+            fontSize="12"
           >
-            {subtitle}
+            {title}
           </text>
-        )}
 
-        {/* Tooltip on hover */}
-        {hover && (
-          <g style={{ pointerEvents: "none" }}>
-            {/* Tooltip background */}
-            <rect
-              x={x + width / 2 - tooltipWidth / 2}
-              y={showTooltipBelow ? y + height + 12 : y - tooltipHeight - 12}
-              width={tooltipWidth}
-              height={tooltipHeight}
-              rx={8}
-              fill="#ffffff"
-              stroke="#e0e0e0"
-              strokeWidth="1"
-              filter="drop-shadow(0 4px 6px rgba(0,0,0,0.15))"
-            />
+          {size && (
+            <text
+              x={x + width / 2}
+              y={showTooltipBelow ? y + height + 62 : y - tooltipHeight + 42}
+              textAnchor="middle"
+              fontSize="11"
+              fill="#666"
+            >
+              Size: {size}
+            </text>
+          )}
 
-            {/* Tooltip on hover */}
-            {!isReserved && hover && (
-              <g style={{ pointerEvents: "none" }}>
-                {/* Tooltip background */}
-                <rect
-                  x={x + width / 2 - tooltipWidth / 2}
-                  y={showTooltipBelow ? y + height + 12 : y - tooltipHeight - 12}
-                  width={tooltipWidth}
-                  height={tooltipHeight}
-                  rx={8}
-                  fill="#ffffff"
-                  stroke="#e0e0e0"
-                  strokeWidth="1"
-                  filter="drop-shadow(0 4px 6px rgba(0,0,0,0.15))"
-                />
-
-                {/* Tooltip arrow */}
-                <polygon
-                  points={
-                    showTooltipBelow
-                      ? `${x + width / 2 - 8},${y + height + 12} ${x + width / 2 + 8},${y + height + 12} ${x + width / 2},${y + height + 4}`
-                      : `${x + width / 2 - 8},${y - 12} ${x + width / 2 + 8},${y - 12} ${x + width / 2},${y - 4}`
-                  }
-                  fill="#ffffff"
-                />
-
-                {/* Tooltip text */}
-                <text
-                  x={x + width / 2}
-                  y={showTooltipBelow ? y + height + 32 : y - tooltipHeight + 8}
-                  textAnchor="middle"
-                  fontSize="13"
-                  fontWeight="bold"
-                  fill="#1a1a2e"
-                >
-                  {title.replace("\n", " ")}
-                </text>
-
-                {subtitle && (
-                  <text
-                    x={x + width / 2}
-                    y={showTooltipBelow ? y + height + 50 : y - tooltipHeight + 28}
-                    textAnchor="middle"
-                    fontSize="11"
-                    fill="#666"
-                  >
-                    Size: {subtitle}
-                  </text>
-                )}
-              </g>
-            )}
-          </g>
-        )}
-      </g>
-    </>
+        </g>
+      )}
+    </g>
   );
 };
 

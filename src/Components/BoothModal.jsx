@@ -190,7 +190,13 @@ const BoothModal = ({ booth, onClose, onReserve }) => {
                                 <div className="summary-box bg-lightgrey p-4 rounded sticky-top">
                                     <h6 className="black">Booth Summary</h6>
                                     <p>
-                                        Booth: <b>{booth.title}</b>
+                                        Booth No: <b>{booth.boothNo}</b>
+                                    </p>
+                                    <p>
+                                        Booth Title: <b>{booth.title}</b>
+                                    </p>
+                                    <p>
+                                        Booth Size: <b>{booth.size}</b>
                                     </p>
                                     <p>Booth Amount: ₹{boothAmount}</p>
                                     <hr />

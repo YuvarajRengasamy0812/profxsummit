@@ -470,7 +470,7 @@ const FloorPlanDubai = () => {
                   boothId={id}
                   boothType="diamond"
                   boothNo={num}
-                  size="2 x 2"
+                  size="4 x 3"
                   x={startX + 375 + i * 120}
                   y={startY + 410}
                   width={120}
@@ -487,7 +487,8 @@ const FloorPlanDubai = () => {
 
             {/* Silver Booths after Diamond - 4 horizontal */}
             {Array.from({ length: 4 }).map((_, i) => {
-              const num = i + 30;
+              const boothNumbers = [31, 32, 33, 34];
+              const num = boothNumbers[i];
               const id = `SILVER-${num}`;
               return (
                 <Booth

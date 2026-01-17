@@ -155,6 +155,11 @@ const FloorPlanDubai = () => {
               // textColor="#ffffff"
               fontSize={14}
               isReserved={reservedBooths[`OFFICIAL-01`] === true}
+              reservedInfo={{
+                companyName: "Google",
+                logo: "/assets/images/logo/profx-black.png",
+                url: "https://google.com",
+              }}
               onClick={setSelectedBooth}
             />
 
@@ -308,8 +313,9 @@ const FloorPlanDubai = () => {
 
             {/* Diamond Sponsors - 2 horizontal */}
             {Array.from({ length: 2 }).map((_, i) => {
-              const num = i + 5;
+              const num = i + 5; // 5, 6
               const id = `DIAMOND-${num}`;
+              const isDiamond5 = id === "DIAMOND-5";
 
               return (
                 <Booth
@@ -325,11 +331,26 @@ const FloorPlanDubai = () => {
                   color={colors.diamond}
                   title={"Diamond\nBooth"}
                   fontSize={14}
-                  isReserved={reservedBooths[id] === true}
+
+                  /* 🔒 lock only DIAMOND-5 */
+                  isReserved={isDiamond5 ? true : reservedBooths[id] === true}
+
+                  /* 🖼️ image + url only for DIAMOND-5 */
+                  reservedInfo={
+                    isDiamond5
+                      ? {
+                        companyName: "Finxcart",
+                        logo: "/assets/images/booth-reserved/finxcart.png",
+                        url: "https://finxcart.com/",
+                      }
+                      : undefined
+                  }
+
                   onClick={setSelectedBooth}
                 />
               );
             })}
+
 
             {/* Silver Booths - 2x2 grid (4 booths) */}
             {[0, 1, 2, 3].map((i) => {
@@ -475,11 +496,13 @@ const FloorPlanDubai = () => {
             })}
 
 
-            {/* Silver Booths after Diamond - 4 horizontal */}
+            {/* Silver Booths after Diamond - 5 horizontal */}
             {Array.from({ length: 5 }).map((_, i) => {
               const boothNumbers = [26, 27, 28, 29, 30];
               const num = boothNumbers[i];
               const id = `SILVER-${num}`;
+              const isSilver26 = id === "SILVER-26";
+
               return (
                 <Booth
                   key={id}
@@ -494,11 +517,26 @@ const FloorPlanDubai = () => {
                   color={colors.silver}
                   title={"Silver\nBooth"}
                   fontSize={11}
-                  isReserved={reservedBooths[id] === true}
+
+                  /* 🔒 lock only SILVER-26 */
+                  isReserved={isSilver26 ? true : reservedBooths[id] === true}
+
+                  /* 🖼️ optional: add logo + url only for 26 */
+                  reservedInfo={
+                    isSilver26
+                      ? {
+                        companyName: "Zylostar",
+                        logo: "/assets/images/booth-reserved/zylostar.png",
+                        url: "https://zylostar.com/",
+                      }
+                      : undefined
+                  }
+
                   onClick={setSelectedBooth}
                 />
               );
             })}
+
 
 
             {/* ===== LEFT SIDE - Cafe, Cocktail, People Icons ===== */}

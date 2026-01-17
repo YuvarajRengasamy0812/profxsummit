@@ -18,8 +18,18 @@ const Booth = ({
   fontSize = 14,
   onClick,
   isReserved = false,
+  // 👇 NEW
+  reservedInfo = null,
+  // {
+  //   companyName: "ABC Corp",
+  //   logo: "/logos/abc.png",
+  //   url: "https://abccorp.com"
+  // },
 }) => {
+  // const [hover, setHover] = useState(false);
   const [hover, setHover] = useState(false);
+  const [reservedHover, setReservedHover] = useState(false);
+
 
   const tooltipWidth = 160;
   const tooltipHeight = 70;
@@ -27,14 +37,22 @@ const Booth = ({
 
   return (
     <g
-      onMouseEnter={() => !isReserved && setHover(true)}
-      onMouseLeave={() => setHover(false)}
+      onMouseEnter={() => {
+        if (isReserved) setReservedHover(true);
+        else setHover(true);
+      }}
+      onMouseLeave={() => {
+        setHover(false);
+        setReservedHover(false);
+      }}
       onClick={() => {
         if (!isReserved && onClick) {
           onClick({ boothId, boothNo, boothType, title, size });
         }
       }}
-      style={{ cursor: isReserved ? "not-allowed" : "pointer" }}
+      style={{
+        cursor: isReserved ? "pointer" : "pointer",
+      }}
     >
       {/* Shadow */}
       <rect
@@ -239,6 +257,75 @@ const Booth = ({
 
         </g>
       )}
+
+      {/* ===== RESERVED TOOLTIP ===== */}
+      {isReserved && reservedHover && reservedInfo && (
+        <g>
+          {/* Tooltip box */}
+          <rect
+            x={x + width / 2 - tooltipWidth / 2}
+            y={showTooltipBelow ? y + height + 12 : y - tooltipHeight - 12}
+            width={tooltipWidth}
+            height={tooltipHeight}
+            rx={8}
+            fill="#fff"
+            stroke="#e0e0e0"
+            filter="drop-shadow(0 4px 6px rgba(0,0,0,0.15))"
+          />
+
+          {/* Arrow */}
+          <polygon
+            points={
+              showTooltipBelow
+                ? `${x + width / 2 - 8},${y + height + 12}
+                   ${x + width / 2 + 8},${y + height + 12}
+                   ${x + width / 2},${y + height + 4}`
+                : `${x + width / 2 - 8},${y - 12}
+                   ${x + width / 2 + 8},${y - 12}
+                   ${x + width / 2},${y - 4}`
+            }
+            fill="#fff"
+          />
+
+          {/* Company logo */}
+          {/* <image
+            href={reservedInfo.logo}
+            x={x + width / 2 - 55}
+            y={y - 88}
+            width={100}
+            height={100}
+            preserveAspectRatio="xMidYMid meet"
+          /> */}
+          <a
+            href={reservedInfo.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <image
+              href={reservedInfo.logo}
+              x={x + width / 2 - 50}
+              y={y - 88}
+              width={100}
+              height={100}
+              preserveAspectRatio="xMidYMid meet"
+              style={{ cursor: "pointer" }}
+            />
+          </a>
+
+
+          {/* Company name */}
+          <text
+            x={x + width / 2 - 20}
+            y={y - 65}
+            fontSize="12"
+            fontWeight="700"
+            fill="#333"
+          >
+            {reservedInfo.companyName}
+          </text>
+        </g>
+      )}
+
     </g>
   );
 };

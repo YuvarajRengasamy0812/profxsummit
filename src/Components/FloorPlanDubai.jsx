@@ -17,10 +17,10 @@ const FloorPlanDubai = () => {
   const dy = 18;
   const up = 60;
   // Speaker Hall
-  const hallX = startX + 710;
+  const hallX = startX + 530;
   const hallY = startY + 475;
-  const hallW = 370;
-  const hallH = 400;
+  const hallW = 550;
+  const hallH = 402;
 
   // Colors matching the reference PDF
   const colors = {
@@ -62,11 +62,11 @@ const FloorPlanDubai = () => {
         <div
           className="mx-auto bg-white rounded shadow-xl floor-plan-dubai"
           style={{
-            width: "95%",                         // almost full width
-            maxWidth: "2000px",                    // optional max width
-            height: "85vh",                        // scale with viewport height
+            width: "95%",
+            maxWidth: "2000px",
+            height: "85vh",
             minHeight: "750px",
-            paddingTop: "20px",                       // ensures it’s not too small on small screens
+            paddingTop: "20px",
             overflow: "hidden",
             display: "flex",
             alignItems: "center",
@@ -158,9 +158,33 @@ const FloorPlanDubai = () => {
               onClick={setSelectedBooth}
             />
 
-            {/* Silver Booths Row - 9 booths */}
-            {Array.from({ length: 9 }).map((_, i) => {
-              const number = i + 2;
+            {/* Gold Booths Row - 2 booths */}
+            {Array.from({ length: 2 }).map((_, i) => {
+              const number = i + 3;
+              const id = `GOLD-${number}`;
+              return (
+                <Booth
+                  key={id}
+                  boothId={id}
+                  boothType="gold"
+                  boothNo={number}
+                  size="2 x 3"
+                  x={startX + 355 + i * 120}
+                  y={startY + 52}
+                  width={120}
+                  height={72}
+                  color={colors.gold}
+                  title={"Gold\nBooth"}
+                  fontSize={12}
+                  isReserved={reservedBooths[id] === true}
+                  onClick={setSelectedBooth}
+                />
+              );
+            })}
+
+            {/* Silver Booths Row - 5 booths */}
+            {Array.from({ length: 5 }).map((_, i) => {
+              const number = i + 11;
               const id = `SILVER-${number}`;
               return (
                 <Booth
@@ -169,7 +193,7 @@ const FloorPlanDubai = () => {
                   boothType="silver"
                   boothNo={number}
                   size="3 x 2"
-                  x={startX + 330 + i * 78}
+                  x={startX + 650 + i * 78}
                   y={startY + 52}
                   width={78}
                   height={72}
@@ -186,21 +210,21 @@ const FloorPlanDubai = () => {
             <g>
               {/* LED Wall Box */}
               <rect
-                x={startX + 1060}
+                x={startX + 1067}
                 y={startY + 100}
-                width={30}
-                height={90}
+                width={23}
+                height={70}
                 fill={colors.ledWall}
                 rx={3}
               />
 
               {/* LED Exposure Wall text */}
               <text
-                x={startX + 1005}
-                y={startY + 50}
+                x={startX + 1015}
+                y={startY + 54}
                 textAnchor="middle"
                 dominantBaseline="middle"
-                fontSize="8"
+                fontSize="6"
                 fill="#fff"
                 fontWeight="600"
                 transform={`rotate(-90, ${startX + 1085}, ${startY + 65})`}
@@ -210,8 +234,8 @@ const FloorPlanDubai = () => {
 
               {/* Size text */}
               <text
-                x={startX + 1025}
-                y={startY + 80}
+                x={startX + 1035}
+                y={startY + 84}
                 textAnchor="middle"
                 dominantBaseline="middle"
                 fontSize="7"
@@ -228,7 +252,7 @@ const FloorPlanDubai = () => {
             <Booth
               boothId="EXCLUSIVE-01"
               boothType="exclusive"
-              boothNo="11"
+              boothNo="2"
               size="4 x 3"
               x={startX + 180}
               y={startY + 180}
@@ -282,75 +306,47 @@ const FloorPlanDubai = () => {
               </text>
             </g>
 
-            {/* Gold Booths - 2x2 grid (4 booths) */}
+            {/* Diamond Sponsors - 2 horizontal */}
+            {Array.from({ length: 2 }).map((_, i) => {
+              const num = i + 5;
+              const id = `DIAMOND-${num}`;
+
+              return (
+                <Booth
+                  key={id}
+                  boothId={id}
+                  boothType="diamond"
+                  boothNo={num}
+                  size="4 x 3"
+                  x={startX + 355 + i * 120}
+                  y={startY + 180}
+                  width={120}
+                  height={95}
+                  color={colors.diamond}
+                  title={"Diamond\nBooth"}
+                  fontSize={14}
+                  isReserved={reservedBooths[id] === true}
+                  onClick={setSelectedBooth}
+                />
+              );
+            })}
+
+            {/* Silver Booths - 2x2 grid (4 booths) */}
             {[0, 1, 2, 3].map((i) => {
-              const boothNumbers = [12, 14, 13, 15];
-              const num = boothNumbers[i];
-              const id = `GOLD-${num}`;
-
-              return (
-                <Booth
-                  key={id}
-                  boothId={id}
-                  boothType="gold"
-                  boothNo={num}
-                  size="4 x 3"
-                  x={startX + 330 + (i % 2) * 104}
-                  y={startY + 180 + Math.floor(i / 2) * 82}
-                  width={104}
-                  height={82}
-                  color={colors.gold}
-                  title={"Gold\nBooth"}
-                  fontSize={12}
-                  isReserved={reservedBooths[id] === true}
-                  onClick={setSelectedBooth}
-                />
-              );
-            })}
-
-            {/* Gold Booths - 2 vertical */}
-            {[0, 1].map((i) => {
-              const boothNumbers = [16, 17];
-              const num = boothNumbers[i];
-              const id = `GOLD-${num}`;
-
-              return (
-                <Booth
-                  key={id}
-                  boothId={id}
-                  boothType="gold"
-                  boothNo={num}
-                  size="4 x 3"
-                  x={startX + 588}
-                  y={startY + 180 + i * 82}
-                  width={76}
-                  height={82}
-                  color={colors.gold}
-                  title={"Gold\nBooth"}
-                  fontSize={12}
-                  isReserved={reservedBooths[id] === true}
-                  onClick={setSelectedBooth}
-                />
-              );
-            })}
-
-
-
-            {/* Silver Booths - 2 vertical */}
-            {[0, 1].map((i) => {
-              const boothNumbers = [18, 19];
+              const boothNumbers = [16, 17, 18, 19];
               const num = boothNumbers[i];
               const id = `SILVER-${num}`;
+
               return (
                 <Booth
                   key={id}
                   boothId={id}
                   boothType="silver"
                   boothNo={num}
-                  size="3 x 2"
-                  x={startX + 725 - 60}
-                  y={startY + 180 + i * 82}
-                  width={76}
+                  size="4 x 3"
+                  x={startX + 650 + (i % 2) * 63}
+                  y={startY + 180 + Math.floor(i / 2) * 82}
+                  width={63}
                   height={82}
                   color={colors.silver}
                   title={"Silver\nBooth"}
@@ -377,9 +373,9 @@ const FloorPlanDubai = () => {
                   boothType="standard"
                   boothNo={num}
                   size="2 x 2"
-                  x={startX + 790 + col * 65}
+                  x={startX + 820 + col * 62}
                   y={startY + 180 + row * 55}
-                  width={67}
+                  width={62}
                   height={55}
                   color={colors.standard}
                   title={`Standard\nBooth`}
@@ -390,52 +386,43 @@ const FloorPlanDubai = () => {
               );
             })}
 
+            {/* ===== NETWORKING LOUNGE ===== */}
+            <Booth
+              boothId="SPONSOR-NETWORK"
+              boothType="networklounge"
+              title={`Networking\nLounge`}
+              subtitle="6 x 4"
+              size="6 x 4"
+              x={startX + 978}
+              y={startY + 175}
+              width={110}
+              height={170}
+              color={colors.networking}
+              textColor="#ffffff"
+              fontSize={13}
+              onClick={setSelectedBooth}
+            />
 
-            {/* Standard Booths - Right 3 */}
-            {Array.from({ length: 3 }).map((_, i) => {
-              const boothNumbers = [26, 27, 28];
-              const num = boothNumbers[i];
-              const id = `STANDARD-${num}`;
-
-              return (
-                <Booth
-                  key={id}
-                  boothId={id}
-                  boothType="standard"
-                  boothNo={num}
-                  size="2 x 2"
-                  x={startX + 845 + 2 * 60 + 8} // aligned to right of left grid
-                  y={startY + 180 + i * 55}     // vertical stack
-                  width={67}
-                  height={55}
-                  color={colors.standard}
-                  title={`Standard\nBooth`}
-                  fontSize={10}
-                  isReserved={reservedBooths[id] === true}
-                  onClick={setSelectedBooth}
-                />
-              );
-            })}
 
             {/* LED Exposure Wall - Second Right */}
             <g>
               {/* LED Wall Box */}
               <rect
-                x={startX + 1060}
-                y={startY + 320}
-                width={30}
-                height={90}
+                x={startX + 1067}
+                y={startY + 350}
+                width={23}
+                height={70}
                 fill={colors.ledWall}
                 rx={3}
               />
 
               {/* LED Exposure Wall text */}
               <text
-                x={startX + 1025}
-                y={startY + 290}
+                x={startX + 1005}
+                y={startY + 293}
                 textAnchor="middle"
                 dominantBaseline="middle"
-                fontSize="8"
+                fontSize="6"
                 fill="#fff"
                 fontWeight="600"
                 transform={`rotate(-90, ${startX + 1085}, ${startY + 305})`}
@@ -445,8 +432,8 @@ const FloorPlanDubai = () => {
 
               {/* Size text */}
               <text
-                x={startX + 1045}
-                y={startY + 320}
+                x={startX + 1025}
+                y={startY + 323}
                 textAnchor="middle"
                 dominantBaseline="middle"
                 fontSize="7"
@@ -457,27 +444,30 @@ const FloorPlanDubai = () => {
               </text>
             </g>
 
-            {/* ===== DIAMOND + SILVER ROW ===== */}
+            {/* ===== GOLD + SILVER ROW ===== */}
 
-            {/* Diamond Sponsors - 2 horizontal */}
-            {Array.from({ length: 2 }).map((_, i) => {
-              const num = i + 29;
-              const id = `DIAMOND-${num}`;
+
+
+            {/* Gold Booths - 2x2 grid (4 booths) */}
+            {[0, 1, 2, 3].map((i) => {
+              const boothNumbers = [7, 8, 9, 10];
+              const num = boothNumbers[i];
+              const id = `GOLD-${num}`;
 
               return (
                 <Booth
                   key={id}
                   boothId={id}
-                  boothType="diamond"
+                  boothType="gold"
                   boothNo={num}
-                  size="4 x 3"
-                  x={startX + 375 + i * 120}
-                  y={startY + 410}
+                  size="2 x 3"
+                  x={startX + 355 + (i % 2) * 120}
+                  y={startY + 310 + Math.floor(i / 2) * 65}
                   width={120}
-                  height={95}
-                  color={colors.diamond}
-                  title={"Diamond\nBooth"}
-                  fontSize={14}
+                  height={65}
+                  color={colors.gold}
+                  title={"Gold\nBooth"}
+                  fontSize={12}
                   isReserved={reservedBooths[id] === true}
                   onClick={setSelectedBooth}
                 />
@@ -486,8 +476,8 @@ const FloorPlanDubai = () => {
 
 
             {/* Silver Booths after Diamond - 4 horizontal */}
-            {Array.from({ length: 4 }).map((_, i) => {
-              const boothNumbers = [31, 32, 33, 34];
+            {Array.from({ length: 5 }).map((_, i) => {
+              const boothNumbers = [26, 27, 28, 29, 30];
               const num = boothNumbers[i];
               const id = `SILVER-${num}`;
               return (
@@ -497,7 +487,7 @@ const FloorPlanDubai = () => {
                   boothType="silver"
                   boothNo={num}
                   size="3 x 2"
-                  x={startX + 710 + i * 82}
+                  x={startX + 650 + i * 82}
                   y={startY + 410}
                   width={82}
                   height={60}
@@ -515,16 +505,20 @@ const FloorPlanDubai = () => {
 
             {/* Cafe */}
             <Booth
+              boothId="SPONSOR-CAFE"
+              boothType="cafe"
+              title="Café"
+              size=""
               x={startX - 15}
-              y={startY + 320 + 30}
+              y={startY + 350}
               width={70}
               height={90}
               color={colors.cafe}
-              title="Café"
-              subtitle=""
               textColor="#ffffff"
               fontSize={13}
+              onClick={setSelectedBooth}
             />
+
 
             {/* Cafe Tables - Only 2 */}
             {[0, 1].map((i) => (
@@ -549,16 +543,20 @@ const FloorPlanDubai = () => {
 
             {/* Cocktail Lounge */}
             <Booth
+              boothId="SPONSOR-COCKTAIL"
+              boothType="cocktail"
+              title={`Cocktail\nLounge`}
+              size=""
               x={startX - 15}
-              y={startY + 430 + 30}
+              y={startY + 460}
               width={70}
               height={90}
               color={colors.cocktail}
-              title={`Cocktail\nLounge`}   // <-- line break here
-              subtitle=""
               textColor="#ffffff"
               fontSize={11}
+              onClick={setSelectedBooth}
             />
+
 
 
             {/* Cocktail Lounge Tables */}
@@ -610,75 +608,31 @@ const FloorPlanDubai = () => {
               </text>
             </g>
 
-            {/* ===== NETWORKING LOUNGE ===== */}
-            <Booth
-              x={startX + 550}
-              y={startY + 555}
-              width={150}
-              height={180}
-              color={colors.networking}
-              title={`Networking\nLounge`}
-              size="4 x 5"
-              textColor="#ffffff"
-              borderRadius={6}
-              fontSize={13}
-            />
-            <Booth
-              x={startX + 550}
-              y={startY + 675}
-              width={150}
-              height={50}
-              color={colors.backdrop}
-              title={`Backdrop`}
-              size="3.3 x 2.3"
-              textColor="#ffffff"
-              borderRadius={6}
-              fontSize={13}
-            />
 
-            {/* ===== SPEAKER HALL WITH JAGGED ENTRANCE ===== */}
+
+            {/* ===== SPEAKER HALL ===== */}
             <g>
-              {/* ===== SPEAKER HALL WITH CUT BOTTOM-LEFT ===== */}
               <path
                 d={`
-                  M ${hallX + 6} ${hallY}
-                  H ${hallX + hallW - 6}
-                  Q ${hallX + hallW} ${hallY} ${hallX + hallW} ${hallY + 6}
-                  V ${hallY + hallH - 6}
-                  Q ${hallX + hallW} ${hallY + hallH} ${hallX + hallW - 6} ${hallY + hallH}
-                  H ${hallX + 90}
-                  L ${hallX + 20} ${hallY + hallH - 65}
-                  V ${hallY + 40}
-                  Q ${hallX} ${hallY + 40} ${hallX} ${hallY + 34}
-                  V ${hallY + 6}
-                  Q ${hallX} ${hallY} ${hallX + 6} ${hallY}
+                  M ${hallX} ${hallY}
+                  H ${hallX + hallW}
+                  V ${hallY + hallH}
+                  H ${hallX + 270}
+                  L ${hallX + 120} ${hallY + hallH - 140}
+                  H ${hallX + 20}
+                  V ${hallY}
+                  H ${hallX}
                   Z
                 `}
                 fill={colors.speakerHall}
               />
 
 
-              {/* Jagged/Stepped entrance on left side — moved right and down */}
-              <path
-                d={`
-                  M ${startX + 670 + 65} ${startY + 380 + 115}
-                  L ${startX + 670 + 65} ${startY + 410 + 115}
-                  L ${startX + 655 + 65} ${startY + 410 + 115}
-                  L ${startX + 655 + 65} ${startY + 470 + 115}
-                  L ${startX + 670 + 65} ${startY + 470 + 115}
-                  L ${startX + 670 + 65} ${startY + 620 + 115}
-                  L ${startX + 655 + 65} ${startY + 620 + 115}
-                  L ${startX + 655 + 65} ${startY + 680 + 115}
-                  L ${startX + 670 + 65} ${startY + 680 + 115}
-                  L ${startX + 670 + 65} ${startY + 900 + 115}
-                `}
-                fill={colors.speakerHall}
-              />
 
               {/* Speaker Hall Title */}
               <text
-                x={startX + 905}
-                y={startY + 550}
+                x={startX + 810}
+                y={startY + 620}
                 textAnchor="middle"
                 fontSize="26"
                 fill="#fff"
@@ -689,43 +643,57 @@ const FloorPlanDubai = () => {
               </text>
 
               <text
-                x={startX + 905}
-                y={startY + 585}
+                x={startX + 810}
+                y={startY + 650}
                 textAnchor="middle"
                 fontSize="18"
                 fill="rgba(255,255,255,0.9)"
                 fontFamily="Inter, system-ui, sans-serif"
               >
-                13 × 16
+                16 × 16
               </text>
 
 
               {/* Seating rows visualization */}
 
               {/* users */}
-              {[0, 1, 2, 3, 4, 5].map((row) =>
+              {[0, 1, 2, 3, 4, 5, 6].map((row) =>
                 [0, 1, 2, 3, 4].map((col) => {
-                  const isCenterCol = col === 2; // skip all seats in center column
-                  const seatWidth = 40;  // smaller width
-                  const seatHeight = 20; // smaller height
-                  const userSize = 16;   // smaller user icon
+                  const seatWidth = 40;
+                  const seatHeight = 20;
+                  const userSize = 16;
+
+                  const isCenterRow = row === 3; // 🔹 4th row
+
+                  const seatX = startX + 610 + col * 70;
+                  const seatY = startY + 510 + row * 32;
 
                   return (
                     <React.Fragment key={`left-${row}-${col}`}>
+                      {/* Seat (always visible) */}
                       <rect
-                        x={startX + 745 + col * 70} // keep original spacing
-                        y={startY + 600 + row * 32}
+                        x={seatX}
+                        y={seatY}
                         width={seatWidth}
                         height={seatHeight}
                         rx={3}
                         fill="rgba(255,255,255,0.06)"
                       />
-                      {!isCenterCol && (
+
+                      {/* User icon (hidden ONLY in center row) */}
+                      {!isCenterRow && (
                         <Users
-                          x={startX + 745 + col * 70 + (seatWidth - userSize) / 2} // center user in smaller seat
-                          y={startY + 600 + row * 32 + 2}
+                          x={seatX + (seatWidth - userSize) / 2}
+                          y={seatY + (seatHeight - userSize) / 2}
                           size={userSize}
-                          color="#fff"
+                          color="#ffffff6b"
+                          transform={`
+                            rotate(
+                              90
+                              ${seatX + seatWidth / 2}
+                              ${seatY + seatHeight / 2}
+                            )
+                          `}
                         />
                       )}
                     </React.Fragment>
@@ -733,64 +701,186 @@ const FloorPlanDubai = () => {
                 })
               )}
 
+              {/* next users */}
+              {[0, 1, 2, 3].map((row) =>
+                [0, 1, 2].map((col) => {
+                  const seatWidth = 40;
+                  const seatHeight = 20;
+                  const userSize = 16;
 
-              {/* Speaker Stage Container */}
-              <rect
-                x={startX + 798}
-                y={startY + 790}
-                width={270}
-                height={80}
-                rx={4}
-                fill="#6c7a89"
-              />
+                  const seatX = startX + 780 + col * 70;
+                  const seatY = startY + 740 + row * 32;
 
-              <text
-                x={startX + 930}
-                y={startY + 810}
-                textAnchor="middle"
-                fontSize="13"
-                fill="#ffffff"
-                fontWeight="bold"
+                  return (
+                    <React.Fragment key={`left-${row}-${col}`}>
+                      {/* Seat */}
+                      <rect
+                        x={seatX}
+                        y={seatY}
+                        width={seatWidth}
+                        height={seatHeight}
+                        rx={3}
+                        fill="rgba(255,255,255,0.06)"
+                      />
+
+                      {/* User icon (always visible) */}
+                      <Users
+                        x={seatX + (seatWidth - userSize) / 2}
+                        y={seatY + (seatHeight - userSize) / 2}
+                        size={userSize}
+                        color="#ffffff6b"
+                        transform={`
+                          rotate(
+                            90
+                            ${seatX + seatWidth / 2}
+                            ${seatY + seatHeight / 2}
+                          )
+                        `}
+                      />
+                    </React.Fragment>
+                  );
+                })
+              )}
+
+
+              {/* stages visualization */}
+              <g
+                transform={`
+                    rotate(
+                      -90
+                      ${startX + 798 + 270 / 2}
+                      ${startY + 790 + 80 / 2}
+                    )
+                  `}
               >
-                Speaker Stage
-              </text>
-              <text
-                x={startX + 930}
-                y={startY + 822}
-                textAnchor="middle"
-                fontSize="10"
-                fill="rgba(255,255,255,0.8)"
-              >
-                9 x 3
-              </text>
 
-              {/* Three Screens */}
-              {/* Left Screen */}
-              <rect x={startX + 765 + 45} y={startY + 828 - 2} width={70} height={40} rx={3} fill="#1a1a3e" />
-              <text x={startX + 800 + 45} y={startY + 844 - 2} textAnchor="middle" fontSize="7" fill="#ffffff" fontWeight="600">
-                Side Screen
-              </text>
-              <text x={startX + 800 + 45} y={startY + 855 - 2} textAnchor="middle" fontSize="6" fill="rgba(255,255,255,0.7)">
-                1.5 w X 2.5 h
-              </text>
+                <rect
+                  x={startX + 850 + 45 + 152}
+                  y={startY + 928 - 50}
+                  width={70}
+                  height={40}
+                  rx={3}
+                  fill="#6c7a89"
+                />
+                {/* Speaker Stage Container */}
+                <rect
+                  x={startX + 950}
+                  y={startY + 890}
+                  width={290}
+                  height={80}
+                  rx={4}
+                  fill="#6c7a89"
+                />
 
-              {/* Main Screen */}
-              <rect x={startX + 855 + 45} y={startY + 828 - 2} width={70} height={40} rx={3} fill="#1a1a3e" />
-              <text x={startX + 890 + 45} y={startY + 844 - 2} textAnchor="middle" fontSize="7" fill="#ffffff" fontWeight="600">
-                Main Screen
-              </text>
-              <text x={startX + 890 + 45} y={startY + 855 - 2} textAnchor="middle" fontSize="6" fill="rgba(255,255,255,0.7)">
-                5 w x 2.5 h
-              </text>
+                <text
+                  x={startX + 1082}
+                  y={startY + 910}
+                  textAnchor="middle"
+                  fontSize="13"
+                  fill="#ffffff"
+                  fontWeight="bold"
+                >
+                  Speaker Stage
+                </text>
 
-              {/* Right Screen */}
-              <rect x={startX + 945 + 45} y={startY + 828 - 2} width={70} height={40} rx={3} fill="#1a1a3e" />
-              <text x={startX + 980 + 45} y={startY + 844 - 2} textAnchor="middle" fontSize="7" fill="#ffffff" fontWeight="600">
-                Side Screen
-              </text>
-              <text x={startX + 980 + 45} y={startY + 855 - 2} textAnchor="middle" fontSize="6" fill="rgba(255,255,255,0.7)">
-                1.5 w X 2.5 h
-              </text>
+                <text
+                  x={startX + 1082}
+                  y={startY + 922}
+                  textAnchor="middle"
+                  fontSize="10"
+                  fill="rgba(255,255,255,0.8)"
+                >
+                  9 x 3
+                </text>
+
+                {/* Left Screen */}
+                <rect
+                  x={startX + 765 + 45 + 152}
+                  y={startY + 928 - 2}
+                  width={70}
+                  height={40}
+                  rx={3}
+                  fill="#1a1a3e"
+                />
+                <text
+                  x={startX + 800 + 45 + 152}
+                  y={startY + 944 - 2}
+                  textAnchor="middle"
+                  fontSize="7"
+                  fill="#ffffff"
+                  fontWeight="600"
+                >
+                  Side Screen
+                </text>
+                <text
+                  x={startX + 800 + 45 + 152}
+                  y={startY + 955 - 2}
+                  textAnchor="middle"
+                  fontSize="6"
+                  fill="rgba(255,255,255,0.7)"
+                >
+                  1.5 w X 2.5 h
+                </text>
+
+                {/* Main Screen */}
+                <rect
+                  x={startX + 855 + 45 + 152}
+                  y={startY + 928 - 2}
+                  width={70}
+                  height={40}
+                  rx={3}
+                  fill="#1a1a3e"
+                />
+                <text
+                  x={startX + 890 + 45 + 152}
+                  y={startY + 944 - 2}
+                  textAnchor="middle"
+                  fontSize="7"
+                  fill="#ffffff"
+                  fontWeight="600"
+                >
+                  Main Screen
+                </text>
+                <text
+                  x={startX + 890 + 45 + 152}
+                  y={startY + 955 - 2}
+                  textAnchor="middle"
+                  fontSize="6"
+                  fill="rgba(255,255,255,0.7)"
+                >
+                  5 w x 2.5 h
+                </text>
+
+                {/* Right Screen */}
+                <rect
+                  x={startX + 945 + 45 + 152}
+                  y={startY + 928 - 2}
+                  width={70}
+                  height={40}
+                  rx={3}
+                  fill="#1a1a3e"
+                />
+                <text
+                  x={startX + 980 + 45 + 152}
+                  y={startY + 944 - 2}
+                  textAnchor="middle"
+                  fontSize="7"
+                  fill="#ffffff"
+                  fontWeight="600"
+                >
+                  Side Screen
+                </text>
+                <text
+                  x={startX + 980 + 45 + 152}
+                  y={startY + 955 - 2}
+                  textAnchor="middle"
+                  fontSize="6"
+                  fill="rgba(255,255,255,0.7)"
+                >
+                  1.5 w X 2.5 h
+                </text>
+              </g>
+
             </g>
 
             {/* ===== LEGEND ===== */}

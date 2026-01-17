@@ -4,6 +4,7 @@ import React, { useState } from "react";
 const Booth = ({
   boothId,
   boothNo,
+  subtitle,
   boothType,
   title,
   size,
@@ -84,7 +85,7 @@ const Booth = ({
           {/* Lock icon */}
           <Lock
             x={x + width / 2 - 8}
-            y={y + height / 2 - 10}
+            y={y + height / 2 - 16}
             size={16}
             color="#fff"
           />
@@ -154,6 +155,18 @@ const Booth = ({
               fill={hover ? "rgba(255,255,255,0.9)" : "rgba(0,0,0,0.6)"}
             >
               {size}
+            </text>
+          )}
+          {/* subtitle (optional) */}
+          {subtitle && (
+            <text
+              x={x + width / 2}
+              y={y + height - 40}
+              textAnchor="middle"
+              fontSize={fontSize}
+              fill={hover ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.9)"}
+            >
+              {subtitle}
             </text>
           )}
 

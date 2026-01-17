@@ -28,11 +28,28 @@ const BoothModal = ({ booth, onClose, onReserve }) => {
         standard: 2500,
     };
 
-    const boothAmount = boothPrices[booth.boothType] ?? 0;
+    const sponsorshipPrices = {
+        cocktail: 5000,
+        cafe: 5000,
+        networklounge: 5000,
+        speakerhall: 10000,
+        entrancearch: 5000,
+        registrationarea: 5000,
+        ledwalladvertisement: 5000,
+        rollupbanner: 250,
+        flagpole: 500,
+        attendeebag: 3000,
+    };
 
-    // const tax = boothAmount * 0.18;
-    // const total = boothAmount + tax;
-    const total = boothAmount;
+
+    const isSponsorship = booth.boothType in sponsorshipPrices;
+
+    const amount = isSponsorship
+        ? sponsorshipPrices[booth.boothType]
+        : boothPrices[booth.boothType];
+
+    const total = amount ?? 0;
+
 
     const handlePhoneChange = (value) => {
         setForm({ ...form, phone: value });
@@ -188,19 +205,37 @@ const BoothModal = ({ booth, onClose, onReserve }) => {
                             {/* RIGHT – SUMMARY */}
                             <div className="col-md-5">
                                 <div className="summary-box bg-lightgrey p-4 rounded sticky-top">
-                                    <h6 className="black">Booth Summary</h6>
+                                    <h6 className="black">
+                                        {isSponsorship ? "Sponsorship Summary" : "Booth Summary"}
+                                    </h6>
+
+                                    {!isSponsorship && (
+                                        <p>
+                                            Booth No: <b>{booth.boothNo}</b>
+                                        </p>
+                                    )}
+
                                     <p>
-                                        Booth No: <b>{booth.boothNo}</b>
+                                        {isSponsorship ? "Sponsorship Title" : "Booth Title"}:{" "}
+                                        <b>{booth.title}</b>
                                     </p>
+
+                                    {/* Show size ONLY if exists */}
+                                    {booth.size && (
+                                        <p>
+                                            {isSponsorship ? "Sponsorship Size" : "Booth Size"}:{" "}
+                                            <b>{booth.size}</b>
+                                        </p>
+                                    )}
+
                                     <p>
-                                        Booth Title: <b>{booth.title}</b>
+                                        {isSponsorship ? "Sponsorship Amount" : "Booth Amount"}: ₹{amount}
                                     </p>
-                                    <p>
-                                        Booth Size: <b>{booth.size}</b>
-                                    </p>
-                                    <p>Booth Amount: ₹{boothAmount}</p>
+
                                     <hr />
+
                                     <h5>Total Payable: ₹{total}</h5>
+
                                 </div>
                                 <div className="summary-box bg-lightgrey p-4 rounded mt-5">
                                     <h6 className="black">Contact us for Booking support</h6>

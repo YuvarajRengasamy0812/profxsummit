@@ -90,37 +90,86 @@ const BoothModal = ({ booth, onClose, onReserve }) => {
         }
         return true;
     };
-
-    const handleSubmit = () => {
-        if (!paymentMethod || !paymentImage) {
-            Swal.fire({
-                toast: true,
-                icon: "warning",
-                title: "Payment method and proof are required",
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                customClass: { container: "swal2-toast-container-high-z" },
-            });
-            return;
-        }
-
-        onReserve({
-            booth,
-            ...form,
-            paymentMethod,
-            paymentImage,
-            total,
-        });
-
+           const handleSubmit = async () => {
+    if (!paymentMethod || !paymentImage) {
         Swal.fire({
-            icon: "success",
-            title: "Booth Reserved Successfully!",
-            confirmButtonText: "Close",
+            toast: true,
+            icon: "warning",
+            title: "Payment method and proof are required",
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
         });
+        return;
+    }
 
-        onClose();
-    };
+    try {
+        const formData = new FormData();
+
+        // ===== BASIC DETAILS =====
+        formData.append("name", form.name);
+        formData.append("email", form.email);
+        formData.append("phone", form.phone);
+        formData.append("company", form.company || "");
+
+        // ===== OPTIONAL =====
+        formData.append("referal_code", form.referal || "");
+
+        // ===== BOOTH DETAILS =====
+        formData.append("boothno", booth.boothNo || "");
+        formData.append("boothtitle", booth.title || "");
+        formData.append("boothsize", booth.size || "");
+        formData.append("boothammount", total);
+
+        // ===== PAYMENT =====
+        formData.append("paymenttype", paymentMethod);
+        formData.append(
+            "networktype",
+            paymentMethod === "usdt" ? "TRC20/ERC20" : ""
+        );
+        formData.append("file", paymentImage);
+
+        // 🔑 API KEY (🔥 THIS WAS MISSING 🔥)
+        formData.append("api_key", "772414293281728");
+
+        const response = await fetch(
+            "http://localhost/profxsummit/api/v1/floorplansubmit",
+            {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                },
+                body: formData,
+            }
+        );
+
+        const result = await response.json();
+
+        if (result.code === 1) {
+            Swal.fire({
+                icon: "success",
+                title: "Booth Reserved Successfully!",
+                text: "Payment submitted. We will verify shortly.",
+            });
+            onClose();
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: result.msg || "Something went wrong",
+            });
+        }
+    } catch (error) {
+        console.error(error);
+        Swal.fire({
+            icon: "error",
+            title: "Server Error",
+            text: "Please try again later",
+        });
+    }
+};
+
+
 
     return createPortal(
         <div className="ticket-custom-modal-overlay" onClick={onClose}>
@@ -229,7 +278,7 @@ const BoothModal = ({ booth, onClose, onReserve }) => {
                                     )}
 
                                     <p>
-                                        {isSponsorship ? "Sponsorship Amount" : "Booth Amount"}: ₹{amount}
+                                        {isSponsorship ? "Sponsorship Amount" : "Booth Amount"}: ${amount}
                                     </p>
 
                                     <hr />
@@ -452,5 +501,9 @@ const BoothModal = ({ booth, onClose, onReserve }) => {
         document.getElementById("modal-root")
     );
 };
+
+
+
+
 
 export default BoothModal;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Users } from "lucide-react";
 import Booth from "./Booth";
 import FloorBorder from "./FloorBorder";
@@ -8,6 +8,24 @@ import BoothModal from "./BoothModal";
 const FloorPlanDubai = () => {
   const [selectedBooth, setSelectedBooth] = React.useState(null);
   const [reservedBooths, setReservedBooths] = React.useState({});
+
+
+
+
+   useEffect(() => {
+    fetch("http://localhost/profxsummit/api/v1/floorplanList")
+      .then((res) => res.json())
+      .then((data) => {
+        // Transform data into { boothId: isReserved }
+        const reserved = {};
+        data.forEach((floorplan) => {
+          // Lock booth if status is approved
+          reserved[floorplan.boothno] = floorplan.status === "approved";
+        });
+        setReservedBooths(reserved);
+      })
+      .catch((err) => console.error("Error fetching floorplans:", err));
+  }, []);
 
   // Layout constants based on grid
   const startX = 50;
@@ -154,13 +172,12 @@ const FloorPlanDubai = () => {
               title={"Official\nSponsor"}
               // textColor="#ffffff"
               fontSize={14}
-              isReserved={reservedBooths[`OFFICIAL-01`] === true}
-              reservedInfo={{
-                companyName: "Google",
-                logo: "/assets/images/logo/profx-black.png",
-                url: "https://google.com",
-              }}
-              onClick={setSelectedBooth}
+              // isReserved={reservedBooths[`OFFICIAL-01`] === true}
+              // onClick={setSelectedBooth}
+               isReserved={reservedBooths["OFFICIAL-01"] || false} // locked if approved
+          onClick={(id) => {
+            if (!reservedBooths["OFFICIAL-01"]) setSelectedBooth(id);
+          }}
             />
 
             {/* Gold Booths Row - 2 booths */}

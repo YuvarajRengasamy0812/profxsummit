@@ -152,16 +152,21 @@ const FloorPlanDubai = () => {
               height={90}
               color={colors.official}
               title={"Official\nSponsor"}
-              // textColor="#ffffff"
               fontSize={14}
-              isReserved={reservedBooths[`OFFICIAL-01`] === true}
+
+              /* 🔒 always reserved */
+              isReserved={true}
+
+              /* 🖼️ logo + link */
               reservedInfo={{
-                companyName: "Google",
-                logo: "/assets/images/logo/profx-black.png",
-                url: "https://google.com",
+                companyName: "UltraTFX",
+                logo: "/assets/images/booth-reserved/ultratfx.png",
+                url: "https://www.ultratrendfx.com/",
               }}
+
               onClick={setSelectedBooth}
             />
+
 
             {/* Gold Booths Row - 2 booths */}
             {Array.from({ length: 2 }).map((_, i) => {
@@ -265,11 +270,21 @@ const FloorPlanDubai = () => {
               height={90}
               color={colors.exclusive}
               title={"Exclusive\nSponsor"}
-              // textColor="#ffffff"
               fontSize={14}
-              isReserved={reservedBooths[`EXCLUSIVE-01`] === true}
+
+              /* 🔒 always reserved */
+              isReserved={true}
+
+              /* 🖼️ logo + link */
+              reservedInfo={{
+                companyName: "NXG-M",
+                logo: "/assets/images/booth-reserved/nxg.png",
+                url: "https://www.nxgmarkets.com/",
+              }}
+
               onClick={setSelectedBooth}
             />
+
 
             {/* Photo Wall - Diagonal */}
             <g>

@@ -315,14 +315,16 @@ const Booth = ({
 
           {/* Company name */}
           <text
-            x={x + width / 2 - 20}
-            y={y - 65}
-            fontSize="12"
-            fontWeight="700"
-            fill="#333"
-          >
-            {reservedInfo.companyName}
-          </text>
+  x={x + width / 2}
+  y={y - 65}
+  fontSize="12"
+  fontWeight="700"
+  fill="#333"
+  textAnchor="middle"
+>
+  {reservedInfo.companyName}
+</text>
+
         </g>
       )}
 

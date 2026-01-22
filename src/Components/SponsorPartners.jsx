@@ -2,32 +2,80 @@ import React from "react";
 import { motion } from "framer-motion";
 
 const sponsors = {
-    official: {
-        name: "UltraTrend FX",
-        logo: "assets/images/sponsors/official-sponsor.png",
-        url: "https://www.ultratrendfx.com/"
-    },
-    exclusive: {
-        name: "NXG Markets",
-        logo: "assets/images/sponsors/exclusive-sponsor.png",
-        url: "https://www.nxgmarkets.com/"
-    },
-    diamond: {
-        name: "FinXCart",
-        logo: "assets/images/sponsors/diamond-sponsor.png",
-        url: "https://finxcart.com/"
-    },
-    silver: {
-        name: "https://zylostar.com/",
-        logo: "assets/images/sponsors/silver-sponsor.png",
-        url: "https://zylostar.com/"
-    },
-    lanyard: {
+    official: [
+        {
+            name: "UltraTrend FX",
+            logo: "assets/images/sponsors/official-sponsor.png",
+            url: "https://www.ultratrendfx.com/"
+        }
+    ],
+    exclusive: [
+        {
+            name: "NXG Markets",
+            logo: "assets/images/sponsors/exclusive-sponsor.png",
+            url: "https://www.nxgmarkets.com/"
+        }
+    ],
+    diamond: [
+        {
+            name: "FinXCart",
+            logo: "assets/images/sponsors/diamond-sponsor.png",
+            url: "https://finxcart.com/"
+        }
+    ],
+    gold: [
+        { name: "Gold 1", logo: "assets/images/sponsors/leveragemarkets.png", url: "https://leveragemarkets.com/" },
+    ],
+    silver: [
+        { name: "ZyloStar", logo: "assets/images/sponsors/silver-sponsor.png", url: "https://zylostar.com/" },
+    ],
+    other: [
+    {
         name: "CFI Trade",
         logo: "assets/images/sponsors/lanyard-sponsor.png",
-        url: "https://cfi.trade/en/uae"
-    }
+        url: "https://cfi.trade/en/uae",
+        subTitle: "Lanyard Sponsor"
+    },
+]
+
 };
+
+const SponsorSection = ({ title, items, single = false }) => (
+    <div className="text-center mb-5">
+        <h5 className="profx-sponsors-title mb-4">{title}</h5>
+
+        <div className={`row justify-content-center ${single ? "" : "g-4"}`}>
+            {items.map((item, index) => (
+                <div
+                    key={index}
+                    className={single
+                        ? "col-12 d-flex justify-content-center"
+                        : "col-12 col-md-4 d-flex justify-content-center"}
+                >
+                    <div className="text-center">
+                        <a
+                            href={item.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="profx-sponsors-card d-block"
+                        >
+                            <img src={item.logo} alt={item.name} />
+                        </a>
+
+                        {/* Sub title below each sponsor */}
+                        {item.subTitle && (
+                            <p className="mt-3 mb-0 fw-bold pink">
+                                {item.subTitle}
+                            </p>
+                        )}
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+);
+
+
 
 export default function SponsorPartners() {
     return (
@@ -63,43 +111,42 @@ export default function SponsorPartners() {
                 </motion.h2>
             </div>
             <div className="container">
-                {/* Official Sponsor */}
-                <div className="text-center mb-5">
-                    <h5 className="profx-sponsors-title mb-3">Official Sponsor</h5>
-                    <a
-                        href={sponsors.official.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="profx-sponsors-card mx-auto"
-                    >
-                        <img src={sponsors.official.logo} alt={sponsors.official.name} />
-                    </a>
-                </div>
 
-                {/* Other Sponsors */}
-                <div className="row g-4 justify-content-center align-items-center">
+                <SponsorSection
+                    title="Official Sponsors"
+                    items={sponsors.official}
+                    single
+                />
 
-                    {[
-                        { label: "Exclusive Sponsor", data: sponsors.exclusive },
-                        { label: "Diamond Sponsor", data: sponsors.diamond },
-                        { label: "Silver Sponsor", data: sponsors.silver },
-                        { label: "Lanyard Sponsor", data: sponsors.lanyard }
-                    ].map((item, index) => (
-                        <div key={index} className="col-12 col-md-6 text-center d-flex flex-column align-items-center">
-                            <h5 className="profx-sponsors-title mb-3">{item.label}</h5>
-                            <a
-                                href={item.data.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="profx-sponsors-card"
-                            >
-                                <img src={item.data.logo} alt={item.data.name} />
-                            </a>
-                        </div>
-                    ))}
+                <SponsorSection
+                    title="Exclusive Sponsors"
+                    items={sponsors.exclusive}
+                    single
+                />
 
-                </div>
+                <SponsorSection
+                    title="Diamond Sponsors"
+                    items={sponsors.diamond}
+                    single
+                />
+
+                <SponsorSection
+                    title="Gold Sponsors"
+                    items={sponsors.gold}
+                />
+
+                <SponsorSection
+                    title="Silver Sponsors"
+                    items={sponsors.silver}
+                />
+
+                <SponsorSection
+                    title="Other Sponsors"
+                    items={sponsors.other}
+                />
+
             </div>
         </section>
     );
 }
+

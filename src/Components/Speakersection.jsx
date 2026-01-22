@@ -56,7 +56,18 @@ const speakersData = [
             linkedin: "#",
             instagram: "#"
         }
-    }
+    },
+    {
+        id: 6,
+        name: "Sandeep Sigar",
+        designation: "Founder & Ceo",
+        company: "Setup Fx",
+        image: "assets/images/speakers/6.jpg",
+        socials: {
+            linkedin: "#",
+            instagram: "#"
+        }
+    },
 ];
 
 

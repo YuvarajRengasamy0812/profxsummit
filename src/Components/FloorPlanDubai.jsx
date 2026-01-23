@@ -13,28 +13,33 @@ const FloorPlanDubai = () => {
 
  const [booths, setBooths] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get("http://localhost/profxsummit/api/v1/floorplanList")
-      .then((res) => {
-        const tickets = res.data.details.tickets.data;
+ useEffect(() => {
+  axios
+    .get("https://profxsummit.com/adminpanel/api/v1/floorplanList")
+    .then((res) => {
+      const tickets = res.data.details.tickets.data;
 
-        const reserved = tickets
-          .filter((t) => t.boothno)
-          .map((t) => ({
-            boothNo: String(t.boothno),
-            companyName: t.company,
-            logo: t.company_logo
-              ? `${t.company_logo}`
-              : "/no-logo.png",
-            url: t.company_url || "#",
-            title: t.boothtitle,
-            size: t.boothsize,
-          }));
+      const reserved = tickets
+        .filter((t) => t.boothno)
+        .map((t) => ({
+          boothNo: String(t.boothno),
+          companyName: t.company || "",
+          // ✅ Set default placeholder if logo is missing
+          logo: t.company_logo || "assets/images/booth-reserved/v-process.png",
+          url: t.company_url || "#",
+          title: t.boothtitle || "Reserved Booth",
+          size: t.boothsize || "",
+          // ✅ Optional: you can track approval status
+          approved: !!t.company_logo // if logo exists, assume approved
+        }));
 
-        setReservedBooths(reserved);
-      });
-  }, []);
+      setReservedBooths(reserved);
+    })
+    .catch((err) => {
+      console.error("Error fetching floorplan:", err);
+    });
+}, []);
+
   const getReservedInfo = (boothNo) =>
     reservedBooths.find((b) => b.boothNo === String(boothNo));
 
@@ -174,19 +179,22 @@ const FloorPlanDubai = () => {
             {/* Official Sponsor */}
 <Booth
   boothId="OFFICIAL-01"
+   boothType="official"
   boothNo="1"
+    size="4 x 3"
   title={"Official\nSponsor"}
   x={startX + 180}
   y={startY + 50}
   width={120}
   height={90}
+  fontSize={14}
   color={colors.official}
         isReserved={!!getReservedInfo("1")}
           reservedInfo={getReservedInfo("1")}
   onClick={setSelectedBooth}
 />
 
-
+         
 
 
 
@@ -227,6 +235,7 @@ const FloorPlanDubai = () => {
             {Array.from({ length: 5 }).map((_, i) => {
               const number = i + 11;
               const id = `SILVER-${number}`;
+                const reservedInfo = getReservedInfo(number);
               return (
                 <Booth
                   key={id}
@@ -241,8 +250,10 @@ const FloorPlanDubai = () => {
                   color={colors.silver}
                   title={"Silver\nBooth"}
                   fontSize={12}
-                  isReserved={reservedBooths[id] === true}
-                  onClick={setSelectedBooth}
+                   isReserved={!!reservedInfo}
+      reservedInfo={reservedInfo}
+
+      onClick={setSelectedBooth}
                 />
               );
             })}
@@ -302,18 +313,11 @@ const FloorPlanDubai = () => {
               color={colors.exclusive}
               title={"Exclusive\nSponsor"}
               fontSize={14}
-
+        isReserved={!!getReservedInfo("2")}
+          reservedInfo={getReservedInfo("2")}
+  onClick={setSelectedBooth}
               /* 🔒 always reserved */
-              isReserved={true}
 
-              /* 🖼️ logo + link */
-              reservedInfo={{
-                companyName: "NXG-M",
-                logo: "/assets/images/booth-reserved/nxg.png",
-                url: "https://www.nxgmarkets.com/",
-              }}
-
-              onClick={setSelectedBooth}
             />
 
 
@@ -362,7 +366,7 @@ const FloorPlanDubai = () => {
               const num = i + 5; // 5, 6
               const id = `DIAMOND-${num}`;
               const isDiamond5 = id === "DIAMOND-5";
-
+ const reservedInfo = getReservedInfo(num);
               return (
                 <Booth
                   key={id}
@@ -378,20 +382,8 @@ const FloorPlanDubai = () => {
                   title={"Diamond\nBooth"}
                   fontSize={14}
 
-                  /* 🔒 lock only DIAMOND-5 */
-                  isReserved={isDiamond5 ? true : reservedBooths[id] === true}
-
-                  /* 🖼️ image + url only for DIAMOND-5 */
-                  reservedInfo={
-                    isDiamond5
-                      ? {
-                        companyName: "Finxcart",
-                        logo: "/assets/images/booth-reserved/finxcart.png",
-                        url: "https://finxcart.com/",
-                      }
-                      : undefined
-                  }
-
+                 isReserved={!!reservedInfo}
+      reservedInfo={reservedInfo}
                   onClick={setSelectedBooth}
                 />
               );
@@ -403,7 +395,7 @@ const FloorPlanDubai = () => {
               const boothNumbers = [16, 17, 18, 19];
               const num = boothNumbers[i];
               const id = `SILVER-${num}`;
-
+ const reservedInfo = getReservedInfo(num);
               return (
                 <Booth
                   key={id}
@@ -418,7 +410,8 @@ const FloorPlanDubai = () => {
                   color={colors.silver}
                   title={"Silver\nBooth"}
                   fontSize={12}
-                  isReserved={reservedBooths[id] === true}
+                isReserved={!!reservedInfo}
+      reservedInfo={reservedInfo}
                   onClick={setSelectedBooth}
                 />
               );
@@ -432,7 +425,7 @@ const FloorPlanDubai = () => {
               const col = i % 2;              // 2 columns
               const row = Math.floor(i / 2);  // 3 rows
               const id = `STANDARD-${num}`;
-
+ const reservedInfo = getReservedInfo(num);
               return (
                 <Booth
                   key={id}
@@ -447,7 +440,8 @@ const FloorPlanDubai = () => {
                   color={colors.standard}
                   title={`Standard\nBooth`}
                   fontSize={10}
-                  isReserved={reservedBooths[id] === true}
+                                  isReserved={!!reservedInfo}
+      reservedInfo={reservedInfo}
                   onClick={setSelectedBooth}
                 />
               );
@@ -520,8 +514,8 @@ const FloorPlanDubai = () => {
               const boothNumbers = [7, 8, 9, 10];
               const num = boothNumbers[i];
               const id = `GOLD-${num}`;
-
-              const isGold8 = num === 8;
+ const reservedInfo = getReservedInfo(num);
+             
 
               return (
                 <Booth
@@ -539,19 +533,8 @@ const FloorPlanDubai = () => {
                   fontSize={12}
 
                   /* 🔒 lock only booth 8 */
-                  isReserved={isGold8 ? true : reservedBooths[id] === true}
-
-                  /* 🖼️ optional logo + link for booth 8 */
-                  reservedInfo={
-                    isGold8
-                      ? {
-                        companyName: "Leverage markets",
-                        logo: "/assets/images/booth-reserved/leverage-markets.png",
-                        url: "https://leveragemarkets.com/",
-                      }
-                      : undefined
-                  }
-
+                  isReserved={!!reservedInfo}
+      reservedInfo={reservedInfo}
                   onClick={setSelectedBooth}
                 />
               );
@@ -564,7 +547,7 @@ const FloorPlanDubai = () => {
               const boothNumbers = [26, 27, 28, 29, 30];
               const num = boothNumbers[i];
               const id = `SILVER-${num}`;
-              const isSilver26 = id === "SILVER-26";
+             const reservedInfo = getReservedInfo(num);
 
               return (
                 <Booth
@@ -581,20 +564,9 @@ const FloorPlanDubai = () => {
                   title={"Silver\nBooth"}
                   fontSize={11}
 
-                  /* 🔒 lock only SILVER-26 */
-                  isReserved={isSilver26 ? true : reservedBooths[id] === true}
-
-                  /* 🖼️ optional: add logo + url only for 26 */
-                  reservedInfo={
-                    isSilver26
-                      ? {
-                        companyName: "Zylostar",
-                        logo: "/assets/images/booth-reserved/zylostar.png",
-                        url: "https://zylostar.com/",
-                      }
-                      : undefined
-                  }
-
+ /* 🔒 lock only booth 8 */
+                  isReserved={!!reservedInfo}
+      reservedInfo={reservedInfo}
                   onClick={setSelectedBooth}
                 />
               );

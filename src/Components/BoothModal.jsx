@@ -133,7 +133,7 @@ const BoothModal = ({ booth, onClose, onReserve }) => {
         formData.append("api_key", "772414293281728");
 
         const response = await fetch(
-            "http://localhost/profxsummit/api/v1/floorplansubmit",
+            "https://profxsummit.com/adminpanel/api/v1/floorplansubmit",
             {
                 method: "POST",
                 headers: {
@@ -150,6 +150,9 @@ const BoothModal = ({ booth, onClose, onReserve }) => {
                 icon: "success",
                 title: "Booth Reserved Successfully!",
                 text: "Payment submitted. We will verify shortly.",
+            }).then(() => {
+                // Reload the page after user closes the alert
+                window.location.reload();
             });
             onClose();
         } else {

@@ -4,28 +4,41 @@ import Booth from "./Booth";
 import FloorBorder from "./FloorBorder";
 import { createPortal } from "react-dom";
 import BoothModal from "./BoothModal";
+import axios from "axios";
 
 const FloorPlanDubai = () => {
   const [selectedBooth, setSelectedBooth] = React.useState(null);
-  const [reservedBooths, setReservedBooths] = React.useState({});
+  const [reservedBooths, setReservedBooths] = useState([]);
 
 
+ const [booths, setBooths] = useState([]);
 
+  useEffect(() => {
+    axios
+      .get("http://localhost/profxsummit/api/v1/floorplanList")
+      .then((res) => {
+        const tickets = res.data.details.tickets.data;
 
-   useEffect(() => {
-    fetch("http://localhost/profxsummit/api/v1/floorplanList")
-      .then((res) => res.json())
-      .then((data) => {
-        // Transform data into { boothId: isReserved }
-        const reserved = {};
-        data.forEach((floorplan) => {
-          // Lock booth if status is approved
-          reserved[floorplan.boothno] = floorplan.status === "approved";
-        });
+        const reserved = tickets
+          .filter((t) => t.boothno)
+          .map((t) => ({
+            boothNo: String(t.boothno),
+            companyName: t.company,
+            logo: t.company_logo
+              ? `${t.company_logo}`
+              : "/no-logo.png",
+            url: t.company_url || "#",
+            title: t.boothtitle,
+            size: t.boothsize,
+          }));
+
         setReservedBooths(reserved);
-      })
-      .catch((err) => console.error("Error fetching floorplans:", err));
+      });
   }, []);
+  const getReservedInfo = (boothNo) =>
+    reservedBooths.find((b) => b.boothNo === String(boothNo));
+
+
 
   // Layout constants based on grid
   const startX = 50;
@@ -159,50 +172,55 @@ const FloorPlanDubai = () => {
             {/* ===== TOP ROW ===== */}
 
             {/* Official Sponsor */}
-            <Booth
-              boothId="OFFICIAL-01"
-              boothType="official"
-              boothNo="1"
-              size="4 x 3"
-              x={startX + 180}
-              y={startY + 50}
-              width={120}
-              height={90}
-              color={colors.official}
-              title={"Official\nSponsor"}
-              // textColor="#ffffff"
-              fontSize={14}
-              // isReserved={reservedBooths[`OFFICIAL-01`] === true}
-              // onClick={setSelectedBooth}
-               isReserved={reservedBooths["OFFICIAL-01"] || false} // locked if approved
-          onClick={(id) => {
-            if (!reservedBooths["OFFICIAL-01"]) setSelectedBooth(id);
-          }}
-            />
+<Booth
+  boothId="OFFICIAL-01"
+  boothNo="1"
+  title={"Official\nSponsor"}
+  x={startX + 180}
+  y={startY + 50}
+  width={120}
+  height={90}
+  color={colors.official}
+        isReserved={!!getReservedInfo("1")}
+          reservedInfo={getReservedInfo("1")}
+  onClick={setSelectedBooth}
+/>
+
+
+
+
 
             {/* Gold Booths Row - 2 booths */}
-            {Array.from({ length: 2 }).map((_, i) => {
-              const number = i + 3;
-              const id = `GOLD-${number}`;
-              return (
-                <Booth
-                  key={id}
-                  boothId={id}
-                  boothType="gold"
-                  boothNo={number}
-                  size="2 x 3"
-                  x={startX + 355 + i * 120}
-                  y={startY + 52}
-                  width={120}
-                  height={72}
-                  color={colors.gold}
-                  title={"Gold\nBooth"}
-                  fontSize={12}
-                  isReserved={reservedBooths[id] === true}
-                  onClick={setSelectedBooth}
-                />
-              );
-            })}
+       {Array.from({ length: 2 }).map((_, i) => {
+  const number = i + 3; // boothNo = 3, 4
+  const id = `GOLD-${number}`;
+
+  const reservedInfo = getReservedInfo(number);
+
+  return (
+    <Booth
+      key={id}
+      boothId={id}
+      boothType="gold"
+      boothNo={number}
+      size="2 x 3"
+      x={startX + 355 + i * 120}
+      y={startY + 52}
+      width={120}
+      height={72}
+      color={colors.gold}
+      title={"Gold\nBooth"}
+      fontSize={12}
+
+      /* ✅ CORRECT RESERVE CHECK */
+      isReserved={!!reservedInfo}
+      reservedInfo={reservedInfo}
+
+      onClick={setSelectedBooth}
+    />
+  );
+})}
+
 
             {/* Silver Booths Row - 5 booths */}
             {Array.from({ length: 5 }).map((_, i) => {

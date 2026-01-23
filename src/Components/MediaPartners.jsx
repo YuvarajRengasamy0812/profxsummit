@@ -22,7 +22,7 @@ const [media, setMedia] = useState([]);
   };
 
   return (
-    <section className="partners">
+    <section className="partners pt-0">
       <div className="container">
         <div className="partner-inner">
           <div className="partner-title text-center pb-6 w-lg-60 m-auto">

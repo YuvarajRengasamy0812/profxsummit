@@ -190,6 +190,7 @@ const FloorPlanDubai = () => {
 
 
 
+
             {/* Gold Booths Row - 2 booths */}
        {Array.from({ length: 2 }).map((_, i) => {
   const number = i + 3; // boothNo = 3, 4
@@ -300,11 +301,21 @@ const FloorPlanDubai = () => {
               height={90}
               color={colors.exclusive}
               title={"Exclusive\nSponsor"}
-              // textColor="#ffffff"
               fontSize={14}
-              isReserved={reservedBooths[`EXCLUSIVE-01`] === true}
+
+              /* 🔒 always reserved */
+              isReserved={true}
+
+              /* 🖼️ logo + link */
+              reservedInfo={{
+                companyName: "NXG-M",
+                logo: "/assets/images/booth-reserved/nxg.png",
+                url: "https://www.nxgmarkets.com/",
+              }}
+
               onClick={setSelectedBooth}
             />
+
 
             {/* Photo Wall - Diagonal */}
             <g>
@@ -510,6 +521,8 @@ const FloorPlanDubai = () => {
               const num = boothNumbers[i];
               const id = `GOLD-${num}`;
 
+              const isGold8 = num === 8;
+
               return (
                 <Booth
                   key={id}
@@ -524,11 +537,26 @@ const FloorPlanDubai = () => {
                   color={colors.gold}
                   title={"Gold\nBooth"}
                   fontSize={12}
-                  isReserved={reservedBooths[id] === true}
+
+                  /* 🔒 lock only booth 8 */
+                  isReserved={isGold8 ? true : reservedBooths[id] === true}
+
+                  /* 🖼️ optional logo + link for booth 8 */
+                  reservedInfo={
+                    isGold8
+                      ? {
+                        companyName: "Leverage markets",
+                        logo: "/assets/images/booth-reserved/leverage-markets.png",
+                        url: "https://leveragemarkets.com/",
+                      }
+                      : undefined
+                  }
+
                   onClick={setSelectedBooth}
                 />
               );
             })}
+
 
 
             {/* Silver Booths after Diamond - 5 horizontal */}

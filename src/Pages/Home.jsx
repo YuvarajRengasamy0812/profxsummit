@@ -19,6 +19,8 @@ import { useEffect, useState } from "react";
 import TrustedPartners from "../Components/TrustedPartners";
 import FloorPlanDubai from "../Components/FloorPlanDubai";
 import MediaPartners from "../Components/MediaPartners";
+import SponsorPartners from "../Components/SponsorPartners";
+import Speakersection from "../Components/Speakersection";
 function Home() {
   const [brochure, setBrochure] = useState([]);
 
@@ -304,6 +306,8 @@ function Home() {
 
       {/*--Partners Section start--*/}
       <TrustedPartners />
+      <SponsorPartners />
+      <Speakersection />
       <MediaPartners />
       {/*--Partners Section end--*/}
 

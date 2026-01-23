@@ -5,8 +5,8 @@ import { Calendar, Briefcase, Trophy, Mic } from "lucide-react";
 const LivePulse = () => {
   const stats = [
     { icon: <Mic size={28} />, number: 30, suffix: "+", label: "Global Speakers" },
-    { icon: <Calendar size={28} />, number: 5000, suffix: "+", label: "Attendees Expected" },
-    { icon: <Briefcase size={28} />, number: 25, suffix: "+", label: "Exhibition Booths" },
+    { icon: <Calendar size={28} />, number: 2000, suffix: "+", label: "Attendees Expected" },
+    { icon: <Briefcase size={28} />, number: 30, suffix: "+", label: "Exhibition Booths" },
     // { icon: <DollarSign size={28} />, number: 10, suffix: "M+", label: "Investments Showcased" },
     { icon: <Trophy size={28} />, number: 40, suffix: "+", label: "Industrial Awards" },
   ];

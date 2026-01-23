@@ -1266,6 +1266,95 @@ p.text-grey {
   margin-top: auto; /* pushes this to bottom */
 }
 
+
+/* Sponsorship Partners */
+.profx-sponsors-card {
+  width: 260px;
+  min-height: 120px;
+  padding: 16px;
+}
+
+@media (max-width: 768px) {
+  .profx-sponsors-card {
+    width: 220px;
+  }
+}
+
+.profx-sponsors-section {
+  background-color: #ffffff;
+}
+
+.profx-sponsors-title {
+  color: #e91e63;
+  font-weight: 600;
+}
+
+.profx-sponsors-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 220px;
+  height: auto;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  transition: all 0.25s ease;
+  text-decoration: none;
+}
+
+.profx-sponsors-card img {
+  max-width: 350px;
+  max-height: 116px;
+  object-fit: contain;
+}
+
+.profx-sponsors-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 40px rgba(233,30,99,0.25);
+}
+/*  */
+/* Always-visible small overlay */
+.profx-speakers-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 12px;
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 1),
+        rgba(0, 0, 0, 0)
+    );
+    text-align: center;
+    z-index: 0;
+    transition: opacity 0.3s ease;
+}
+
+.profx-speakers-overlay h6 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+    color: #fff;
+}
+
+.profx-speakers-overlay span {
+    display: block;
+    font-size: 15px;
+    color: #fff;
+}
+
+.profx-speakers-overlay small {
+    display: block;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+/* Hide small overlay on hover so hover content is clear */
+.speaker-box:hover .profx-speakers-overlay {
+    opacity: 0;
+}
+
+
 /* Custom Navbar css */
 /* -------------------------------------
    DESKTOP NAV

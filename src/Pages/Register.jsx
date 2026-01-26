@@ -85,6 +85,7 @@ const Register = () => {
     try {
       const res = await axios.post(
         "https://profxsummit.com/adminpanel/api/v1/register",
+        // "http://localhost/profxsummitbackend/api/v1/register",
         {
           api_key: "772414293281728",
           full_name: fullName,
@@ -200,7 +201,7 @@ const Register = () => {
                 <p className="mb-1 fw-semibold"><Pin /> Le Meridian, Airport Road, Dubai UAE</p>
                 <Link className="text-grey d-flex align-items-center gap-1" to="https://www.profxsummit.com" target="_blank" rel="noreferrer"><Globe /> www.profxsummit.com</Link>
                 <Link className="text-grey d-flex align-items-center gap-1" to="tel:+971588845033"><PhoneCall /> +971 58 884 5033</Link>
-                <Link className="text-grey d-flex align-items-center gap-1" to="mailto:info@profxsummit.com"><Mail /> info@profxsummit.com</Link>
+                <Link className="text-grey d-flex align-items-center gap-1" to="mailto:info@profxmedia.com"><Mail /> info@profxmedia.com</Link>
                 <div className="ratio ratio-16x9 rounded overflow-hidden mt-2">
                   <iframe
                     src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d209000.25475612728!2d55.264738!3d25.249132!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f5d052da27f4b%3A0x1e08c07158e27b01!2sLe%20M%C3%A9ridien%20Dubai%20Hotel%20%26%20Conference%20Centre!5e1!3m2!1sen!2sae!4v1766667195286!5m2!1sen!2sae"

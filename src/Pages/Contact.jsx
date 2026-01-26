@@ -33,7 +33,7 @@ function Contact() {
                   <div className="ticket-info pb-5">
                     <h5 className="text-white pb-2">Ticket INFO:</h5>
                     <p className="m-0">Booking: <a className="social-url" href="tel:+971588845033">(+971) 58 884 5033</a></p>
-                    <p className="m-0 mt-2">Email: <a className="social-url" href="mailto:proof@profxsummit.com">info@profxsummit.com</a></p>
+                    <p className="m-0 mt-2">Email: <a className="social-url" href="mailto:info@profxmedia.com">info@profxmedia.com</a></p>
                   </div>
                   <div className="direction-link">
                     <a className="btn border" href="https://maps.app.goo.gl/pzmErXhidm3Euz8f6">Get Directions</a>

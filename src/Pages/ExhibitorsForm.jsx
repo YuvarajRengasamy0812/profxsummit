@@ -15,7 +15,7 @@ import { Eye, EyeOff, Globe, Mail, PhoneCall, Pin } from "lucide-react";
 
 function Booknow() {
 
-     const countryOptions = countryList().getData();
+  const countryOptions = countryList().getData();
   const handlePhoneChange = (value, country) => {
     setPhone(value);
 
@@ -191,210 +191,210 @@ function Booknow() {
   return (
     <div>
       <PageHelmet pageTitle="Exhibitors" />
-        <Breadcrumb title="Exhibitors" />
+      <Breadcrumb title="Exhibitors" />
 
       {/*--Book now Section start*/}
       <div className="container-fluid min-vh-100 py-6 d-flex align-items-center bg-lightgrey">
-            <div className="container">
-              <div className="row g-4 align-items-stretch">
-    
-                {/* LEFT SIDE – CONTACT INFO */}
-                <div className="col-12 col-lg-5">
-                  <div className="h-100 bg-white rounded shadow p-4 d-flex flex-column gap-3">
-                    <h5 className="pink mb-2">Contact Info:</h5>
-                    <p className="mb-1 fw-semibold"><Pin /> Le Meridian, Airport Road, Dubai UAE</p>
-                    <Link className="text-grey d-flex align-items-center gap-1" to="https://www.profxsummit.com" target="_blank" rel="noreferrer"><Globe /> www.profxsummit.com</Link>
-                    <Link className="text-grey d-flex align-items-center gap-1" to="tel:+971588845033"><PhoneCall /> +971 58 884 5033</Link>
-                    <Link className="text-grey d-flex align-items-center gap-1" to="mailto:info@profxsummit.com"><Mail /> info@profxsummit.com</Link>
-                    <div className="ratio ratio-16x9 rounded overflow-hidden mt-2">
-                      <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d209000.25475612728!2d55.264738!3d25.249132!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f5d052da27f4b%3A0x1e08c07158e27b01!2sLe%20M%C3%A9ridien%20Dubai%20Hotel%20%26%20Conference%20Centre!5e1!3m2!1sen!2sae!4v1766667195286!5m2!1sen!2sae"
-                        allowFullScreen
-                        loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
-                        title="Le Meridian Map"
-                      />
-                    </div>
-                  </div>
+        <div className="container">
+          <div className="row g-4 align-items-stretch">
+
+            {/* LEFT SIDE – CONTACT INFO */}
+            <div className="col-12 col-lg-5">
+              <div className="h-100 bg-white rounded shadow p-4 d-flex flex-column gap-3">
+                <h5 className="pink mb-2">Contact Info:</h5>
+                <p className="mb-1 fw-semibold"><Pin /> Le Meridian, Airport Road, Dubai UAE</p>
+                <Link className="text-grey d-flex align-items-center gap-1" to="https://www.profxsummit.com" target="_blank" rel="noreferrer"><Globe /> www.profxsummit.com</Link>
+                <Link className="text-grey d-flex align-items-center gap-1" to="tel:+971588845033"><PhoneCall /> +971 58 884 5033</Link>
+                <Link className="text-grey d-flex align-items-center gap-1" to="mailto:info@profxmedia.com"><Mail /> info@profxmedia.com</Link>
+                <div className="ratio ratio-16x9 rounded overflow-hidden mt-2">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d209000.25475612728!2d55.264738!3d25.249132!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f5d052da27f4b%3A0x1e08c07158e27b01!2sLe%20M%C3%A9ridien%20Dubai%20Hotel%20%26%20Conference%20Centre!5e1!3m2!1sen!2sae!4v1766667195286!5m2!1sen!2sae"
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Le Meridian Map"
+                  />
                 </div>
-    
-                {/* RIGHT SIDE – REGISTER FORM */}
-                <div className="col-12 col-lg-7">
-                  <div className="h-100 bg-white rounded shadow p-4">
-                    <h4 className="pink mb-4 text-center">Exhibitors For PROFX SUMMIT Dubai 2026</h4>
-    
-                    <form onSubmit={handleRegister} className="row g-3">
-                      <div className="col-md-6">
-                        <input type="text" className="form-control" placeholder="Full Name" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
-                      </div>
-    
-                      <div className="col-md-6">
-                        <input type="email" className="form-control" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                      </div>
-    
-                     
-    
-                      <div className="col-md-6">
-                        <div className="phone-no mb-3">
-                          <PhoneInput
-                            country={"ae"}
-                            value={phone}
-                            onChange={handlePhoneChange}
-                            inputProps={{
-                              name: "phone",
-                              required: true,
-                              placeholder: "Phone No.",
-                              style: {
-                                fontSize: "15px",
-                                fontWeight: "400",
-                                backgroundColor: "#F7F7F7",
-                                border: "none",
-                                borderRadius: "25px",
-                                padding: "3px 42px",
-                                color: "#707070",
-                                width: "100%",
-                                boxShadow: "none",
-                                height: "50px",
-                              },
-                            }}
-                            containerStyle={{ width: "100%" }}
-                            inputStyle={{ width: "100%", height: "50px" }}
-                            buttonStyle={{
-                              border: "none",
-                              backgroundColor: "transparent",
-                              borderRadius: "25px 0 0 25px",
-                            }}
-                            dropdownStyle={{ fontSize: "15px" }}
-                            specialLabel=""
-                          />
-    
-                        </div>
-                        {/* <input type="text" className="form-control" placeholder="Phone" value={phone} onChange={(e) => setPhone(e.target.value)} required /> */}
-                      </div>
-    
-                      
-    
-                      <div className="col-md-6">
-                        <Select
-                          options={countryOptions}
-                          value={nationality}
-                          onChange={setNationality}
-                          placeholder="Nationality"
-                          isSearchable
-                          styles={customSelectStyles}
-                          classNamePrefix="react-select"
-                          required
-                        />
-    
-                        {/* <input type="text" className="form-control" placeholder="Nationality" value={nationality} onChange={(e) => setNationality(e.target.value)} required /> */}
-                      </div>
-    
-                      <div className="col-md-6 position-relative">
-                        <input
-                          type={showPassword ? "text" : "password"}
-                          className="form-control"
-                          placeholder="Password"
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                          required
-                        />
-                        <span
-                          onClick={() => setShowPassword(!showPassword)}
-                          style={{
-                            position: "absolute",
-                            right: "20px",
-                            top: "50%",
-                            transform: "translateY(-50%)",
-                            cursor: "pointer",
-                          }}
-                        >
-                          {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                        </span>
-                      </div>
-    
-                      <div className="col-md-6 position-relative">
-                        <input
-                          type={showConfirmPassword ? "text" : "password"}
-                          className="form-control"
-                          placeholder="Confirm Password"
-                          value={confirmPassword}
-                          onChange={(e) => setConfirmPassword(e.target.value)}
-                          required
-                        />
-                        <span
-                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                          style={{
-                            position: "absolute",
-                            right: "20px",
-                            top: "50%",
-                            transform: "translateY(-50%)",
-                            cursor: "pointer",
-                          }}
-                        >
-                          {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                        </span>
-                      </div>
-     <div className="col-md-6">
-                        <input type="text" className="form-control" placeholder="Company Name" value={companyName} onChange={(e) => setCompanyName(e.target.value)} required />
-                      </div>
-                      <div className="col-md-6">
-                        <input type="text" className="form-control" placeholder="Position" value={specialReq} onChange={(e) => setSpecialReq(e.target.value)} />
-                      </div>
-    <div className="col-md-6">
-                        <select value={userType} onChange={(e) => setUserType(e.target.value)} required>
-                          <option value="">User Type</option>
-                          <option value="Visitor">Visitor</option>
-                          <option value="Exhibitor">Exhibitor</option>
-                          <option value="Sponsor">Sponsor</option>
-                        </select>
-                      </div>
-                      <div className="col-md-6">
-                        <select value={sponsorPackage} onChange={(e) => setSponsorPackage(e.target.value)}>
-                          <option value="">Refferal Source</option>
-                          <option value="Facebook">Facebook</option>
-                          <option value="Linkdin">Linkdin</option>
-                          <option value="Instgram">Instgram</option>
-                          <option value="GoogleSearch">Google Search</option>
-                          <option value="News">News</option>
-                          <option value="Other">Other</option>
-                        </select>
-                      </div>
-    
-                      {/* <div className="col-12">
-                        <textarea rows="3" placeholder="Products / Services to Showcase" value={products} onChange={(e) => setProducts(e.target.value)} />
-                      </div> */}
-    
-                      <div className="col-12">
-                        <div className="form-check">
-                          <input className="form-check-input" type="checkbox" id="terms" required />
-                          <label className="form-check-label" htmlFor="terms">
-                            I agree to the <Link to="/terms" className="pink">Terms & Conditions</Link>
-                          </label>
-                        </div>
-                      </div>
-    
-                      <div className="col-12">
-                        <button type="submit" className="btn bg-pink text-white w-100" disabled={loading}>
-                          {loading ? "Registering..." : "Register"}
-                        </button>
-                      </div>
-    
-                      <div className="col-12 text-center">
-                        <small className="text-grey">
-                          Already have an account? <Link to="/Login" className="pink">Login</Link>
-                        </small>
-                      </div>
-    
-                    </form>
-                  </div>
-                </div>
-    
               </div>
             </div>
+
+            {/* RIGHT SIDE – REGISTER FORM */}
+            <div className="col-12 col-lg-7">
+              <div className="h-100 bg-white rounded shadow p-4">
+                <h4 className="pink mb-4 text-center">Exhibitors For PROFX SUMMIT Dubai 2026</h4>
+
+                <form onSubmit={handleRegister} className="row g-3">
+                  <div className="col-md-6">
+                    <input type="text" className="form-control" placeholder="Full Name" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
+                  </div>
+
+                  <div className="col-md-6">
+                    <input type="email" className="form-control" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                  </div>
+
+
+
+                  <div className="col-md-6">
+                    <div className="phone-no mb-3">
+                      <PhoneInput
+                        country={"ae"}
+                        value={phone}
+                        onChange={handlePhoneChange}
+                        inputProps={{
+                          name: "phone",
+                          required: true,
+                          placeholder: "Phone No.",
+                          style: {
+                            fontSize: "15px",
+                            fontWeight: "400",
+                            backgroundColor: "#F7F7F7",
+                            border: "none",
+                            borderRadius: "25px",
+                            padding: "3px 42px",
+                            color: "#707070",
+                            width: "100%",
+                            boxShadow: "none",
+                            height: "50px",
+                          },
+                        }}
+                        containerStyle={{ width: "100%" }}
+                        inputStyle={{ width: "100%", height: "50px" }}
+                        buttonStyle={{
+                          border: "none",
+                          backgroundColor: "transparent",
+                          borderRadius: "25px 0 0 25px",
+                        }}
+                        dropdownStyle={{ fontSize: "15px" }}
+                        specialLabel=""
+                      />
+
+                    </div>
+                    {/* <input type="text" className="form-control" placeholder="Phone" value={phone} onChange={(e) => setPhone(e.target.value)} required /> */}
+                  </div>
+
+
+
+                  <div className="col-md-6">
+                    <Select
+                      options={countryOptions}
+                      value={nationality}
+                      onChange={setNationality}
+                      placeholder="Nationality"
+                      isSearchable
+                      styles={customSelectStyles}
+                      classNamePrefix="react-select"
+                      required
+                    />
+
+                    {/* <input type="text" className="form-control" placeholder="Nationality" value={nationality} onChange={(e) => setNationality(e.target.value)} required /> */}
+                  </div>
+
+                  <div className="col-md-6 position-relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      className="form-control"
+                      placeholder="Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                    <span
+                      onClick={() => setShowPassword(!showPassword)}
+                      style={{
+                        position: "absolute",
+                        right: "20px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        cursor: "pointer",
+                      }}
+                    >
+                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </span>
+                  </div>
+
+                  <div className="col-md-6 position-relative">
+                    <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      className="form-control"
+                      placeholder="Confirm Password"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      required
+                    />
+                    <span
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      style={{
+                        position: "absolute",
+                        right: "20px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        cursor: "pointer",
+                      }}
+                    >
+                      {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </span>
+                  </div>
+                  <div className="col-md-6">
+                    <input type="text" className="form-control" placeholder="Company Name" value={companyName} onChange={(e) => setCompanyName(e.target.value)} required />
+                  </div>
+                  <div className="col-md-6">
+                    <input type="text" className="form-control" placeholder="Position" value={specialReq} onChange={(e) => setSpecialReq(e.target.value)} />
+                  </div>
+                  <div className="col-md-6">
+                    <select value={userType} onChange={(e) => setUserType(e.target.value)} required>
+                      <option value="">User Type</option>
+                      <option value="Visitor">Visitor</option>
+                      <option value="Exhibitor">Exhibitor</option>
+                      <option value="Sponsor">Sponsor</option>
+                    </select>
+                  </div>
+                  <div className="col-md-6">
+                    <select value={sponsorPackage} onChange={(e) => setSponsorPackage(e.target.value)}>
+                      <option value="">Refferal Source</option>
+                      <option value="Facebook">Facebook</option>
+                      <option value="Linkdin">Linkdin</option>
+                      <option value="Instgram">Instgram</option>
+                      <option value="GoogleSearch">Google Search</option>
+                      <option value="News">News</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+
+                  {/* <div className="col-12">
+                        <textarea rows="3" placeholder="Products / Services to Showcase" value={products} onChange={(e) => setProducts(e.target.value)} />
+                      </div> */}
+
+                  <div className="col-12">
+                    <div className="form-check">
+                      <input className="form-check-input" type="checkbox" id="terms" required />
+                      <label className="form-check-label" htmlFor="terms">
+                        I agree to the <Link to="/terms" className="pink">Terms & Conditions</Link>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="col-12">
+                    <button type="submit" className="btn bg-pink text-white w-100" disabled={loading}>
+                      {loading ? "Registering..." : "Register"}
+                    </button>
+                  </div>
+
+                  <div className="col-12 text-center">
+                    <small className="text-grey">
+                      Already have an account? <Link to="/Login" className="pink">Login</Link>
+                    </small>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+
           </div>
+        </div>
+      </div>
       {/*--Book now Section end*/}
 
-     
+
     </div>
   );
 }

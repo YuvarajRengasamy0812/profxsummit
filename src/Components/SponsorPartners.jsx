@@ -133,6 +133,11 @@ export default function SponsorPartners() {
                     showTitle={false}
                 />
                 <SponsorSection
+                    title="Standard Sponsors"
+                    items={getCategoryItems("STANDARD")}
+                    showTitle={false}
+                />
+                <SponsorSection
                     title="Other Sponsors"
                     items={getCategoryItems("OTHERS")}
                     showTitle={true} // hide title for Others category

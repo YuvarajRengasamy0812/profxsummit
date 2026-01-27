@@ -286,7 +286,7 @@ const BoothModal = ({ booth, onClose, onReserve }) => {
 
                                     <hr />
 
-                                    <h5>Total Payable: ₹{total}</h5>
+                                    <h5>Total Payable: ${total}</h5>
 
                                 </div>
                                 <div className="summary-box bg-lightgrey p-4 rounded mt-5">
@@ -366,7 +366,7 @@ const BoothModal = ({ booth, onClose, onReserve }) => {
                         {paymentMethod === "now" && (
                             <div className="payment-box mb-3">
                                 <h6>NowPayments</h6>
-                                <p>Amount: ₹{total.toFixed(2)}</p>
+                                <p>Amount: ${total.toFixed(2)}</p>
                                 <button className="btn bg-pink text-white">Pay Now</button>
                             </div>
                         )}
@@ -375,7 +375,7 @@ const BoothModal = ({ booth, onClose, onReserve }) => {
                         {paymentMethod === "stripe" && (
                             <div className="payment-box mb-3">
                                 <h6>Stripe</h6>
-                                <p>Amount: ₹{total.toFixed(2)}</p>
+                                <p>Amount: ${total.toFixed(2)}</p>
                                 <button className="btn bg-blue text-white">Pay Now</button>
                             </div>
                         )}
@@ -401,7 +401,7 @@ const BoothModal = ({ booth, onClose, onReserve }) => {
                                     <div className="col-lg-6 col-12 d-flex flex-column gap-3 justify-content-center align-items-start">
                                         <h6>Upload Payment Proof for Verification</h6>
                                         <label>Amount to be Paid</label>
-                                        <input type="text" value={total} disabled />
+                                        <input type="text" value={`$${total}`} disabled />
                                         <input type="file" onChange={(e) => setPaymentImage(e.target.files[0])} />
                                     </div>
                                 </div>
@@ -451,7 +451,7 @@ const BoothModal = ({ booth, onClose, onReserve }) => {
                                         </select>
 
                                         <label>Amount to be Paid</label>
-                                        <input type="text" value={total} disabled />
+                                        <input type="text" value={`$${total}`} disabled />
                                         <input type="file" onChange={(e) => setPaymentImage(e.target.files[0])} />
                                     </div>
                                 </div>
@@ -480,7 +480,7 @@ const BoothModal = ({ booth, onClose, onReserve }) => {
                                     <div className="bank-upload d-flex flex-column gap-3">
                                         <h6>Upload Payment Proof for Verification</h6>
                                         <label>Amount to be Paid</label>
-                                        <input type="text" value={total} disabled />
+                                        <input type="text" value={`$${total}`} disabled />
                                         <input type="file" onChange={(e) => setPaymentImage(e.target.files[0])} />
                                     </div>
                                 </div>

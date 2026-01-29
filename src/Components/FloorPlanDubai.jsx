@@ -11,34 +11,34 @@ const FloorPlanDubai = () => {
   const [reservedBooths, setReservedBooths] = useState([]);
 
 
- const [booths, setBooths] = useState([]);
+  const [booths, setBooths] = useState([]);
 
- useEffect(() => {
-  axios
-    .get("https://profxsummit.com/adminpanel/api/v1/floorplanList")
-    .then((res) => {
-      const tickets = res.data.details.tickets.data;
+  useEffect(() => {
+    axios
+      .get("https://profxsummit.com/adminpanel/api/v1/floorplanList")
+      .then((res) => {
+        const tickets = res.data.details.tickets.data;
 
-      const reserved = tickets
-        .filter((t) => t.boothno)
-        .map((t) => ({
-          boothNo: String(t.boothno),
-          companyName: t.company || "",
-          // ✅ Set default placeholder if logo is missing
-          logo: t.company_logo || "assets/images/booth-reserved/v-process.png",
-          url: t.company_url || "#",
-          title: t.boothtitle || "Reserved Booth",
-          size: t.boothsize || "",
-          // ✅ Optional: you can track approval status
-          approved: !!t.company_logo // if logo exists, assume approved
-        }));
+        const reserved = tickets
+          .filter((t) => t.boothno)
+          .map((t) => ({
+            boothNo: String(t.boothno),
+            companyName: t.company || "",
+            // ✅ Set default placeholder if logo is missing
+            logo: t.company_logo || "assets/images/booth-reserved/v-process.png",
+            url: t.company_url || "#",
+            title: t.boothtitle || "Reserved Booth",
+            size: t.boothsize || "",
+            // ✅ Optional: you can track approval status
+            approved: !!t.company_logo // if logo exists, assume approved
+          }));
 
-      setReservedBooths(reserved);
-    })
-    .catch((err) => {
-      console.error("Error fetching floorplan:", err);
-    });
-}, []);
+        setReservedBooths(reserved);
+      })
+      .catch((err) => {
+        console.error("Error fetching floorplan:", err);
+      });
+  }, []);
 
   const getReservedInfo = (boothNo) =>
     reservedBooths.find((b) => b.boothNo === String(boothNo));
@@ -177,65 +177,65 @@ const FloorPlanDubai = () => {
             {/* ===== TOP ROW ===== */}
 
             {/* Official Sponsor */}
-<Booth
-  boothId="OFFICIAL-01"
-   boothType="official"
-  boothNo="1"
-    size="4 x 3"
-  title={"Official\nSponsor"}
-  x={startX + 180}
-  y={startY + 50}
-  width={120}
-  height={90}
-  fontSize={14}
-  color={colors.official}
-        isReserved={!!getReservedInfo("1")}
-          reservedInfo={getReservedInfo("1")}
-  onClick={setSelectedBooth}
-/>
+            <Booth
+              boothId="OFFICIAL-01"
+              boothType="official"
+              boothNo="1"
+              size="4 x 3"
+              title={"Official\nSponsor"}
+              x={startX + 180}
+              y={startY + 50}
+              width={120}
+              height={90}
+              fontSize={14}
+              color={colors.official}
+              isReserved={!!getReservedInfo("1")}
+              reservedInfo={getReservedInfo("1")}
+              onClick={setSelectedBooth}
+            />
 
-         
+
 
 
 
 
             {/* Gold Booths Row - 2 booths */}
-       {Array.from({ length: 2 }).map((_, i) => {
-  const number = i + 3; // boothNo = 3, 4
-  const id = `GOLD-${number}`;
+            {Array.from({ length: 2 }).map((_, i) => {
+              const number = i + 3; // boothNo = 3, 4
+              const id = `GOLD-${number}`;
 
-  const reservedInfo = getReservedInfo(number);
+              const reservedInfo = getReservedInfo(number);
 
-  return (
-    <Booth
-      key={id}
-      boothId={id}
-      boothType="gold"
-      boothNo={number}
-      size="2 x 3"
-      x={startX + 355 + i * 120}
-      y={startY + 52}
-      width={120}
-      height={72}
-      color={colors.gold}
-      title={"Gold\nBooth"}
-      fontSize={12}
+              return (
+                <Booth
+                  key={id}
+                  boothId={id}
+                  boothType="gold"
+                  boothNo={number}
+                  size="2 x 3"
+                  x={startX + 355 + i * 120}
+                  y={startY + 52}
+                  width={120}
+                  height={72}
+                  color={colors.gold}
+                  title={"Gold\nBooth"}
+                  fontSize={12}
 
-      /* ✅ CORRECT RESERVE CHECK */
-      isReserved={!!reservedInfo}
-      reservedInfo={reservedInfo}
+                  /* ✅ CORRECT RESERVE CHECK */
+                  isReserved={!!reservedInfo}
+                  reservedInfo={reservedInfo}
 
-      onClick={setSelectedBooth}
-    />
-  );
-})}
+                  onClick={setSelectedBooth}
+                />
+              );
+            })}
 
 
             {/* Silver Booths Row - 5 booths */}
             {Array.from({ length: 5 }).map((_, i) => {
               const number = i + 11;
               const id = `SILVER-${number}`;
-                const reservedInfo = getReservedInfo(number);
+              const reservedInfo = getReservedInfo(number);
               return (
                 <Booth
                   key={id}
@@ -250,10 +250,10 @@ const FloorPlanDubai = () => {
                   color={colors.silver}
                   title={"Silver\nBooth"}
                   fontSize={12}
-                   isReserved={!!reservedInfo}
-      reservedInfo={reservedInfo}
+                  isReserved={!!reservedInfo}
+                  reservedInfo={reservedInfo}
 
-      onClick={setSelectedBooth}
+                  onClick={setSelectedBooth}
                 />
               );
             })}
@@ -313,10 +313,10 @@ const FloorPlanDubai = () => {
               color={colors.exclusive}
               title={"Exclusive\nSponsor"}
               fontSize={14}
-        isReserved={!!getReservedInfo("2")}
-          reservedInfo={getReservedInfo("2")}
-  onClick={setSelectedBooth}
-              /* 🔒 always reserved */
+              isReserved={!!getReservedInfo("2")}
+              reservedInfo={getReservedInfo("2")}
+              onClick={setSelectedBooth}
+            /* 🔒 always reserved */
 
             />
 
@@ -366,7 +366,7 @@ const FloorPlanDubai = () => {
               const num = i + 5; // 5, 6
               const id = `DIAMOND-${num}`;
               const isDiamond5 = id === "DIAMOND-5";
- const reservedInfo = getReservedInfo(num);
+              const reservedInfo = getReservedInfo(num);
               return (
                 <Booth
                   key={id}
@@ -382,8 +382,8 @@ const FloorPlanDubai = () => {
                   title={"Diamond\nBooth"}
                   fontSize={14}
 
-                 isReserved={!!reservedInfo}
-      reservedInfo={reservedInfo}
+                  isReserved={!!reservedInfo}
+                  reservedInfo={reservedInfo}
                   onClick={setSelectedBooth}
                 />
               );
@@ -395,7 +395,7 @@ const FloorPlanDubai = () => {
               const boothNumbers = [16, 17, 18, 19];
               const num = boothNumbers[i];
               const id = `SILVER-${num}`;
- const reservedInfo = getReservedInfo(num);
+              const reservedInfo = getReservedInfo(num);
               return (
                 <Booth
                   key={id}
@@ -410,8 +410,8 @@ const FloorPlanDubai = () => {
                   color={colors.silver}
                   title={"Silver\nBooth"}
                   fontSize={12}
-                isReserved={!!reservedInfo}
-      reservedInfo={reservedInfo}
+                  isReserved={!!reservedInfo}
+                  reservedInfo={reservedInfo}
                   onClick={setSelectedBooth}
                 />
               );
@@ -425,7 +425,7 @@ const FloorPlanDubai = () => {
               const col = i % 2;              // 2 columns
               const row = Math.floor(i / 2);  // 3 rows
               const id = `STANDARD-${num}`;
- const reservedInfo = getReservedInfo(num);
+              const reservedInfo = getReservedInfo(num);
               return (
                 <Booth
                   key={id}
@@ -440,8 +440,8 @@ const FloorPlanDubai = () => {
                   color={colors.standard}
                   title={`Standard\nBooth`}
                   fontSize={10}
-                                  isReserved={!!reservedInfo}
-      reservedInfo={reservedInfo}
+                  isReserved={!!reservedInfo}
+                  reservedInfo={reservedInfo}
                   onClick={setSelectedBooth}
                 />
               );
@@ -514,8 +514,8 @@ const FloorPlanDubai = () => {
               const boothNumbers = [7, 8, 9, 10];
               const num = boothNumbers[i];
               const id = `GOLD-${num}`;
- const reservedInfo = getReservedInfo(num);
-             
+              const reservedInfo = getReservedInfo(num);
+
 
               return (
                 <Booth
@@ -534,7 +534,7 @@ const FloorPlanDubai = () => {
 
                   /* 🔒 lock only booth 8 */
                   isReserved={!!reservedInfo}
-      reservedInfo={reservedInfo}
+                  reservedInfo={reservedInfo}
                   onClick={setSelectedBooth}
                 />
               );
@@ -547,7 +547,7 @@ const FloorPlanDubai = () => {
               const boothNumbers = [26, 27, 28, 29, 30];
               const num = boothNumbers[i];
               const id = `SILVER-${num}`;
-             const reservedInfo = getReservedInfo(num);
+              const reservedInfo = getReservedInfo(num);
 
               return (
                 <Booth
@@ -564,9 +564,9 @@ const FloorPlanDubai = () => {
                   title={"Silver\nBooth"}
                   fontSize={11}
 
- /* 🔒 lock only booth 8 */
+                  /* 🔒 lock only booth 8 */
                   isReserved={!!reservedInfo}
-      reservedInfo={reservedInfo}
+                  reservedInfo={reservedInfo}
                   onClick={setSelectedBooth}
                 />
               );

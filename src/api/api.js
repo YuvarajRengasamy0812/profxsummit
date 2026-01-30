@@ -1,10 +1,10 @@
 import axios from "axios";
 
 // const API = axios.create({ baseURL: 'http://localhost:4000/api/'});
-// const API = axios.create({baseURL:"http://localhost/profinsummit/api/v1"})
-const API = axios.create({
-  baseURL: "https://profxsummit.com/adminpanel/api/v1",
-});
+const API = axios.create({baseURL:"http://localhost/profxsummitbackend/api/v1"})
+// const API = axios.create({
+//   baseURL: "https://profxsummit.com/adminpanel/api/v1",
+// });
 
 
 API.interceptors.request.use((request) => {

@@ -212,7 +212,7 @@ const FloorPlanDubai = () => {
       boothId={id}
       boothType="gold"
       boothNo={number}
-      size="2 x 3"
+      size="4 x 3"
       x={startX + 355 + i * 120}
       y={startY + 52}
       width={120}
@@ -402,7 +402,7 @@ const FloorPlanDubai = () => {
                   boothId={id}
                   boothType="silver"
                   boothNo={num}
-                  size="4 x 3"
+                  size="3 x 2"
                   x={startX + 650 + (i % 2) * 63}
                   y={startY + 180 + Math.floor(i / 2) * 82}
                   width={63}
@@ -523,7 +523,7 @@ const FloorPlanDubai = () => {
                   boothId={id}
                   boothType="gold"
                   boothNo={num}
-                  size="2 x 3"
+                  size="4 x 3"
                   x={startX + 355 + (i % 2) * 120}
                   y={startY + 310 + Math.floor(i / 2) * 65}
                   width={120}

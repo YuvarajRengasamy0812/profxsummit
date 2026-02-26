@@ -106,6 +106,10 @@ const Register = () => {
       );
 
       if (res.data.code === "1" || res.data.code === 1) {
+        if (typeof window !== "undefined" && typeof window.gtag === "function") {
+          window.gtag("event", "sign_up", { method: "register_form" });
+          window.gtag("event", "conversion", { send_to: "AW-16663879548/vKA5CIeCoMgZEPy--ok-" });
+        }
         // ✅ Success SweetAlert
         await Swal.fire({
           icon: "success",

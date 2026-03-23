@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PageHelmet from "../Components/Pagehelmet";
 import Breadcrumb from "../Components/Breadcrumb";
-import axios from "axios";
+import API from "../api/api";
 import Swal from "sweetalert2";
 import 'sweetalert2/dist/sweetalert2.min.css';
 import { Eye, EyeOff, Globe, Mail, PhoneCall, Pin } from "lucide-react";
@@ -21,19 +21,11 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post(
-        "https://profxsummit.com/adminpanel/api/v1/login", // Laravel API URL
-        {
-          api_key: "772414293281728", // Replace with your actual API key
+      const res = await API.post("/login", {
+          api_key: process.env.REACT_APP_API_KEY,
           email: email,
           password: password
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      );
+        });
 
       // ✅ Check code === 1
       if (res.data.code === "1" || res.data.code === 1) {

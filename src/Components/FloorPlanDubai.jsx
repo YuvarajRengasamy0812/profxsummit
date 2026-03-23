@@ -15,7 +15,7 @@ const FloorPlanDubai = () => {
 
   useEffect(() => {
     axios
-      .get("https://profxsummit.com/adminpanel/api/v1/floorplanList")
+      .get(`${process.env.REACT_APP_API_URL}/floorplanList`)
       .then((res) => {
         const tickets = res.data.details.tickets.data;
 

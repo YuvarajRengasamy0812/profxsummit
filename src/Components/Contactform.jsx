@@ -47,7 +47,7 @@ const ContactForm = () => {
 
     try {
       const response = await postContactForm({
-        api_key: "772414293281728",
+        api_key: process.env.REACT_APP_API_KEY,
         contact_name: formData.name,
         contact_email: formData.email,
         contact_phone: digitsOnly,

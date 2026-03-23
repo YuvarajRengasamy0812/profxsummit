@@ -129,11 +129,10 @@ const BoothModal = ({ booth, onClose, onReserve }) => {
         );
         formData.append("file", paymentImage);
 
-        // 🔑 API KEY (🔥 THIS WAS MISSING 🔥)
-        formData.append("api_key", "772414293281728");
+        formData.append("api_key", process.env.REACT_APP_API_KEY);
 
         const response = await fetch(
-            "https://profxsummit.com/adminpanel/api/v1/floorplansubmit",
+            `${process.env.REACT_APP_API_URL}/floorplansubmit`,
             {
                 method: "POST",
                 headers: {

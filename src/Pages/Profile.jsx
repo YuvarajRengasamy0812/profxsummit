@@ -1,23 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import PageHelmet from "../Components/Pagehelmet";
 import Breadcrumb from "../Components/Breadcrumb";
 import { User, Camera } from "lucide-react";
 
 const Profile = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("profile");
   const [avatar, setAvatar] = useState("assets/images/resources/avatar.png");
+  const [user, setUser] = useState(null);
 
-  // Dummy user data for UI only
-  const user = {
-    full_name: "John Doe",
-    email: "john@example.com",
-    company_name: "Example Corp",
-    phone: "+971 50 123 4567",
-    nationality: "UAE",
-    sponsor_package: "Gold",
-    special_requirements: "None",
-    user_type: "Attendee",
-  };
+  useEffect(() => {
+    const stored = localStorage.getItem("user");
+    if (stored) {
+      setUser(JSON.parse(stored));
+    } else {
+      navigate("/Login");
+    }
+  }, [navigate]);
 
   // Handle profile picture change
   const handleAvatarChange = (e) => {
@@ -26,6 +26,8 @@ const Profile = () => {
       setAvatar(file);
     }
   };
+
+  if (!user) return null;
 
   return (
     <>
@@ -123,23 +125,13 @@ const Profile = () => {
 
               {/* MY BOOTH SECTION */}
               {activeTab === "booth" && (
-                <div className="bg-white rounded shadow p-4">
-                  <h5 className="pink mb-3">My Booth</h5>
-                  <div className="row g-4">
-
-                    {/* Booth Card Example */}
-                    {["Booth A", "Booth B", "Booth C"].map((booth, i) => (
-                      <div key={i} className="col-md-4">
-                        <div className="border rounded shadow-sm p-3 text-center hover-shadow" style={{ transition: "0.3s", cursor: "pointer" }}>
-                          <div className="mb-2" style={{ fontSize: 32, color: "#ff66b3" }}>🏟️</div>
-                          <h6>{booth}</h6>
-                          <p className="text-muted">Location: Hall {i+1}</p>
-                          <span className="badge bg-pink text-white">Reserved</span>
-                        </div>
-                      </div>
-                    ))}
-
-                  </div>
+                <div className="bg-white rounded shadow p-4 text-center py-5">
+                  <div className="mb-3" style={{ fontSize: 64, color: "#ff66b3" }}>🏟️</div>
+                  <h5 className="mb-2">No Booth Booked Yet</h5>
+                  <p className="text-muted mb-4">You haven't booked a booth yet. Explore our floor plan to find and reserve your perfect spot.</p>
+                  <Link to="/Floorplan" className="btn bg-pink text-white px-4">
+                    View Floor Plan
+                  </Link>
                 </div>
               )}
 

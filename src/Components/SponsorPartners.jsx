@@ -47,7 +47,7 @@ export default function SponsorPartners() {
         const fetchSponsors = async () => {
             try {
                 const { data } = await axios.get(
-                    "https://profxsummit.com/adminpanel/api/v1/website/Sponsors"
+                    `${process.env.REACT_APP_API_URL}/website/Sponsors`
                 );
 
                 if (data.success) {

@@ -1,15 +1,12 @@
 import axios from "axios";
 
-// const API = axios.create({ baseURL: 'http://localhost:4000/api/'});
-// const API = axios.create({baseURL:"http://localhost/profxsummitbackend/api/v1"})
 const API = axios.create({
-  baseURL: "https://profxsummit.com/adminpanel/api/v1",
+  baseURL: process.env.REACT_APP_API_URL,
 });
-
 
 API.interceptors.request.use((request) => {
   const token = localStorage.getItem("token");
-  const basicAuth = `Basic ` + btoa("profxsummit:772414293281728");
+  const basicAuth = `Basic ` + btoa(`${process.env.REACT_APP_API_USER}:${process.env.REACT_APP_API_KEY}`);
   request.headers.authorization = basicAuth;
   if (token) {
     request.headers.token = `Bearer ${token}`;

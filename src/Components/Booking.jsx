@@ -46,7 +46,7 @@ const BookingForm = () => {
 
     try {
       const response = await postBookingForm({
-        api_key: "772414293281728",
+        api_key: process.env.REACT_APP_API_KEY,
         name: formData.name,
         email: formData.email,
         phone: digitsOnly,

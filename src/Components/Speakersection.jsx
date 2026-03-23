@@ -6,7 +6,7 @@ const Speakersection = () => {
   const [speakersData, setSpeakersData] = useState([]);
 
   useEffect(() => {
-    fetch("https://profxsummit.com/adminpanel/api/v1/website/speakers")
+    fetch(`${process.env.REACT_APP_API_URL}/website/speakers`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {

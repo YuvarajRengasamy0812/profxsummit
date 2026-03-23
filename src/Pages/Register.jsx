@@ -6,7 +6,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import Select from "react-select";
 import countryList from "react-select-country-list";
-import axios from "axios";
+import API from "../api/api";
 import Swal from "sweetalert2";
 import 'sweetalert2/dist/sweetalert2.min.css';
 import { Eye, EyeOff, Globe, Mail, PhoneCall, Pin } from "lucide-react";
@@ -83,10 +83,8 @@ const Register = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post(
-        "https://profxsummit.com/adminpanel/api/v1/register",
-        {
-          api_key: "772414293281728",
+      const res = await API.post("/register", {
+          api_key: process.env.REACT_APP_API_KEY,
           full_name: fullName,
           email: email,
           company_name: companyName,
@@ -94,15 +92,11 @@ const Register = () => {
           user_type: userType,
           nationality: nationality?.label || "",
           password: password,
-          password_confirmation: confirmPassword, // ✅ important fix
+          password_confirmation: confirmPassword,
           special_requirements: specialReq,
           sponsor_package: sponsorPackage,
           products_services: products
-        },
-        {
-          headers: { "Content-Type": "application/json" }
-        }
-      );
+        });
 
       if (res.data.code === "1" || res.data.code === 1) {
         if (typeof window !== "undefined" && typeof window.gtag === "function") {

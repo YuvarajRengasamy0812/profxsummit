@@ -8,22 +8,20 @@ const CustomNavbar = () => {
   const { user, logout } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [companyOpen, setCompanyOpen] = useState(false);
-  const [menuLinks, setMenuLinks] = useState([]);
+  const [menuLinks, setMenuLinks] = useState(() => {
+    const cached = sessionStorage.getItem("menuLinks");
+    return cached ? JSON.parse(cached) : [];
+  });
+
   useEffect(() => {
-    getHedaerList()
-
-  }, [])
-
-  const getHedaerList = () => {
     getAllHeader()
       .then((res) => {
-        console.log("header data", res);
-        setMenuLinks(res?.data?.links);
+        const links = res?.data?.links || [];
+        setMenuLinks(links);
+        sessionStorage.setItem("menuLinks", JSON.stringify(links));
       })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+      .catch(() => {});
+  }, []);
 
   return (
     <>

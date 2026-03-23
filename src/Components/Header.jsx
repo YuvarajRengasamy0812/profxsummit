@@ -12,54 +12,50 @@ import { useAuth } from "./AuthContext";
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const { user, logout } = useAuth();
-  const [social, setSocial] = useState([]);
-  const [topbar, setTopBar] = useState([]);
-  const [logo, setLogo] = useState([]);
+  const [social, setSocial] = useState(() => {
+    const cached = sessionStorage.getItem("social");
+    return cached ? JSON.parse(cached) : [];
+  });
+  const [topbar, setTopBar] = useState(() => {
+    const cached = sessionStorage.getItem("topbar");
+    return cached ? JSON.parse(cached) : [];
+  });
+  const [logo, setLogo] = useState(() => {
+    const cached = sessionStorage.getItem("logo");
+    return cached ? JSON.parse(cached) : [];
+  });
 
   useEffect(() => {
-    getSocialList();
-    getTopBarList();
-    getLogo();
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20); // change after 20px scroll
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-
-  }, [])
-
-  const getSocialList = () => {
     getAllSocial()
       .then((res) => {
-
-        setSocial(res?.data?.details);
+        const data = res?.data?.details || [];
+        setSocial(data);
+        sessionStorage.setItem("social", JSON.stringify(data));
       })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+      .catch(() => {});
 
-  const getTopBarList = () => {
     getAllTopBar()
       .then((res) => {
-
-        setTopBar(res?.data?.details);
+        const data = res?.data?.details || [];
+        setTopBar(data);
+        sessionStorage.setItem("topbar", JSON.stringify(data));
       })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  const getLogo = () => {
+      .catch(() => {});
+
     getAllLog()
       .then((res) => {
-
-        setLogo(res?.data?.details);
+        const data = res?.data?.details || [];
+        setLogo(data);
+        sessionStorage.setItem("logo", JSON.stringify(data));
       })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+      .catch(() => {});
+
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   return (
     <header className={`main_header_area w-100 site-header position-absolute w-100 site-header ${isScrolled ? "scrolled" : ""}`}>
       {/* Top bar with social and contact info */}

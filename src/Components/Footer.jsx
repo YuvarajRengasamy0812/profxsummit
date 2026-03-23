@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import BackToTop from "../Components/Backtotop";
 import SubscribeForm from "./SubscribeForm";
+import { getAllSocial } from "../api/socialmedia";
 
 function Footer() {
+  const [social, setSocial] = useState(() => {
+    const cached = sessionStorage.getItem("social");
+    return cached ? JSON.parse(cached) : null;
+  });
+
+  useEffect(() => {
+    if (!social) {
+      getAllSocial()
+        .then((res) => {
+          const data = res?.data?.details || {};
+          setSocial(data);
+          sessionStorage.setItem("social", JSON.stringify(data));
+        })
+        .catch(() => {});
+    }
+  }, [social]);
   return (
     <div>
       {/*--Subscribe Section start--*/}
@@ -54,50 +71,17 @@ function Footer() {
                 recognition.
               </p>
               <div className="footer-socials pb-6">
-                {/* <ul className="m-0 p-0 d-flex gap-2 justify-content-center">
-                  {[
-                    "facebook",
-                    "twitter",
-                    "google",
-                    "instagram",
-                    "youtube-play",
-                  ].map((icon, i) => (
-                    <li key={i} className="d-inline">
-                      <a
-                        href="#"
-                        className="d-inline-block rounded-circle bg-white  bg-opacity-25"
-                      >
-                        <i className={`fa fa-${icon}`}></i>
-                      </a>
-                    </li>
-                  ))}
-                </ul> */}
                 <ul className="m-0 p-0 d-flex gap-2 justify-content-center">
                   {[
-                    {
-                      icon: "facebook",
-                      url: "https://www.facebook.com/share/qVva5zrCuYdkqGJJ/?mibextid=qi2Omg",
-                    },
-                    {
-                      icon: "twitter",
-                      url: "https://x.com/profx_media",
-                    },
-                    {
-                      icon: "instagram",
-                      url: "https://www.instagram.com/profxmedia.official/",
-                    },
-                    {
-                      icon: "youtube",
-                      url: "https://www.youtube.com/@ProfxMedia",
-                    },
-                    {
-                      icon: "linkedin",
-                      url: "https://www.linkedin.com/company/profxmedia/",
-                    },
+                    { icon: "facebook", url: social?.facebook },
+                    { icon: "twitter", url: social?.twitter },
+                    { icon: "instagram", url: social?.instagram },
+                    { icon: "youtube", url: social?.youtube },
+                    { icon: "linkedin", url: social?.linkedin },
                   ].map((item, i) => (
                     <li key={i} className="d-inline">
                       <a
-                        href={item.url}
+                        href={item.url || "#"}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="d-inline-block rounded-circle bg-white  bg-opacity-25"

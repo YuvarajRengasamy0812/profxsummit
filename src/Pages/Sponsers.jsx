@@ -26,8 +26,19 @@ function Sponsers() {
                 ProFX Summit Dubai 2026 offers a wide range of sponsorship opportunities designed to maximize your brand exposure, authority, and engagement across the summit venue, digital platforms, and marketing campaigns.
               </p>
 
-              <a href="#" className="btn primary-btn px-4 py-3">
-                Become a Sponsor
+              <a
+                href="/assets/brochure/ProFX Summit Dubai 2026 - Sponsorship Brochure.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn primary-btn px-4 py-3"
+                onClick={() => {
+                  const link = document.createElement("a");
+                  link.href = "/assets/brochure/ProFX Summit Dubai 2026 - Sponsorship Brochure.pdf";
+                  link.download = "ProFX Summit Dubai 2026 - Sponsorship Brochure.pdf";
+                  link.click();
+                }}
+              >
+                Download Sponsorship Brochure
               </a>
             </div>
 

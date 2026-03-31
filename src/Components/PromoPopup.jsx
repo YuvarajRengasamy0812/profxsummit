@@ -37,7 +37,7 @@ function PromoPopup() {
         <div
           className="promo-image-wrap"
           style={{ cursor: "pointer" }}
-          onClick={() => { handleClose(); navigate("/Booknow"); }}
+          onClick={() => { handleClose(); navigate("/Register"); }}
         >
           <img
             src="/assets/images/promo/promo-banner.jpeg"

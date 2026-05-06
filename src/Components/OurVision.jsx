@@ -7,28 +7,28 @@ gsap.registerPlugin(ScrollTrigger);
 
 const milestones = [
   {
-    year: "18 June 2026",
+    year: "25 June 2026",
     title: "Opening Ceremony & Keynotes",
     description:
       "<b>PROFX SUMMIT DUBAI 2026</b> kicks off with a grand opening ceremony followed by keynote speeches from global Forex finance and FinTech leaders.",
     icon: <CreditCard size={24} />,
   },
   {
-    year: "18 June 2026",
+    year: "25 June 2026",
     title: "Panels & Exhibition",
     description:
       "Day 1 features in-depth panel discussions on Forex, FinTech, and Trading Innovation, alongside live exhibition booths open throughout the day.",
     icon: <Image size={24} />,
   },
   {
-    year: "19 June 2026",
+    year: "26 June 2026",
     title: "Expert Talks & Networking",
     description:
       "Day 2 offers fireside chats, advanced panels on market trends and technology, and dedicated investor and partner networking sessions.",
     icon: <Layers size={24} />,
   },
   {
-    year: "19 June 2026",
+    year: "26 June 2026",
     title: "PROFX Awards Ceremony",
     description:
       "The summit concludes with the prestigious PROFX Awards, celebrating excellence, innovation, and leadership within the global finance ecosystem.",

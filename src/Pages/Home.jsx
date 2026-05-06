@@ -110,7 +110,7 @@ function Home() {
                   >
                     <ul className="m-0 ps-0 d-sm-flex justify-content-center justify-content-lg-start list-unstyled">
                       <li className="pe-2 border-end border-1 border-lightgrey">
-                        <i className="fa fa-calendar-o pe-1"></i> 18-19 June 2026
+                        <i className="fa fa-calendar-o pe-1"></i> 25-26 June 2026
                       </li>
                       <li className="ps-2">
                         <i className="fa fa-map-marker pe-1"></i>Le Méridien,
@@ -246,7 +246,7 @@ function Home() {
                               <Link to="/Contact">
                                 <h5 className="mb-1">WHEN</h5>
                                 <small className="pink">
-                                  Thu & Fri <br /> June 18-19, 2026
+                                  Thu & Fri <br /> June 25-26, 2026
                                 </small>
                               </Link>
                             </div>

@@ -28,7 +28,7 @@ const SchedulesSection = () => {
                   <div className="col-lg-3 col-md-4 mt-lg-5 mt-md-5 pt-lg-3 pt-md-3">
                     <div className="schedule-day text-center text-sm-start py-6 position-relative ps-2 z-1">
                       <h4 className="pink mb-2">1ST DAY</h4>
-                      <h6 className="mb-2">JUNE 18, 2026</h6>
+                      <h6 className="mb-2">JUNE 25, 2026</h6>
                       <p>
                         PROFX Summit
                         <br />
@@ -126,7 +126,7 @@ const SchedulesSection = () => {
                   <div className="col-lg-3 col-md-4 mt-lg-5 mt-md-5 pt-lg-3 pt-md-3">
                     <div className="schedule-day text-center text-sm-start py-6 ps-2 z-1">
                       <h4 className="pink mb-2">2ND DAY</h4>
-                      <h6 className="mb-2">JUNE 19, 2026</h6>
+                      <h6 className="mb-2">JUNE 26, 2026</h6>
                       <p>
                         PROFX Summit
                         <br />

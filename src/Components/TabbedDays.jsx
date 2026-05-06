@@ -91,7 +91,7 @@ const TabbedDays = () => {
             Full Schedule - <span className="ag-pink"><b>PROFX SUMMIT DUBAI 2026</b></span>
           </h2>
           <p className="ag-text-grey mt-2">
-            <b>PROFX SUMMIT DUBAI 2026</b> is a premier two-day global finance summit featuring keynote speeches by industry leaders, panel discussions on Forex, FinTech & Trading Innovation, exhibition showcases, and exclusive networking opportunities. Join us on 18-19 June 2026 at  Le Méridien, Airport Road, Dubai, UAE.
+            <b>PROFX SUMMIT DUBAI 2026</b> is a premier two-day global finance summit featuring keynote speeches by industry leaders, panel discussions on Forex, FinTech & Trading Innovation, exhibition showcases, and exclusive networking opportunities. Join us on 25-26 June 2026 at  Le Méridien, Airport Road, Dubai, UAE.
           </p>
         </div>
 

@@ -1,7 +1,7 @@
 // src/Components/Countdown.js
 import React, { useState, useEffect } from 'react';
 
-const Countdown = ({ targetDate = '2026-06-18T23:59:59' }) => {
+const Countdown = ({ targetDate = '2026-06-25T23:59:59' }) => {
   const [timeLeft, setTimeLeft] = useState({});
   const [expired, setExpired] = useState(false);
 

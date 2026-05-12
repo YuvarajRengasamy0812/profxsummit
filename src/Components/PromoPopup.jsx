@@ -40,7 +40,7 @@ function PromoPopup() {
           onClick={() => { handleClose(); navigate("/Register"); }}
         >
           <img
-            src="/assets/images/promo/promo-banner.jpeg"
+            src="/assets/images/promo/promo-banner.png"
             alt="ProFX Summit Dubai 2026 Promotion"
             className="promo-img"
           />

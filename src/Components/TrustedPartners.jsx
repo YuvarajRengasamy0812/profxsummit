@@ -16,7 +16,7 @@ export default function TrustedPartners() {
   const getTrustedList = () => {
     getAllTrustedPartners()
       .then((res) => {
-        setTrusted(res?.data?.topics);
+        setTrusted(res?.data?.topics || []);
       })
       .catch((err) => {
         console.log(err);

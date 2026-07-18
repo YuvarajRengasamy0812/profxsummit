@@ -4,7 +4,7 @@ import Booth from "./Booth";
 import FloorBorder from "./FloorBorder";
 import { createPortal } from "react-dom";
 import BoothModal from "./BoothModal";
-import axios from "axios";
+import API from "../api/api";
 
 const FloorPlanDubai = () => {
   const [selectedBooth, setSelectedBooth] = React.useState(null);
@@ -14,10 +14,10 @@ const FloorPlanDubai = () => {
   const [booths, setBooths] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/floorplanList`)
+    API
+      .get("floorplanList")
       .then((res) => {
-        const tickets = res.data.details.tickets.data;
+        const tickets = res.data?.details?.tickets?.data || [];
 
         const reserved = tickets
           .filter((t) => t.boothno)

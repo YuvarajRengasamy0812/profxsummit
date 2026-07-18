@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import PageHelmet from "../Components/Pagehelmet";
 import Breadcrumb from "../Components/Breadcrumb";
 import API from "../api/api";
+import { API_KEY } from "../api/config";
 import Swal from "sweetalert2";
 import 'sweetalert2/dist/sweetalert2.min.css';
 import { Eye, EyeOff, Globe, Mail, PhoneCall, Pin } from "lucide-react";
@@ -22,7 +23,7 @@ const Login = () => {
 
     try {
       const res = await API.post("/login", {
-          api_key: process.env.REACT_APP_API_KEY,
+          api_key: API_KEY,
           email: email,
           password: password
         });

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { Link, X } from "lucide-react";
+import { X } from "lucide-react";
 import Swal from "sweetalert2";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { API_BASE_URL, API_KEY } from "../api/config";
 
 
 const BoothModal = ({ booth, onClose, onReserve }) => {
@@ -129,10 +130,10 @@ const BoothModal = ({ booth, onClose, onReserve }) => {
         );
         formData.append("file", paymentImage);
 
-        formData.append("api_key", process.env.REACT_APP_API_KEY);
+        formData.append("api_key", API_KEY);
 
         const response = await fetch(
-            `${process.env.REACT_APP_API_URL}/floorplansubmit`,
+            `${API_BASE_URL}/floorplansubmit`,
             {
                 method: "POST",
                 headers: {

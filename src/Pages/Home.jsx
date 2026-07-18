@@ -33,7 +33,7 @@ function Home() {
   const getSocialList = () => {
     getBrochure()
       .then((res) => {
-        setBrochure(res?.data?.topics);
+        setBrochure(res?.data?.topics || []);
       })
       .catch((err) => {
         console.log(err);

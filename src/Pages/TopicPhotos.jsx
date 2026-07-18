@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import { API_BASE_URL } from "../api/config";
 
 function TopicPhotos({ topicId, lang = "en" }) {
   const [photosData, setPhotosData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`https://profxawards.com/api/v1/topic/photos/${topicId}/${lang}`)
+    fetch(`${API_BASE_URL}/topic/photos/${topicId}/${lang}`)
       .then((res) => res.json())
       .then((data) => {
         setPhotosData(data);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import axios from "axios";
+import API from "../api/api";
 
 // SponsorSection component
 const SponsorSection = ({ title, items, single = false, showTitle = true }) => (
@@ -46,12 +46,10 @@ export default function SponsorPartners() {
     useEffect(() => {
         const fetchSponsors = async () => {
             try {
-                const { data } = await axios.get(
-                    `${process.env.REACT_APP_API_URL}/website/Sponsors`
-                );
+                const { data } = await API.get("website/Sponsors");
 
                 if (data.success) {
-                    setSponsors(data.categories);
+                    setSponsors(data.categories || []);
                 }
             } catch (error) {
                 console.error("Error fetching sponsors:", error);

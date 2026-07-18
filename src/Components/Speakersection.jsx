@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import API from "../api/api";
 
 const Speakersection = () => {
   const [speakersData, setSpeakersData] = useState([]);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/website/speakers`)
-      .then((res) => res.json())
-      .then((data) => {
+    API.get("website/speakers")
+      .then(({ data }) => {
         if (data.success) {
-          const formattedData = data.topics.map((item) => {
+          const formattedData = (data.topics || []).map((item) => {
             // convert fields array to object
             const fieldsObj = {};
             item.fields.forEach((field) => {

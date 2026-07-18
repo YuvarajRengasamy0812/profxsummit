@@ -14,7 +14,7 @@ const [media, setMedia] = useState([]);
   const getMediaList = () => {
     getAllMediaPartners()
       .then((res) => {
-        setMedia(res?.data?.topics);
+        setMedia(res?.data?.topics || []);
       })
       .catch((err) => {
         console.log(err);

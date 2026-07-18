@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import 'react-phone-input-2/lib/style.css';
 import { postBookingForm } from "../api/bookingform";
+import { API_KEY } from "../api/config";
 import Swal from "sweetalert2";
 import 'sweetalert2/themes/bulma.css';
 
@@ -46,7 +47,7 @@ const BookingForm = () => {
 
     try {
       const response = await postBookingForm({
-        api_key: process.env.REACT_APP_API_KEY,
+        api_key: API_KEY,
         name: formData.name,
         email: formData.email,
         phone: digitsOnly,

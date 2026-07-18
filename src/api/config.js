@@ -3,7 +3,7 @@ export const API_BASE_URL =
   "https://www.profxsummit.com/adminpanel/api/v1";
 
 export const API_KEY =
-  process.env.REACT_APP_API_KEY || "772414293281728";
+  process.env.REACT_APP_API_KEY || "187480897890259";
 
 const API_CACHE_VERSION = "profx-api-v2";
 

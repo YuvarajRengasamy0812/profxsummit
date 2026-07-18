@@ -4,7 +4,8 @@ import { X } from "lucide-react";
 import Swal from "sweetalert2";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import { API_BASE_URL, API_KEY } from "../api/config";
+import { API_KEY } from "../api/config";
+import { postFormApi } from "../api/post";
 
 
 const BoothModal = ({ booth, onClose, onReserve }) => {
@@ -132,18 +133,9 @@ const BoothModal = ({ booth, onClose, onReserve }) => {
 
         formData.append("api_key", API_KEY);
 
-        const response = await fetch(
-            `${API_BASE_URL}/floorplansubmit`,
-            {
-                method: "POST",
-                headers: {
-                    Accept: "application/json",
-                },
-                body: formData,
-            }
-        );
+        const response = await postFormApi("floorplansubmit", formData);
 
-        const result = await response.json();
+        const result = response.data;
 
         if (result.code === 1) {
             Swal.fire({

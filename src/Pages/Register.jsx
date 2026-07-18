@@ -6,8 +6,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import Select from "react-select";
 import countryList from "react-select-country-list";
-import API from "../api/api";
-import { API_KEY } from "../api/config";
+import { postApi } from "../api/post";
 import Swal from "sweetalert2";
 import 'sweetalert2/dist/sweetalert2.min.css';
 import { Eye, EyeOff, Globe, Mail, PhoneCall, Pin } from "lucide-react";
@@ -84,8 +83,7 @@ const Register = () => {
     setLoading(true);
 
     try {
-      const res = await API.post("/register", {
-          api_key: API_KEY,
+      const res = await postApi("register", {
           full_name: fullName,
           email: email,
           company_name: companyName,

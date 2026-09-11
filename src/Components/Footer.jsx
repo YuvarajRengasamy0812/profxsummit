@@ -112,7 +112,7 @@ function Footer() {
                   </Link>
                 </li>
                 <li className="d-inline mx-2">
-                  <Link to="/Pricing">
+                  <Link to="/Booknow">
                     <small>Booking</small>
                   </Link>
                 </li>

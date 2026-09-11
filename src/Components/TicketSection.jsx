@@ -9,7 +9,7 @@ const TicketSection = () => {
         <div className="container">
           <div className="price-inner text-center">
             <div className="price-title mb-7 w-lg-60 m-auto">
-              <p className="mb-1 pink">PRICING</p>
+              <p className="mb-1 pink">Booknow</p>
               <h2 className="mb-1">
                 YOUR TICKET TO <span className="pink">SUMMIT</span>
               </h2>
@@ -76,7 +76,7 @@ const TicketSection = () => {
                     </div>
 
                     <div className="ticket-button mt-auto p-6">
-                      <Link to="/Pricing" className="btn">
+                      <Link to="/Booknow" className="btn">
                         BUY NOW
                       </Link>
                     </div>
@@ -139,7 +139,7 @@ const TicketSection = () => {
                     </div>
 
                     <div className="partner-button mt-auto p-6">
-                      <Link to="/Pricing" className="btn" style={{ background: "#ae4b84" }}>
+                      <Link to="/Booknow" className="btn" style={{ background: "#ae4b84" }}>
                         BUY NOW
                       </Link>
                     </div>
@@ -206,7 +206,7 @@ const TicketSection = () => {
                     </div>
 
                     <div className="partner-button mt-auto p-5">
-                      <Link to="/Pricing" className="btn" style={{ background: "#393182" }}>
+                      <Link to="/Booknow" className="btn" style={{ background: "#393182" }}>
                         BUY NOW
                       </Link>
                     </div>
@@ -269,7 +269,7 @@ const TicketSection = () => {
                     </div>
 
                     <div className="partner-button mt-auto p-5">
-                      <Link to="/Pricing" className="btn" style={{ background: "#d7b56b" }}>
+                      <Link to="/Booknow" className="btn" style={{ background: "#d7b56b" }}>
                         BUY NOW
                       </Link>
                     </div>
@@ -326,7 +326,7 @@ const TicketSection = () => {
                     </div>
 
                     <div className="partner-button mt-auto p-5">
-                      <Link to="/Pricing" className="btn" style={{ background: "#dc6601" }}>
+                      <Link to="/Booknow" className="btn" style={{ background: "#dc6601" }}>
                         BUY NOW
                       </Link>
                     </div>

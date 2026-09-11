@@ -545,7 +545,7 @@ function Home() {
       {/*--Direction Section end--*/}
 
       {/*--Blog Section start--*/}
-      <BlogSection />
+      {/* <BlogSection /> */}
       {/*--Blog Section end--*/}
     </div>
   );

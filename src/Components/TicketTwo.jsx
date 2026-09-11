@@ -8,9 +8,9 @@ const TicketTwo = () => {
         <div className="container">
           <div className="price-inner text-center">
             <div className="price-title mb-7 w-lg-60 m-auto">
-              <p className="mb-1 pink">PRICING TABLE</p>
+              <p className="mb-1 pink">Booknow TABLE</p>
               <h2 className="mb-1">
-                EXPLORE FLEXIBLE <span className="pink">PRICING</span> PLANS
+                EXPLORE FLEXIBLE <span className="pink">Booknow</span> PLANS
               </h2>
               <p className="m-0">
                 Excepteur sint occaecat cupidatat non proident, sunt in culpa
@@ -64,7 +64,7 @@ const TicketTwo = () => {
                         </ul>
                       </div>
                       <div className="ticket-button  m-auto p-6">
-                        <Link to="/Pricing" className="btn">
+                        <Link to="/Booknow" className="btn">
                           PURCHASE
                         </Link>
                         <p className="mt-4">
@@ -127,7 +127,7 @@ const TicketTwo = () => {
                       </ul>
                     </div>
                     <div className="partner-button  m-auto p-6">
-                      <Link to="/Pricing" className="btn">
+                      <Link to="/Booknow" className="btn">
                         PURCHASE
                       </Link>
                       <p className="mt-4">
@@ -184,7 +184,7 @@ const TicketTwo = () => {
                       </ul>
                     </div>
                     <div className="partner-button  m-auto p-5">
-                      <Link to="/Pricing" className="btn">
+                      <Link to="/Booknow" className="btn">
                         PURCHASE
                       </Link>
                       <p className="mt-4">

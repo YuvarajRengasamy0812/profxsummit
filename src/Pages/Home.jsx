@@ -21,7 +21,7 @@ import FloorPlanDubai from "../Components/FloorPlanDubai";
 import MediaPartners from "../Components/MediaPartners";
 import SponsorPartners from "../Components/SponsorPartners";
 import Speakersection from "../Components/Speakersection";
-import PromoPopup from "../Components/PromoPopup";
+// import PromoPopup from "../Components/PromoPopup";
 function Home() {
   const [brochure, setBrochure] = useState([]);
 
@@ -41,7 +41,7 @@ function Home() {
   };
   return (
     <div style={{ overflowX: "hidden" }}>
-      <PromoPopup />
+      {/* <PromoPopup /> */}
       {/*!-- Bannner section starts --*/}
       <section className="banner position-relative pb-0">
         <div className="overlay"></div>

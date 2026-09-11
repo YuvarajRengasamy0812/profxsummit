@@ -7,7 +7,7 @@
 @media (max-width: 600px) {
   .floor-plan-dubai {
     min-height: 0px !important;
-    height: auto; /* optional, helps on very small screens */
+    height: auto !important;
   }
 }
 

@@ -9,7 +9,7 @@ import Contact from "./Pages/Contact";
 import Ourgallery from "./Pages/Ourgallery";
 import Bloglists from "./Pages/Bloglists";
 import Blogsingle from "./Pages/Blogsingle";
-// import Pricing from "./Pages/Pricing";
+import Pricing from "./Pages/Pricing";
 import Booknow from "./Pages/Booknow";
 // import Comingsoon from "./Pages/Comingsoon";
 import Faq from "./Pages/Faq";

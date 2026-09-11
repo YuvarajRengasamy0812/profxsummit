@@ -1,36 +1,615 @@
-import React, { useEffect, useState } from "react";
-import { Users } from "lucide-react";
-import Booth from "./Booth";
-import FloorBorder from "./FloorBorder";
-import { createPortal } from "react-dom";
+import React, { useEffect, useMemo, useState } from "react";
 import BoothModal from "./BoothModal";
 import API from "../api/api";
 
+const palette = {
+  floor: "#ffffff",
+  wall: "#cfe4ec",
+  wallDark: "#8fb7c8",
+  text: "#101828",
+  official: "#2ecc71",
+  exclusive: "#6d3a7f",
+  diamond: "#67cfe3",
+  gold: "#ffe39a",
+  silver: "#dfe4e8",
+  cafe: "#a95f45",
+  cocktail: "#7894d6",
+  photoWall: "#35342e",
+  stage: "#76869d",
+  screen: "#3d2aa4",
+  reserved: "#343a40",
+};
+
+const floorPathD =
+  "M260 20 H1268 V780 L1132 842 L962 746 H610 L512 648 V578 H492 V448 L250 206 V92 H260 Z";
+const boothScale = 0.86;
+
+const reservedPalette = {
+  official: "#27b965",
+  exclusive: "#6d3a7f",
+  diamond: "#4b929d",
+  gold: "#a89759",
+  silver: "#8f969a",
+  standard: "#9f513c",
+};
+
+const boothList = [
+  {
+    boothNo: "1",
+    boothId: "OFFICIAL-01",
+    boothType: "official",
+    title: "Official\nSponsor\nBooth",
+    size: "4 x 3",
+    x: 710,
+    y: 468,
+    width: 105,
+    height: 80,
+    color: palette.official,
+  },
+  {
+    boothNo: "3",
+    boothId: "SILVER-03",
+    boothType: "silver",
+    title: "Silver Booth",
+    size: "3 x 3",
+    x: 815,
+    y: 468,
+    width: 80,
+    height: 80,
+    color: palette.silver,
+  },
+  {
+    boothNo: "4",
+    boothId: "SILVER-04",
+    boothType: "silver",
+    title: "Silver Booth",
+    size: "3 x 3",
+    x: 895,
+    y: 468,
+    width: 80,
+    height: 80,
+    color: palette.silver,
+  },
+  {
+    boothNo: "5",
+    boothId: "SILVER-05",
+    boothType: "silver",
+    title: "Silver Booth",
+    size: "3 x 3",
+    x: 975,
+    y: 468,
+    width: 80,
+    height: 80,
+    color: palette.silver,
+  },
+  {
+    boothNo: "6",
+    boothId: "SILVER-06",
+    boothType: "silver",
+    title: "Silver Booth",
+    size: "3 x 3",
+    x: 1055,
+    y: 468,
+    width: 80,
+    height: 80,
+    color: palette.silver,
+  },
+  {
+    boothNo: "7",
+    boothId: "SILVER-07",
+    boothType: "silver",
+    title: "Silver Booth",
+    size: "3 x 3",
+    x: 1135,
+    y: 468,
+    width: 80,
+    height: 80,
+    color: palette.silver,
+  },
+  {
+    boothNo: "2",
+    boothId: "EXCLUSIVE-02",
+    boothType: "exclusive",
+    title: "Exclusive\nSponsor\nBooth",
+    size: "4 x 3",
+    x: 820,
+    y: 566,
+    width: 80,
+    height: 100,
+    color: palette.exclusive,
+  },
+  {
+    boothNo: "8",
+    boothId: "GOLD-08",
+    boothType: "gold",
+    title: "Gold Booth",
+    size: "3 x 3",
+    x: 930,
+    y: 566,
+    width: 80,
+    height: 72,
+    color: palette.gold,
+  },
+  {
+    boothNo: "9",
+    boothId: "SILVER-09",
+    boothType: "silver",
+    title: "Silver Booth",
+    size: "3 x 3",
+    x: 1010,
+    y: 566,
+    width: 80,
+    height: 72,
+    color: palette.silver,
+  },
+  {
+    boothNo: "10",
+    boothId: "SILVER-10",
+    boothType: "silver",
+    title: "Silver Booth",
+    size: "3 x 3",
+    x: 1090,
+    y: 566,
+    width: 80,
+    height: 72,
+    color: palette.silver,
+  },
+  {
+    boothNo: "11",
+    boothId: "SILVER-11",
+    boothType: "silver",
+    title: "Silver Booth",
+    size: "3 x 3",
+    x: 1170,
+    y: 566,
+    width: 80,
+    height: 72,
+    color: palette.silver,
+  },
+  {
+    boothNo: "12",
+    boothId: "GOLD-12",
+    boothType: "gold",
+    title: "Gold Booth",
+    size: "3 x 3",
+    x: 930,
+    y: 638,
+    width: 80,
+    height: 72,
+    color: palette.gold,
+  },
+  {
+    boothNo: "13",
+    boothId: "SILVER-13",
+    boothType: "silver",
+    title: "Silver Booth",
+    size: "3 x 3",
+    x: 1010,
+    y: 638,
+    width: 80,
+    height: 72,
+    color: palette.silver,
+  },
+  {
+    boothNo: "14",
+    boothId: "SILVER-14",
+    boothType: "silver",
+    title: "Silver Booth",
+    size: "3 x 3",
+    x: 1090,
+    y: 638,
+    width: 80,
+    height: 72,
+    color: palette.silver,
+  },
+  {
+    boothNo: "15",
+    boothId: "SILVER-15",
+    boothType: "silver",
+    title: "Silver Booth",
+    size: "3 x 3",
+    x: 1170,
+    y: 638,
+    width: 80,
+    height: 72,
+    color: palette.silver,
+  },
+  {
+    boothNo: "16",
+    boothId: "DIAMOND-16",
+    boothType: "diamond",
+    title: "Diamond\nSponsor\nBooth",
+    size: "4 x 3",
+    x: 1010,
+    y: 710,
+    width: 80,
+    height: 70,
+    color: palette.diamond,
+  },
+  {
+    boothNo: "17",
+    boothId: "SILVER-17",
+    boothType: "silver",
+    title: "Silver Booth",
+    size: "3 x 3",
+    x: 1090,
+    y: 710,
+    width: 80,
+    height: 70,
+    color: palette.silver,
+  },
+  {
+    boothNo: "18",
+    boothId: "SILVER-18",
+    boothType: "silver",
+    title: "Silver Booth",
+    size: "3 x 3",
+    x: 1170,
+    y: 710,
+    width: 80,
+    height: 70,
+    color: palette.silver,
+  },
+];
+
+function TextLines({
+  x,
+  y,
+  lines,
+  fontSize = 10,
+  fill = palette.text,
+  weight = 700,
+  lineHeight = 13,
+}) {
+  return (
+    <text x={x} y={y} textAnchor="middle" fontSize={fontSize} fill={fill} fontWeight={weight}>
+      {String(lines)
+        .split("\n")
+        .map((line, index) => (
+          <tspan key={line + index} x={x} dy={index === 0 ? 0 : lineHeight}>
+            {line}
+          </tspan>
+        ))}
+    </text>
+  );
+}
+
+function LockIcon({ x, y, size = 20 }) {
+  const shackleX = x + size * 0.25;
+  const shackleY = y + size * 0.08;
+  const shackleW = size * 0.5;
+  const shackleH = size * 0.42;
+  const bodyY = y + size * 0.38;
+
+  return (
+    <g>
+      <path
+        d={`M ${shackleX} ${bodyY} V ${shackleY + shackleH * 0.55} C ${shackleX} ${shackleY} ${shackleX + shackleW} ${shackleY} ${shackleX + shackleW} ${shackleY + shackleH * 0.55} V ${bodyY}`}
+        fill="none"
+        stroke="#ffffff"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+      />
+      <rect x={x + size * 0.15} y={bodyY} width={size * 0.7} height={size * 0.5} rx="3" fill="#ffffff" />
+      <circle cx={x + size * 0.5} cy={bodyY + size * 0.24} r="2" fill={palette.reserved} />
+    </g>
+  );
+}
+
+function FloorBooth({ booth, reservedInfo, onSelect }) {
+  const isReserved = Boolean(reservedInfo);
+  const [showReservedTip, setShowReservedTip] = useState(false);
+  const width = Math.round(booth.width * boothScale);
+  const height = Math.round(booth.height * boothScale);
+  const x = booth.x + (booth.width - width) / 2;
+  const y = booth.y + (booth.height - height) / 2;
+  const centerX = x + width / 2;
+  const fill = isReserved ? reservedPalette[booth.boothType] || palette.reserved : booth.color;
+  const headerFill = isReserved ? "rgba(255,255,255,0.16)" : "rgba(255,255,255,0.35)";
+  const borderColor = isReserved ? "rgba(0,0,0,0.24)" : "rgba(0,0,0,0.22)";
+  const tipX = centerX - 70;
+  const tipY = Math.max(18, y - 84);
+
+  return (
+    <g
+      onMouseEnter={() => isReserved && setShowReservedTip(true)}
+      onMouseLeave={() => setShowReservedTip(false)}
+      onTouchStart={() => isReserved && setShowReservedTip(true)}
+      onClick={() => {
+        if (isReserved) {
+          setShowReservedTip(true);
+          return;
+        }
+
+        onSelect(booth);
+      }}
+      style={{ cursor: "pointer" }}
+    >
+      <rect
+        x={x}
+        y={y}
+        width={width}
+        height={height}
+        rx="6"
+        fill={fill}
+        stroke={borderColor}
+        strokeWidth="2"
+        filter="url(#boothShadow)"
+      />
+      <rect x={x + 2} y={y + 3} width={width - 4} height="18" rx="5" fill={headerFill} />
+      {!isReserved && (
+        <text x={centerX} y={y + 15} textAnchor="middle" fontSize="7" fill={palette.text} fontWeight="800">
+          Booth no: {booth.boothNo}
+        </text>
+      )}
+
+      {isReserved ? (
+        <>
+          <LockIcon x={centerX - 9} y={y + height / 2 - 20} size={18} />
+          <text x={centerX} y={y + height / 2 + 14} textAnchor="middle" fontSize="8" fill="#ffffff" fontWeight="800">
+            RESERVED
+          </text>
+          {showReservedTip && (
+            <g pointerEvents="none">
+              <rect
+                x={tipX}
+                y={tipY}
+                width="140"
+                height="68"
+                rx="8"
+                fill="#ffffff"
+                stroke="#e4e7ec"
+                filter="url(#boothTipShadow)"
+              />
+              <polygon
+                points={`${centerX - 8},${tipY + 68} ${centerX + 8},${tipY + 68} ${centerX},${tipY + 78}`}
+                fill="#ffffff"
+              />
+              {reservedInfo?.logo ? (
+                <image
+                  href={reservedInfo.logo}
+                  x={tipX + 18}
+                  y={tipY + 12}
+                  width="104"
+                  height="30"
+                  preserveAspectRatio="xMidYMid meet"
+                />
+              ) : (
+                <text x={centerX} y={tipY + 31} textAnchor="middle" fontSize="12" fill={palette.text} fontWeight="800">
+                  Reserved
+                </text>
+              )}
+              <text x={centerX} y={tipY + 55} textAnchor="middle" fontSize="10" fill="#344054" fontWeight="700">
+                {reservedInfo?.companyName || "Reserved Company"}
+              </text>
+            </g>
+          )}
+        </>
+      ) : (
+        <>
+          <TextLines
+            x={centerX}
+            y={y + height / 2 - 4}
+            lines={booth.title}
+            fontSize={booth.title.includes("\n") ? 8 : 9}
+            lineHeight={10}
+          />
+          <text x={centerX} y={y + height - 10} textAnchor="middle" fontSize="8" fill={palette.text}>
+            {booth.size}
+          </text>
+        </>
+      )}
+    </g>
+  );
+}
+
+function SeatBlock({ x, y, rows = 5, cols = 15 }) {
+  const seats = [];
+
+  for (let row = 0; row < rows; row += 1) {
+    for (let col = 0; col < cols; col += 1) {
+      seats.push({ x: x + col * 20, y: y + row * 20, key: `${row}-${col}` });
+    }
+  }
+
+  return (
+    <g>
+      {seats.map((seat) => (
+        <g key={seat.key} transform={`rotate(90 ${seat.x + 5} ${seat.y + 8})`}>
+          <rect x={seat.x} y={seat.y} width="10" height="13" rx="4" fill="#ffffff" stroke="#6d747b" strokeWidth="2" />
+          <rect x={seat.x - 2} y={seat.y + 10} width="4" height="6" rx="1" fill="#6d747b" />
+          <rect x={seat.x + 8} y={seat.y + 10} width="4" height="6" rx="1" fill="#6d747b" />
+        </g>
+      ))}
+    </g>
+  );
+}
+
+function RoundTable({ x, y }) {
+  return (
+    <g>
+      {[0, 90, 180, 270].map((angle) => (
+        <ellipse
+          key={angle}
+          cx={x}
+          cy={y - 17}
+          rx="5"
+          ry="8"
+          fill="#c7b09e"
+          transform={`rotate(${angle}, ${x}, ${y})`}
+        />
+      ))}
+      <circle cx={x} cy={y} r="12" fill="#e8d1b6" stroke="#b9a08c" strokeWidth="1" />
+    </g>
+  );
+}
+
+function DirectionLabel({ x, y, label }) {
+  return (
+    <text x={x} y={y} fontSize="12" fill="#5b7cff" fontWeight="800" transform={`rotate(-90, ${x}, ${y})`}>
+      {label}
+    </text>
+  );
+}
+
+function ArrowPair({ x, y, direction = "right" }) {
+  const rotate = direction === "left" ? 180 : 0;
+
+  return (
+    <g transform={`rotate(${rotate}, ${x}, ${y})`}>
+      {[0, 18].map((offset) => (
+        <path
+          key={offset}
+          d={`M ${x - 28} ${y + offset} H ${x} M ${x - 8} ${y + offset - 6} L ${x} ${y + offset} L ${x - 8} ${y + offset + 6}`}
+          stroke="#111827"
+          strokeWidth="3"
+          fill="none"
+        />
+      ))}
+    </g>
+  );
+}
+
+function EntranceDoorDetail() {
+  return (
+    <g>
+      <path d="M250 92 H212 V150 H250" fill="#ffffff" stroke={palette.wall} strokeWidth="8" />
+      <path d="M250 102 C222 102 222 122 250 122" stroke={palette.wall} strokeWidth="3" fill="none" />
+      <path d="M250 122 C222 122 222 142 250 142" stroke={palette.wall} strokeWidth="3" fill="none" />
+      <rect x="244" y="82" width="16" height="18" fill={palette.wall} />
+      <rect x="244" y="150" width="16" height="18" fill={palette.wall} />
+    </g>
+  );
+}
+
+function ToiletIcon({ x, y, color = "#ff7c5b" }) {
+  return (
+    <g fill={color}>
+      <circle cx={x} cy={y} r="4" />
+      <rect x={x - 3} y={y + 6} width="6" height="16" rx="2" />
+      <rect x={x - 8} y={y + 10} width="3" height="12" rx="1.5" />
+      <rect x={x + 5} y={y + 10} width="3" height="12" rx="1.5" />
+      <rect x={x - 5} y={y + 22} width="4" height="12" rx="1.5" />
+      <rect x={x + 1} y={y + 22} width="4" height="12" rx="1.5" />
+    </g>
+  );
+}
+
+function AmenityBlock({ x, y, width, height, label, color }) {
+  const [showTip, setShowTip] = useState(false);
+  const tipWidth = 160;
+  const tipHeight = 58;
+  const tipX = x + width / 2 - tipWidth / 2;
+  const tipY = y - tipHeight - 14;
+
+  return (
+    <g
+      onMouseEnter={() => setShowTip(true)}
+      onMouseLeave={() => setShowTip(false)}
+      onClick={() => setShowTip((visible) => !visible)}
+      onTouchStart={() => setShowTip(true)}
+      style={{ cursor: "pointer" }}
+    >
+      {showTip && (
+        <g pointerEvents="none">
+          <rect
+            x={tipX}
+            y={tipY}
+            width={tipWidth}
+            height={tipHeight}
+            rx="8"
+            fill="#ffffff"
+            stroke="#e4e7ec"
+            filter="url(#boothTipShadow)"
+          />
+          <polygon
+            points={`${x + width / 2 - 10},${tipY + tipHeight} ${x + width / 2 + 10},${tipY + tipHeight} ${x + width / 2},${tipY + tipHeight + 10}`}
+            fill="#ffffff"
+          />
+          <text x={x + width / 2} y={tipY + 35} textAnchor="middle" fontSize="14" fill={palette.text} fontWeight="700">
+            {label}
+          </text>
+        </g>
+      )}
+      <rect
+        x={x}
+        y={y}
+        width={width}
+        height={height}
+        rx="7"
+        fill={color}
+        stroke="rgba(0,0,0,0.22)"
+        strokeWidth="2"
+        filter="url(#boothShadow)"
+      />
+      <rect x={x + 3} y={y + 4} width={width - 6} height="22" rx="6" fill="rgba(255,255,255,0.2)" />
+      <TextLines
+        x={x + width / 2}
+        y={y + height / 2 - (label.includes("\n") ? 6 : 0)}
+        lines={label}
+        fontSize={label.includes("\n") ? 11 : 13}
+        fill="#ffffff"
+        lineHeight={13}
+      />
+    </g>
+  );
+}
+
+function ExitDoorDetail() {
+  return (
+    <g>
+      <path
+        d="M492 448 H795 V648 H610 L512 550 V448 Z"
+        fill="#ffffff"
+        stroke="none"
+      />
+      <path
+        d="M512 578 H795 V648 H610 L512 550 Z"
+        fill="#ffffff"
+        stroke={palette.wall}
+        strokeWidth="8"
+      />
+      <path d="M492 452 V578" stroke={palette.wall} strokeWidth="8" fill="none" />
+      <path d="M492 520 H560" stroke={palette.wall} strokeWidth="8" fill="none" />
+      <path d="M492 472 C526 472 526 498 492 498" stroke={palette.wall} strokeWidth="3" fill="none" />
+      <path d="M492 498 C526 498 526 524 492 524" stroke={palette.wall} strokeWidth="3" fill="none" />
+      <rect x="492" y="448" width="18" height="22" fill={palette.wall} />
+      <rect x="492" y="572" width="18" height="26" fill={palette.wall} />
+
+      <path d="M598 640 H760" stroke={palette.wall} strokeWidth="6" fill="none" />
+      <path d="M600 662 V746 M688 662 V746 M760 662 V746" stroke={palette.wall} strokeWidth="5" />
+      <path d="M600 662 H760" stroke={palette.wall} strokeWidth="5" fill="none" />
+      <path d="M585 662 H775" stroke={palette.wall} strokeWidth="5" fill="none" />
+      <ToiletIcon x={646} y={698} />
+      <ToiletIcon x={724} y={698} />
+      <text x="646" y="740" textAnchor="middle" fontSize="10" fill="#ff7c5b" fontWeight="800">
+        Women
+      </text>
+      <text x="724" y="740" textAnchor="middle" fontSize="10" fill="#ff7c5b" fontWeight="800">
+        Men
+      </text>
+    </g>
+  );
+}
+
 const FloorPlanDubai = () => {
-  const [selectedBooth, setSelectedBooth] = React.useState(null);
+  const [selectedBooth, setSelectedBooth] = useState(null);
   const [reservedBooths, setReservedBooths] = useState([]);
 
-
-  const [booths, setBooths] = useState([]);
-
   useEffect(() => {
-    API
-      .get("floorplanList")
+    API.get("floorplanList")
       .then((res) => {
         const tickets = res.data?.details?.tickets?.data || [];
-
         const reserved = tickets
-          .filter((t) => t.boothno)
-          .map((t) => ({
-            boothNo: String(t.boothno),
-            companyName: t.company || "",
-            // ✅ Set default placeholder if logo is missing
-            logo: t.company_logo || "assets/images/booth-reserved/v-process.png",
-            url: t.company_url || "#",
-            title: t.boothtitle || "Reserved Booth",
-            size: t.boothsize || "",
-            // ✅ Optional: you can track approval status
-            approved: !!t.company_logo // if logo exists, assume approved
+          .filter((ticket) => ticket.boothno)
+          .map((ticket) => ({
+            boothNo: String(ticket.boothno),
+            companyName: ticket.company || "",
+            logo: ticket.company_logo || "assets/images/booth-reserved/v-process.png",
+            url: ticket.company_url || "#",
+            title: ticket.boothtitle || "Reserved Booth",
+            size: ticket.boothsize || "",
+            approved: Boolean(ticket.company_logo),
           }));
 
         setReservedBooths(reserved);
@@ -40,947 +619,183 @@ const FloorPlanDubai = () => {
       });
   }, []);
 
-  const getReservedInfo = (boothNo) =>
-    reservedBooths.find((b) => b.boothNo === String(boothNo));
+  const reservedByBoothNo = useMemo(() => {
+    return reservedBooths.reduce((map, booth) => {
+      map[String(booth.boothNo)] = booth;
+      return map;
+    }, {});
+  }, [reservedBooths]);
 
+  const handleReserve = ({ company }) => {
+    if (!selectedBooth) return;
 
-
-  // Layout constants based on grid
-  const startX = 50;
-  const startY = 50;
-  // Arrow constants
-  const dx = -95;
-  const dy = 18;
-  const up = 60;
-  // Speaker Hall
-  const hallX = startX + 530;
-  const hallY = startY + 475;
-  const hallW = 550;
-  const hallH = 402;
-
-  // Colors matching the reference PDF
-  const colors = {
-    official: "#2ecc71",      // Green
-    exclusive: "#9b59b6",     // Purple  
-    diamond: "#6fd3e7",       // Cyan/Light blue
-    gold: "#f5d98e",          // Light gold/beige
-    silver: "#d4d8dc",        // Light gray
-    standard: "#d97556",      // Orange/coral
-    speakerHall: "#a855b7",   // Purple/magenta
-    networking: "#2c2f7c",    // Dark blue/navy
-    cafe: "#8b5a2b",          // Brown
-    cocktail: "#6c7bd9",      // Blue
-    photoWall: "#6c7a89",     // Gray
-    photoWallStage: "#F1F3F3",     // Gray
-    backdrop: "#d4d8dc87",      // Light gray
-    ledWall: "#e74c3c"        // Red
+    setReservedBooths((prev) => [
+      ...prev,
+      {
+        boothNo: selectedBooth.boothNo,
+        companyName: company || "Reserved",
+        logo: "assets/images/booth-reserved/v-process.png",
+        url: "#",
+        title: selectedBooth.title,
+        size: selectedBooth.size,
+        approved: false,
+      },
+    ]);
   };
 
   return (
-
     <>
-      <div className="py-5">
-        {/* Section Title  */}
-        <div className="col-lg-6 mx-auto">
-          <div className="title-content text-center mb-4">
-            <p className="mb-1 pink">
-              Floor Plan
-            </p>
-            <h2 className="mb-1">
-              PROFX SUMMIT<span className="pink"> <b>DUBAI 2026</b></span>
-            </h2>
-            <p className="m-0">
-              Choose from 4 powerful tiers - designed for trend explorers, skill builders, networkers, and deal-closers.
-            </p>
-          </div>
+      <div className="floor-plan-section py-4">
+        <div className="floor-plan-heading text-center mb-5">
+          <p className="mb-2 pink" style={{ fontSize: "20px", fontWeight: 500 }}>
+            Floor Plan
+          </p>
+          <h2 className="mb-3" style={{ fontSize: "48px", lineHeight: 1.1, fontWeight: 800, letterSpacing: "0" }}>
+            PROFX SUMMIT <span className="pink">DUBAI 2026</span>
+          </h2>
+          <p className="mx-auto mb-0" style={{ maxWidth: "860px", fontSize: "21px", lineHeight: 1.25, color: "#5f6673" }}>
+            Choose from 4 powerful tiers - designed for trend explorers, skill builders, networkers, and deal-closers.
+          </p>
         </div>
-        {/* Floor Plan Container */}
+
         <div
-          className="mx-auto bg-white rounded shadow-xl floor-plan-dubai"
+          className="mx-auto bg-white floor-plan-dubai"
           style={{
-            width: "95%",
-            maxWidth: "2000px",
-            height: "85vh",
-            minHeight: "750px",
-            paddingTop: "20px",
-            overflow: "hidden",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            width: "100%",
+            maxWidth: "1760px",
+            overflowX: "auto",
+            backgroundColor: "#ffffff",
+            border: "0",
+            borderRadius: "0",
+            padding: "0",
           }}
         >
-
           <svg
-            viewBox="0 0 1220 1000"
+            viewBox="55 0 1285 845"
             width="100%"
-            height="100%"
-            preserveAspectRatio="xMidYMid meet"
-            style={{
-              background: "#fff",
-              // transform: "scale(1.0)",     // increase size here
-              transformOrigin: "center",
-            }}
-            className="transform-floor"
+            height="auto"
+            role="img"
+            aria-label="Updated ProFx Summit Dubai 2026 floor plan"
+            preserveAspectRatio="xMidYMin meet"
+            style={{ minWidth: "1280px", display: "block", background: "#ffffff" }}
           >
+            <rect x="0" y="0" width="1360" height="930" fill="#ffffff" />
+            <defs>
+              <clipPath id="floor-room-clip">
+                <path d={floorPathD} />
+              </clipPath>
+              <filter id="boothShadow" x="-12%" y="-12%" width="124%" height="124%">
+                <feDropShadow dx="0" dy="2" stdDeviation="1.2" floodColor="#101828" floodOpacity="0.18" />
+              </filter>
+              <filter id="boothTipShadow" x="-18%" y="-18%" width="136%" height="136%">
+                <feDropShadow dx="0" dy="8" stdDeviation="5" floodColor="#101828" floodOpacity="0.18" />
+              </filter>
+            </defs>
 
-
-            {/* Inner fine grid for main floor area */}
-            <rect x={startX + 90} y={startY} width="1020" height="900" fill="url(#gridDense)" />
-
-            {/* Floor Border */}
-            <FloorBorder
-              style={{
-                position: "absolute",
-                top: startY,
-                left: startX,
-                width: 80,
-                height: 80,
-              }}
+            <path
+              d={floorPathD}
+              fill="#ffffff"
+              stroke={palette.wall}
+              strokeWidth="10"
             />
-
-
-            {/* ===== ENTRANCE - Top Left ===== */}
-            <g>
-              <text x={startX - 10} y={startY + 20} fontSize="9" fill="#333" fontWeight="600" transform={`rotate(-90, ${startX + 75}, ${startY + 55})`}>
-                ENTRANCE
-              </text>
-
-              {/* Top arrow */}
-              <path
-                d={`
-                  M ${startX + 100 + dx} ${startY + 45 + up}
-                  L ${startX + 120 + dx} ${startY + 45 + up}
-                  M ${startX + 115 + dx} ${startY + 40 + up}
-                  L ${startX + 120 + dx} ${startY + 45 + up}
-                  L ${startX + 115 + dx} ${startY + 50 + up}
-                `}
-                stroke="#555"
-                strokeWidth="1.5"
-                fill="none"
-              />
-
-              {/* Bottom arrow */}
-              <path
-                d={`
-                  M ${startX + 100 + dx} ${startY + 45 + dy + up}
-                  L ${startX + 120 + dx} ${startY + 45 + dy + up}
-                  M ${startX + 115 + dx} ${startY + 40 + dy + up}
-                  L ${startX + 120 + dx} ${startY + 45 + dy + up}
-                  L ${startX + 115 + dx} ${startY + 50 + dy + up}
-                `}
-                stroke="#555"
-                strokeWidth="1.5"
-                fill="none"
-              />
+            <g clipPath="url(#floor-room-clip)">
+              <rect x="55" y="0" width="1285" height="845" fill="#ffffff" />
             </g>
+            <path d="M300 20 H1268" stroke={palette.wall} strokeWidth="18" />
+            <EntranceDoorDetail />
+            <path d="M250 206 L492 448" fill="none" stroke={palette.wall} strokeWidth="8" />
+            <path d="M492 448 H1270" stroke={palette.wallDark} strokeWidth="4" />
+            <ExitDoorDetail />
+            <rect x="470" y="458" width="34" height="9" fill="#6da8bd" />
+            <rect x="562" y="458" width="64" height="9" fill="#6da8bd" />
 
-            {/* ===== TOP ROW ===== */}
-
-            {/* Official Sponsor */}
-            <Booth
-              boothId="OFFICIAL-01"
-              boothType="official"
-              boothNo="1"
-              size="4 x 3"
-              title={"Official\nSponsor"}
-              x={startX + 180}
-              y={startY + 50}
-              width={120}
-              height={90}
-              fontSize={14}
-              color={colors.official}
-              isReserved={!!getReservedInfo("1")}
-              reservedInfo={getReservedInfo("1")}
-              onClick={setSelectedBooth}
-            />
-
-
-
-
-
-
-            {/* Gold Booths Row - 2 booths */}
-            {Array.from({ length: 2 }).map((_, i) => {
-              const number = i + 3; // boothNo = 3, 4
-              const id = `GOLD-${number}`;
-
-              const reservedInfo = getReservedInfo(number);
-
+            {[310, 1208, 1266, 480, 500, 780, 1260, 1267, 990].map((x, index) => {
+              const y = [30, 62, 368, 350, 410, 625, 282, 617, 790][index];
               return (
-                <Booth
-                  key={id}
-                  boothId={id}
-                  boothType="gold"
-                  boothNo={number}
-                  size="4 x 3"
-                  x={startX + 355 + i * 120}
-                  y={startY + 52}
-                  width={120}
-                  height={72}
-                  color={colors.gold}
-                  title={"Gold\nBooth"}
-                  fontSize={12}
-
-                  /* ✅ CORRECT RESERVE CHECK */
-                  isReserved={!!reservedInfo}
-                  reservedInfo={reservedInfo}
-
-                  onClick={setSelectedBooth}
+                <rect
+                  key={`marker-${index}`}
+                  x={x}
+                  y={y}
+                  width="11"
+                  height="11"
+                  fill="#ff7c5b"
+                  transform={`rotate(45 ${x + 5.5} ${y + 5.5})`}
                 />
               );
             })}
 
+            <DirectionLabel x="230" y="112" label="ENTRANCE" />
+            <ArrowPair x="210" y="85" />
+            <DirectionLabel x="472" y="527" label="EXIT" />
+            <ArrowPair x="470" y="509" direction="left" />
 
-            {/* Silver Booths Row - 5 booths */}
-            {Array.from({ length: 5 }).map((_, i) => {
-              const number = i + 11;
-              const id = `SILVER-${number}`;
-              const reservedInfo = getReservedInfo(number);
-              return (
-                <Booth
-                  key={id}
-                  boothId={id}
-                  boothType="silver"
-                  boothNo={number}
-                  size="3 x 2"
-                  x={startX + 650 + i * 78}
-                  y={startY + 52}
-                  width={78}
-                  height={72}
-                  color={colors.silver}
-                  title={"Silver\nBooth"}
-                  fontSize={12}
-                  isReserved={!!reservedInfo}
-                  reservedInfo={reservedInfo}
+            <g clipPath="url(#floor-room-clip)">
+              <g transform="translate(330 58)">
+                <SeatBlock x={0} y={0} rows={5} cols={17} />
+                <SeatBlock x={370} y={0} rows={5} cols={24} />
+                <SeatBlock x={0} y={120} rows={5} cols={17} />
+                <SeatBlock x={370} y={120} rows={5} cols={24} />
+                <SeatBlock x={118} y={240} rows={5} cols={13} />
+                <SeatBlock x={370} y={240} rows={5} cols={24} />
+              </g>
+            </g>
+            <path
+              d={floorPathD}
+              fill="none"
+              stroke={palette.wall}
+              strokeWidth="10"
+              pointerEvents="none"
+            />
+            <path
+              d="M492 448 H1270"
+              stroke={palette.wallDark}
+              strokeWidth="4"
+              pointerEvents="none"
+            />
+            <EntranceDoorDetail />
+            <ExitDoorDetail />
 
-                  onClick={setSelectedBooth}
-                />
-              );
-            })}
-
-            {/* LED Exposure Wall - Top Right */}
-            <g>
-              {/* LED Wall Box */}
-              <rect
-                x={startX + 1067}
-                y={startY + 100}
-                width={23}
-                height={70}
-                fill={colors.ledWall}
-                rx={3}
-              />
-
-              {/* LED Exposure Wall text */}
-              <text
-                x={startX + 1015}
-                y={startY + 54}
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fontSize="6"
-                fill="#fff"
-                fontWeight="600"
-                transform={`rotate(-90, ${startX + 1085}, ${startY + 65})`}
-              >
-                LED Exposure Wall
+            <g transform="translate(1210 105)">
+              <rect x="0" y="0" width="82" height="300" fill={palette.stage} stroke="#111827" strokeWidth="1.5" />
+              <TextLines x={41} y={120} lines={"Speaker\nAwards\n& League\nStage"} fontSize={12} fill="#ffffff" lineHeight={14} />
+              <text x="41" y="185" textAnchor="middle" fontSize="11" fill="#ffffff">10 x 3</text>
+              <rect x="66" y="12" width="18" height="110" fill={palette.screen} stroke="#111827" />
+              <rect x="66" y="134" width="18" height="110" fill={palette.screen} stroke="#111827" />
+              <text x="78" y="79" textAnchor="middle" fontSize="7" fill="#ffffff" transform="rotate(-90 78 79)">
+                Side Screen 5W x 2.5H
               </text>
-
-              {/* Size text */}
-              <text
-                x={startX + 1035}
-                y={startY + 84}
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fontSize="7"
-                fill="rgba(255,255,255,0.9)"
-                transform={`rotate(-90, ${startX + 1085}, ${startY + 85})`}
-              >
-                2.5w × 3h
+              <text x="78" y="190" textAnchor="middle" fontSize="8" fill="#ffffff" transform="rotate(-90 78 190)">
+                Main Screen 6W x 2.5H
               </text>
             </g>
 
-            {/* ===== SECOND SECTION ===== */}
-
-            {/* Exclusive Sponsor */}
-            <Booth
-              boothId="EXCLUSIVE-01"
-              boothType="exclusive"
-              boothNo="2"
-              size="4 x 3"
-              x={startX + 180}
-              y={startY + 180}
-              width={120}
-              height={90}
-              color={colors.exclusive}
-              title={"Exclusive\nSponsor"}
-              fontSize={14}
-              isReserved={!!getReservedInfo("2")}
-              reservedInfo={getReservedInfo("2")}
-              onClick={setSelectedBooth}
-            /* 🔒 always reserved */
-
-            />
-
-
-            {/* Photo Wall - Diagonal */}
-            <g>
-              {/* Photo Wall rectangle */}
-              <rect
-                x={startX + 0}
-                y={startY + 215}
-                width={100}
-                height={25}
-                fill={colors.photoWall}
-                rx={4}
-                transform={`rotate(45, ${startX + 25}, ${startY + 420})`} // pivot at rect center
-              />
-              <rect
-                x={startX + 10}
-                y={startY + 240}
-                width={80}
-                height={25}
-                fill={colors.photoWallStage}       // fill color
-                rx={4}                             // rounded corners
-                stroke="#000"                      // border color
-                strokeWidth={1}                    // border thickness
-                transform={`rotate(45, ${startX + 25}, ${startY + 420})`} // pivot at rect center
-              />
-
-
-              {/* Photo Wall text */}
-              <text
-                x={startX + 48}            // center of rect before rotation
-                y={startY + 226}           // center of rect before rotation
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fill="#ffffff"
-                fontSize="10"
-                fontWeight="600"
-                transform={`rotate(45, ${startX + 25}, ${startY + 420})`}
-              >
+            <g transform="rotate(45 270 286)">
+              <rect x="214" y="269" width="112" height="70" fill="#f3f3f3" />
+              <rect x="214" y="269" width="112" height="34" fill={palette.photoWall} />
+              <text x="270" y="291" textAnchor="middle" fontSize="15" fill="#ffffff" fontWeight="800">
                 Photo Wall
               </text>
             </g>
 
-            {/* Diamond Sponsors - 2 horizontal */}
-            {Array.from({ length: 2 }).map((_, i) => {
-              const num = i + 5; // 5, 6
-              const id = `DIAMOND-${num}`;
-              const isDiamond5 = id === "DIAMOND-5";
-              const reservedInfo = getReservedInfo(num);
-              return (
-                <Booth
-                  key={id}
-                  boothId={id}
-                  boothType="diamond"
-                  boothNo={num}
-                  size="4 x 3"
-                  x={startX + 355 + i * 120}
-                  y={startY + 180}
-                  width={120}
-                  height={95}
-                  color={colors.diamond}
-                  title={"Diamond\nBooth"}
-                  fontSize={14}
+            <AmenityBlock x={150} y={345} width={72} height={92} label="Cafe" color="#e91e63" />
+            <AmenityBlock x={150} y={522} width={72} height={92} label={"Cocktail\nLounge"} color="#6575dc" />
+            <RoundTable x="310" y="392" />
+            <RoundTable x="395" y="392" />
+            <RoundTable x="310" y="575" />
+            <RoundTable x="395" y="575" />
+            <RoundTable x="310" y="675" />
+            <RoundTable x="395" y="675" />
 
-                  isReserved={!!reservedInfo}
-                  reservedInfo={reservedInfo}
-                  onClick={setSelectedBooth}
-                />
-              );
-            })}
-
-
-            {/* Silver Booths - 2x2 grid (4 booths) */}
-            {[0, 1, 2, 3].map((i) => {
-              const boothNumbers = [16, 17, 18, 19];
-              const num = boothNumbers[i];
-              const id = `SILVER-${num}`;
-              const reservedInfo = getReservedInfo(num);
-              return (
-                <Booth
-                  key={id}
-                  boothId={id}
-                  boothType="silver"
-                  boothNo={num}
-                  size="3 x 2"
-                  x={startX + 650 + (i % 2) * 63}
-                  y={startY + 180 + Math.floor(i / 2) * 82}
-                  width={63}
-                  height={82}
-                  color={colors.silver}
-                  title={"Silver\nBooth"}
-                  fontSize={12}
-                  isReserved={!!reservedInfo}
-                  reservedInfo={reservedInfo}
-                  onClick={setSelectedBooth}
-                />
-              );
-            })}
-
-
-            {/* Standard Booths - Left 6 */}
-            {Array.from({ length: 6 }).map((_, i) => {
-              const boothNumbers = [20, 23, 21, 24, 22, 25];
-              const num = boothNumbers[i];
-              const col = i % 2;              // 2 columns
-              const row = Math.floor(i / 2);  // 3 rows
-              const id = `STANDARD-${num}`;
-              const reservedInfo = getReservedInfo(num);
-              return (
-                <Booth
-                  key={id}
-                  boothId={id}
-                  boothType="standard"
-                  boothNo={num}
-                  size="2 x 2"
-                  x={startX + 820 + col * 62}
-                  y={startY + 180 + row * 55}
-                  width={62}
-                  height={55}
-                  color={colors.standard}
-                  title={`Standard\nBooth`}
-                  fontSize={10}
-                  isReserved={!!reservedInfo}
-                  reservedInfo={reservedInfo}
-                  onClick={setSelectedBooth}
-                />
-              );
-            })}
-
-            {/* ===== NETWORKING LOUNGE ===== */}
-            <Booth
-              boothId="SPONSOR-NETWORK"
-              boothType="networklounge"
-              title={`Networking\nLounge`}
-              subtitle="6 x 4"
-              size="6 x 4"
-              x={startX + 978}
-              y={startY + 175}
-              width={110}
-              height={170}
-              color={colors.networking}
-              textColor="#ffffff"
-              fontSize={13}
-              onClick={setSelectedBooth}
-            />
-
-
-            {/* LED Exposure Wall - Second Right */}
-            <g>
-              {/* LED Wall Box */}
-              <rect
-                x={startX + 1067}
-                y={startY + 350}
-                width={23}
-                height={70}
-                fill={colors.ledWall}
-                rx={3}
+            {boothList.map((booth) => (
+              <FloorBooth
+                key={booth.boothId}
+                booth={booth}
+                reservedInfo={reservedByBoothNo[booth.boothNo]}
+                onSelect={setSelectedBooth}
               />
-
-              {/* LED Exposure Wall text */}
-              <text
-                x={startX + 1005}
-                y={startY + 293}
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fontSize="6"
-                fill="#fff"
-                fontWeight="600"
-                transform={`rotate(-90, ${startX + 1085}, ${startY + 305})`}
-              >
-                LED Exposure Wall
-              </text>
-
-              {/* Size text */}
-              <text
-                x={startX + 1025}
-                y={startY + 323}
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fontSize="7"
-                fill="rgba(255,255,255,0.9)"
-                transform={`rotate(-90, ${startX + 1085}, ${startY + 325})`}
-              >
-                2.5w × 3h
-              </text>
-            </g>
-
-            {/* ===== GOLD + SILVER ROW ===== */}
-
-
-
-            {/* Gold Booths - 2x2 grid (4 booths) */}
-            {[0, 1, 2, 3].map((i) => {
-              const boothNumbers = [7, 8, 9, 10];
-              const num = boothNumbers[i];
-              const id = `GOLD-${num}`;
-              const reservedInfo = getReservedInfo(num);
-
-
-              return (
-                <Booth
-                  key={id}
-                  boothId={id}
-                  boothType="gold"
-                  boothNo={num}
-                  size="4 x 3"
-                  x={startX + 355 + (i % 2) * 120}
-                  y={startY + 310 + Math.floor(i / 2) * 65}
-                  width={120}
-                  height={65}
-                  color={colors.gold}
-                  title={"Gold\nBooth"}
-                  fontSize={12}
-
-                  /* 🔒 lock only booth 8 */
-                  isReserved={!!reservedInfo}
-                  reservedInfo={reservedInfo}
-                  onClick={setSelectedBooth}
-                />
-              );
-            })}
-
-
-
-            {/* Silver Booths after Diamond - 5 horizontal */}
-            {Array.from({ length: 5 }).map((_, i) => {
-              const boothNumbers = [26, 27, 28, 29, 30];
-              const num = boothNumbers[i];
-              const id = `SILVER-${num}`;
-              const reservedInfo = getReservedInfo(num);
-
-              return (
-                <Booth
-                  key={id}
-                  boothId={id}
-                  boothType="silver"
-                  boothNo={num}
-                  size="3 x 2"
-                  x={startX + 650 + i * 82}
-                  y={startY + 410}
-                  width={82}
-                  height={60}
-                  color={colors.silver}
-                  title={"Silver\nBooth"}
-                  fontSize={11}
-
-                  /* 🔒 lock only booth 8 */
-                  isReserved={!!reservedInfo}
-                  reservedInfo={reservedInfo}
-                  onClick={setSelectedBooth}
-                />
-              );
-            })}
-
-
-
-            {/* ===== LEFT SIDE - Cafe, Cocktail, People Icons ===== */}
-
-            {/* Cafe */}
-            <Booth
-              boothId="SPONSOR-CAFE"
-              boothType="cafe"
-              title="Café"
-              size=""
-              x={startX - 15}
-              y={startY + 350}
-              width={70}
-              height={90}
-              color={colors.cafe}
-              textColor="#ffffff"
-              fontSize={13}
-              onClick={setSelectedBooth}
-            />
-
-
-            {/* Cafe Tables - Only 2 */}
-            {[0, 1].map((i) => (
-              <g key={`cafe-table-${i}`}>
-                <circle
-                  cx={startX + 160 + i * 40}  // horizontal spacing
-                  cy={startY + 400}           // same row
-                  r={10}
-                  fill="#d4a574"
-                  stroke="#8b5a2b"
-                  strokeWidth={1}
-                />
-                <circle
-                  cx={startX + 160 + i * 40}
-                  cy={startY + 400}
-                  r={4}
-                  fill="#8b4513"
-                />
-              </g>
             ))}
-
-
-            {/* Cocktail Lounge */}
-            <Booth
-              boothId="SPONSOR-COCKTAIL"
-              boothType="cocktail"
-              title={`Cocktail\nLounge`}
-              size=""
-              x={startX - 15}
-              y={startY + 460}
-              width={70}
-              height={90}
-              color={colors.cocktail}
-              textColor="#ffffff"
-              fontSize={11}
-              onClick={setSelectedBooth}
-            />
-
-
-
-            {/* Cocktail Lounge Tables */}
-            {[0, 1].map((row) => (
-              <g key={`cocktail-row-${row}`}>
-                {[0, 1].map((col) => (
-                  <g key={`cocktail-table-${row}-${col}`}>
-                    <circle
-                      cx={startX + 160 + col * 40}
-                      cy={startY + 600 + row * 40}
-                      r={10}
-                      fill="#7986cb"
-                      stroke="#5b6bc0"
-                      strokeWidth="1"
-                    />
-                    <circle cx={startX + 160 + col * 40} cy={startY + 600 + row * 40} r={4} fill="#3f51b5" />
-                  </g>
-                ))}
-              </g>
-            ))}
-
-            {/* ===== EXIT ===== */}
-            <g>
-              {/* Left-pointing arrows stacked next to EXIT */}
-              {/* arrows in front of EXIT — spaced correctly */}
-              {[0, 10].map((offset, i) => (
-                <path
-                  key={i}
-                  d={`
-                    M ${startX + 315 - 95 - offset} ${startY + 235 + 150}
-                    L ${startX + 315 - 95 - offset} ${startY + 210 + 150}
-
-                    M ${startX + 315 - 95 - offset} ${startY + 210 + 150}
-                    L ${startX + 310 - 95 - offset} ${startY + 215 + 150}
-
-                    M ${startX + 315 - 95 - offset} ${startY + 210 + 150}
-                    L ${startX + 320 - 95 - offset} ${startY + 215 + 150}
-                  `}
-                  stroke="#555"
-                  strokeWidth="1.5"
-                  fill="none"
-                  transform={`rotate(-90, ${startX + 320}, ${startY + 428})`}
-                />
-              ))}
-
-
-              <text x={startX + 228} y={startY + 400} fontSize="9" fill="#333" fontWeight="600" transform={`rotate(-90, ${startX + 330}, ${startY + 440})`}>
-                EXIT
-              </text>
-            </g>
-
-
-
-            {/* ===== SPEAKER HALL ===== */}
-            <g>
-              <path
-                d={`
-                  M ${hallX} ${hallY}
-                  H ${hallX + hallW}
-                  V ${hallY + hallH}
-                  H ${hallX + 270}
-                  L ${hallX + 120} ${hallY + hallH - 140}
-                  H ${hallX + 20}
-                  V ${hallY}
-                  H ${hallX}
-                  Z
-                `}
-                fill={colors.speakerHall}
-              />
-
-
-
-              {/* Speaker Hall Title */}
-              <text
-                x={startX + 810}
-                y={startY + 620}
-                textAnchor="middle"
-                fontSize="26"
-                fill="#fff"
-                fontWeight="bold"
-                fontFamily="Inter, system-ui, sans-serif"
-              >
-                Speaker Hall
-              </text>
-
-              <text
-                x={startX + 810}
-                y={startY + 650}
-                textAnchor="middle"
-                fontSize="18"
-                fill="rgba(255,255,255,0.9)"
-                fontFamily="Inter, system-ui, sans-serif"
-              >
-                16 × 16
-              </text>
-
-
-              {/* Seating rows visualization */}
-
-              {/* users */}
-              {[0, 1, 2, 3, 4, 5, 6].map((row) =>
-                [0, 1, 2, 3, 4].map((col) => {
-                  const seatWidth = 40;
-                  const seatHeight = 20;
-                  const userSize = 16;
-
-                  const isCenterRow = row === 3; // 🔹 4th row
-
-                  const seatX = startX + 610 + col * 70;
-                  const seatY = startY + 510 + row * 32;
-
-                  return (
-                    <React.Fragment key={`left-${row}-${col}`}>
-                      {/* Seat (always visible) */}
-                      <rect
-                        x={seatX}
-                        y={seatY}
-                        width={seatWidth}
-                        height={seatHeight}
-                        rx={3}
-                        fill="rgba(255,255,255,0.06)"
-                      />
-
-                      {/* User icon (hidden ONLY in center row) */}
-                      {!isCenterRow && (
-                        <Users
-                          x={seatX + (seatWidth - userSize) / 2}
-                          y={seatY + (seatHeight - userSize) / 2}
-                          size={userSize}
-                          color="#ffffff6b"
-                          transform={`
-                            rotate(
-                              90
-                              ${seatX + seatWidth / 2}
-                              ${seatY + seatHeight / 2}
-                            )
-                          `}
-                        />
-                      )}
-                    </React.Fragment>
-                  );
-                })
-              )}
-
-              {/* next users */}
-              {[0, 1, 2, 3].map((row) =>
-                [0, 1, 2].map((col) => {
-                  const seatWidth = 40;
-                  const seatHeight = 20;
-                  const userSize = 16;
-
-                  const seatX = startX + 780 + col * 70;
-                  const seatY = startY + 740 + row * 32;
-
-                  return (
-                    <React.Fragment key={`left-${row}-${col}`}>
-                      {/* Seat */}
-                      <rect
-                        x={seatX}
-                        y={seatY}
-                        width={seatWidth}
-                        height={seatHeight}
-                        rx={3}
-                        fill="rgba(255,255,255,0.06)"
-                      />
-
-                      {/* User icon (always visible) */}
-                      <Users
-                        x={seatX + (seatWidth - userSize) / 2}
-                        y={seatY + (seatHeight - userSize) / 2}
-                        size={userSize}
-                        color="#ffffff6b"
-                        transform={`
-                          rotate(
-                            90
-                            ${seatX + seatWidth / 2}
-                            ${seatY + seatHeight / 2}
-                          )
-                        `}
-                      />
-                    </React.Fragment>
-                  );
-                })
-              )}
-
-
-              {/* stages visualization */}
-              <g
-                transform={`
-                    rotate(
-                      -90
-                      ${startX + 798 + 270 / 2}
-                      ${startY + 790 + 80 / 2}
-                    )
-                  `}
-              >
-
-                <rect
-                  x={startX + 850 + 45 + 152}
-                  y={startY + 928 - 50}
-                  width={70}
-                  height={40}
-                  rx={3}
-                  fill="#6c7a89"
-                />
-                {/* Speaker Stage Container */}
-                <rect
-                  x={startX + 950}
-                  y={startY + 890}
-                  width={290}
-                  height={80}
-                  rx={4}
-                  fill="#6c7a89"
-                />
-
-                <text
-                  x={startX + 1082}
-                  y={startY + 910}
-                  textAnchor="middle"
-                  fontSize="13"
-                  fill="#ffffff"
-                  fontWeight="bold"
-                >
-                  Speaker Stage
-                </text>
-
-                <text
-                  x={startX + 1082}
-                  y={startY + 922}
-                  textAnchor="middle"
-                  fontSize="10"
-                  fill="rgba(255,255,255,0.8)"
-                >
-                  9 x 3
-                </text>
-
-                {/* Left Screen */}
-                <rect
-                  x={startX + 765 + 45 + 152}
-                  y={startY + 928 - 2}
-                  width={70}
-                  height={40}
-                  rx={3}
-                  fill="#1a1a3e"
-                />
-                <text
-                  x={startX + 800 + 45 + 152}
-                  y={startY + 944 - 2}
-                  textAnchor="middle"
-                  fontSize="7"
-                  fill="#ffffff"
-                  fontWeight="600"
-                >
-                  Side Screen
-                </text>
-                <text
-                  x={startX + 800 + 45 + 152}
-                  y={startY + 955 - 2}
-                  textAnchor="middle"
-                  fontSize="6"
-                  fill="rgba(255,255,255,0.7)"
-                >
-                  1.5 w X 2.5 h
-                </text>
-
-                {/* Main Screen */}
-                <rect
-                  x={startX + 855 + 45 + 152}
-                  y={startY + 928 - 2}
-                  width={70}
-                  height={40}
-                  rx={3}
-                  fill="#1a1a3e"
-                />
-                <text
-                  x={startX + 890 + 45 + 152}
-                  y={startY + 944 - 2}
-                  textAnchor="middle"
-                  fontSize="7"
-                  fill="#ffffff"
-                  fontWeight="600"
-                >
-                  Main Screen
-                </text>
-                <text
-                  x={startX + 890 + 45 + 152}
-                  y={startY + 955 - 2}
-                  textAnchor="middle"
-                  fontSize="6"
-                  fill="rgba(255,255,255,0.7)"
-                >
-                  5 w x 2.5 h
-                </text>
-
-                {/* Right Screen */}
-                <rect
-                  x={startX + 945 + 45 + 152}
-                  y={startY + 928 - 2}
-                  width={70}
-                  height={40}
-                  rx={3}
-                  fill="#1a1a3e"
-                />
-                <text
-                  x={startX + 980 + 45 + 152}
-                  y={startY + 944 - 2}
-                  textAnchor="middle"
-                  fontSize="7"
-                  fill="#ffffff"
-                  fontWeight="600"
-                >
-                  Side Screen
-                </text>
-                <text
-                  x={startX + 980 + 45 + 152}
-                  y={startY + 955 - 2}
-                  textAnchor="middle"
-                  fontSize="6"
-                  fill="rgba(255,255,255,0.7)"
-                >
-                  1.5 w X 2.5 h
-                </text>
-              </g>
-
-            </g>
-
-            {/* ===== LEGEND ===== */}
-            <g transform={`translate(${startX + 140}, ${startY + 700})`}>
-              <text x={0} y={0} fontSize="13" fontWeight="bold" fill="#1e293b">Booth Legend</text>
-
-              {[
-                { color: colors.official, label: "Official:", count: "01" },
-                { color: colors.exclusive, label: "Exclusive:", count: "01" },
-                { color: colors.diamond, label: "Diamond:", count: "02" },
-                { color: colors.gold, label: "Gold Booth:", count: "06" },
-                { color: colors.silver, label: "Silver Booth:", count: "15" },
-                { color: colors.standard, label: "Standard:", count: "09" },
-              ].map((item, i) => (
-                <g key={`legend-${i}`} transform={`translate(0, ${22 + i * 20})`}>
-                  <rect x={0} y={0} width={14} height={14} rx={2} fill={item.color} stroke="#94a3b8" strokeWidth="0.5" />
-                  <text x={22} y={11} fontSize="11" fill="#475569">{item.label}</text>
-                  <text x={100} y={11} fontSize="11" fill="#1e293b" fontWeight="600">{item.count}</text>
-                </g>
-              ))}
-            </g>
 
           </svg>
-        </div>
-        {/* Footer */}
-        <div className="text-center mt-4 text-slate-400 text-sm">
-          <p>Hover over any booth for details and to reserve • © PROFX SUMMIT DUBAI 2026</p>
         </div>
       </div>
 
@@ -988,31 +803,9 @@ const FloorPlanDubai = () => {
         <BoothModal
           booth={selectedBooth}
           onClose={() => setSelectedBooth(null)}
-          onReserve={({ name, company, phone }) => {
-            // Mark booth as reserved
-            setReservedBooths(prev => ({
-              ...prev,
-              [selectedBooth.boothId]: true
-            }));
-
-            // SweetAlert confirmation
-            import("sweetalert2").then((Swal) => {
-              Swal.default.fire({
-                title: "Reservation Submitted!",
-                html: `
-                  Name: ${name}<br/>
-                  Company: ${company}<br/>
-                  Phone: ${phone}<br/>
-                  Please wait for approval.
-                `,
-                icon: "info",
-                confirmButtonText: "Ok",
-              });
-            });
-          }}
+          onReserve={handleReserve}
         />
       )}
-
 
     </>
   );

@@ -1733,8 +1733,19 @@ input[type="file"]:disabled {
   transform: scale(1.1);
 }
 
-.floor-plan-dubai{
-  height: calc(100vh - 220px)!important;
+.floor-plan-dubai {
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+@media (max-width: 767px) {
+  .floor-plan-heading h2 {
+    font-size: 32px !important;
+  }
+
+  .floor-plan-heading p {
+    font-size: 16px !important;
+  }
 }
 
 /* Less than or equal to 600px */
@@ -1743,8 +1754,9 @@ input[type="file"]:disabled {
     transform: scale(1);
   }
 
-  .floor-plan-dubai{
-    height: calc(120vh - 365px)!important;
+  .floor-plan-dubai {
+    height: auto !important;
+    min-height: 0 !important;
   }
 }
 

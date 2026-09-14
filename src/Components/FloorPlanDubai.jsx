@@ -645,8 +645,8 @@ const FloorPlanDubai = () => {
 
   return (
     <>
-      <div className="floor-plan-section py-4">
-        <div className="floor-plan-heading text-center mb-5">
+      <div className="floor-plan-section py-2">
+        <div className="floor-plan-heading text-center mb-2">
           <p className="mb-2 pink" style={{ fontSize: "20px", fontWeight: 500 }}>
             Floor Plan
           </p>
@@ -662,8 +662,8 @@ const FloorPlanDubai = () => {
           className="mx-auto bg-white floor-plan-dubai"
           style={{
             width: "100%",
-            maxWidth: "1760px",
-            overflowX: "auto",
+            maxWidth: "calc(100vw - 8px)",
+            overflow: "hidden",
             backgroundColor: "#ffffff",
             border: "0",
             borderRadius: "0",
@@ -677,7 +677,7 @@ const FloorPlanDubai = () => {
             role="img"
             aria-label="Updated ProFx Summit Dubai 2026 floor plan"
             preserveAspectRatio="xMidYMin meet"
-            style={{ minWidth: "1280px", display: "block", background: "#ffffff" }}
+            style={{ display: "block", background: "#ffffff" }}
           >
             <rect x="0" y="0" width="1360" height="930" fill="#ffffff" />
             <defs>

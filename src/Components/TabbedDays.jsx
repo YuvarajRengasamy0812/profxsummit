@@ -91,7 +91,7 @@ const TabbedDays = () => {
             Full Schedule - <span className="ag-pink"><b>PROFX SUMMIT DUBAI 2026</b></span>
           </h2>
           <p className="ag-text-grey mt-2">
-            <b>PROFX SUMMIT DUBAI 2026</b> is a premier one-day global finance summit featuring keynote speeches by industry leaders, panel discussions on Forex, FinTech & Trading Innovation, exhibition showcases, and exclusive networking opportunities. Join us on 10 December 2026 at Le Méridien, Airport Road, Dubai, UAE.
+            <b>PROFX SUMMIT DUBAI 2026</b> is a premier one-day global finance summit featuring keynote speeches by industry leaders, panel discussions on Forex, FinTech & Trading Innovation, exhibition showcases, and exclusive networking opportunities. Join us on 11 December 2026 at Le Méridien, Airport Road, Dubai, UAE.
           </p>
         </div>
 
@@ -102,14 +102,14 @@ const TabbedDays = () => {
             onClick={() => setActiveTab("day1")}
             className={`ag-tab-btn ${activeTab === "day1" ? "active" : ""}`}
           >
-            Day 1 - Launchpad (Dec 10)
+            Day 1 - Launchpad (Dec 11)
           </button>
 
           <button
             onClick={() => setActiveTab("day2")}
             className={`ag-tab-btn ${activeTab === "day2" ? "active" : ""}`}
           >
-             - Scale-Up (Dec 10)
+             - Scale-Up (Dec 11)
           </button>
         </div>
 

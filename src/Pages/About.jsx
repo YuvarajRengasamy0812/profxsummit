@@ -77,7 +77,7 @@ function About() {
                               <Link to="/Contact">
                                 <h5 className="mb-1">WHEN</h5>
                                 <small className="pink">
-                                  Thursday<br /> December 10, 2026
+                                  Thursday<br /> December 11, 2026
                                 </small>
                               </Link>
                             </div>

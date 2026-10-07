@@ -110,7 +110,7 @@ function Home() {
                   >
                     <ul className="m-0 ps-0 d-sm-flex justify-content-center justify-content-lg-start list-unstyled">
                       <li className="pe-2 border-end border-1 border-lightgrey">
-                        <i className="fa fa-calendar-o pe-1"></i> 10-11 December 2026
+                        <i className="fa fa-calendar-o pe-1"></i> 10 December 2026
                       </li>
                       <li className="ps-2">
                         <i className="fa fa-map-marker pe-1"></i>Le Méridien,
@@ -128,7 +128,7 @@ function Home() {
                     <p className="pb-4 m-0">
                       <b>PROFX SUMMIT DUBAI 2026</b> is a premier international financial gathering
                       that brings together global leaders from Forex, FinTech, Blockchain, and
-                      digital finance. The two-day summit features expert-led discussions,
+                      digital finance. The one-day summit features expert-led discussions,
                       live exhibition booths, high-level networking, and a prestigious awards
                       ceremony - all under one roof.
                     </p>
@@ -206,7 +206,7 @@ function Home() {
                       FinTech, Blockchain, and digital finance under one roof.
                     </p>
                     <p className="mb-2" data-aos="fade-right" data-aos-delay="1200">
-                      The two-day summit features expert-led discussions, live
+                      The one-day summit features expert-led discussions, live
                       exhibition booths, continuous networking opportunities, and a
                       prestigious awards ceremony recognizing excellence across the
                       global financial ecosystem.
@@ -246,7 +246,7 @@ function Home() {
                               <Link to="/Contact">
                                 <h5 className="mb-1">WHEN</h5>
                                 <small className="pink">
-                                  Thu & Fri <br /> December 10-11, 2026
+                                  Thursday <br /> December 10, 2026
                                 </small>
                               </Link>
                             </div>

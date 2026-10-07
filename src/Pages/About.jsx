@@ -37,7 +37,7 @@ function About() {
                       FinTech, Blockchain, and digital finance under one roof.
                     </p>
                     <p className="mb-2" data-aos="fade-right" data-aos-delay="1200">
-                      The two-day summit features expert-led discussions, live
+                      The one-day summit features expert-led discussions, live
                       exhibition booths, continuous networking opportunities, and a
                       prestigious awards ceremony recognizing excellence across the
                       global financial ecosystem.
@@ -77,7 +77,7 @@ function About() {
                               <Link to="/Contact">
                                 <h5 className="mb-1">WHEN</h5>
                                 <small className="pink">
-                                  Thu & Fri <br /> December 10-11, 2026
+                                  Thursday<br /> December 10, 2026
                                 </small>
                               </Link>
                             </div>
@@ -223,7 +223,7 @@ function About() {
                   </div>
                   <div className="overview-info text-grey">
                     <p>
-                      Attend <b><b>PROFX SUMMIT DUBAI 2026</b></b> - a two-day international finance summit - to learn from expert keynote speakers, panelists, Exhibitors and industry innovators. Explore the latest in Forex, FinTech, blockchain, and trading innovation while networking with global leaders.
+                      Attend <b><b>PROFX SUMMIT DUBAI 2026</b></b> - a one-day international finance summit - to learn from expert keynote speakers, panelists, Exhibitors and industry innovators. Explore the latest in Forex, FinTech, blockchain, and trading innovation while networking with global leaders.
                     </p>
                     <p>
                       Join 100+ speakers, 50+ sessions, and 5,000+ attendees to gain actionable insights, connect with top companies, and experience live exhibitions and strategic networking.

@@ -34,7 +34,7 @@ const Exhibitors = () => {
                 </h2>
 
                 <p className="section-desc mb-4">
-                  Secure your exhibition space at <strong><b>PROFX SUMMIT DUBAI 2026</b></strong> and connect with <strong>3,000+ finance professionals, innovators, and decision-makers</strong> from Forex, FinTech, blockchain, and trading sectors. Maximize your brand visibility and create meaningful business opportunities during this two-day international finance summit.
+                  Secure your exhibition space at <strong><b>PROFX SUMMIT DUBAI 2026</b></strong> and connect with <strong>3,000+ finance professionals, innovators, and decision-makers</strong> from Forex, FinTech, blockchain, and trading sectors. Maximize your brand visibility and create meaningful business opportunities during this one-day international finance summit.
                 </p>
 
                 <div className="">

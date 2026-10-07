@@ -10,7 +10,7 @@ const milestones = [
     year: "10 December 2026",
     title: "Opening Ceremony & Keynotes",
     description:
-      "<b>PROFX SUMMIT DUBAI 2026</b> kicks off with a grand opening ceremony followed by keynote speeches from global Forex finance and FinTech leaders.",
+      "PROFX SUMMIT DUBAI 2026 kicks off with a grand opening ceremony followed by keynote speeches from global Forex finance and FinTech leaders.",
     icon: <CreditCard size={24} />,
   },
   {
@@ -21,14 +21,14 @@ const milestones = [
     icon: <Image size={24} />,
   },
   {
-    year: "11 December 2026",
+    year: "10 December 2026",
     title: "Expert Talks & Networking",
     description:
       "Day 2 offers fireside chats, advanced panels on market trends and technology, and dedicated investor and partner networking sessions.",
     icon: <Layers size={24} />,
   },
   {
-    year: "11 December 2026",
+    year: "10 December 2026",
     title: "PROFX Awards Ceremony",
     description:
       "The summit concludes with the prestigious PROFX Awards, celebrating excellence, innovation, and leadership within the global finance ecosystem.",

@@ -5,10 +5,10 @@ import API from "../api/api";
 const palette = {
   floor: "#ffffff",
   wall: "#cfe4ec",
-  wallDark: "#8fb7c8",
+  wallDark: "#6da8bd",
   text: "#101828",
-  official: "#2ecc71",
-  exclusive: "#6d3a7f",
+  official: "#a64fd0",
+  exclusive: "#2ecc71",
   diamond: "#67cfe3",
   gold: "#ffe39a",
   silver: "#dfe4e8",
@@ -18,239 +18,105 @@ const palette = {
   stage: "#76869d",
   screen: "#3d2aa4",
   reserved: "#343a40",
+  pillar: "#ff7c5b",
 };
 
-const floorPathD =
-  "M260 20 H1268 V780 L1132 842 L962 746 H610 L512 648 V578 H492 V448 L250 206 V92 H260 Z";
-const boothScale = 0.86;
+// Horizontal stretch so the plan fills a wide screen while the height stays the same.
+const K = 1.5;
+const sx = (x) => x * K;
+const toPath = (points) => `M${points.map(([x, y]) => `${sx(x)} ${y}`).join(" L")} Z`;
+
+// Room outline (Falcon A + B) with the restroom block cut out of the lower-left corner.
+const floorPathD = toPath([
+  [110, 46],
+  [1264, 46],
+  [1264, 1032],
+  [944, 1032],
+  [768, 864],
+  [644, 864],
+  [644, 696],
+  [372, 696],
+  [372, 472],
+  [110, 200],
+]);
+const restroomPathD = toPath([
+  [372, 696],
+  [644, 696],
+  [644, 872],
+  [452, 872],
+  [372, 792],
+]);
+const leftWallX = sx(110);
+const exitWallX = sx(372);
+const restroomRightX = sx(644);
+const rightWallX = sx(1264);
+const viewWidth = rightWallX + 16;
+const boothScale = 0.92;
 
 const reservedPalette = {
-  official: "#27b965",
-  exclusive: "#6d3a7f",
+  official: "#6d3a7f",
+  exclusive: "#27b965",
   diamond: "#4b929d",
   gold: "#a89759",
   silver: "#8f969a",
   standard: "#9f513c",
 };
 
+// 3m booth = 132 wide, 4m = 176 wide; depth (3m) = 104
+const unit = 132;
+const bigUnit = 176;
+const depth = 104;
+
+const boothTitles = {
+  official: "Official\nSponsor\nBooth",
+  exclusive: "Exclusive\nSponsor\nBooth",
+  gold: "Gold Booth",
+  silver: "Silver Booth",
+};
+
+const makeBooth = (boothNo, boothType, x, y, width = unit, height = depth) => ({
+  boothNo: String(boothNo),
+  boothId: `${boothType.toUpperCase()}-${String(boothNo).padStart(2, "0")}`,
+  boothType,
+  title: boothTitles[boothType],
+  size: boothType === "official" || boothType === "exclusive" ? "4 x 3" : "3 x 3",
+  x,
+  y,
+  width,
+  height,
+  color: palette[boothType],
+});
+
+const topRowX = restroomRightX + 4;
+const topRowY = 552;
+const gridX = rightWallX - 34 - unit * 4;
+const gridY = 712;
+
 const boothList = [
-  {
-    boothNo: "1",
-    boothId: "OFFICIAL-01",
-    boothType: "official",
-    title: "Official\nSponsor\nBooth",
-    size: "4 x 3",
-    x: 710,
-    y: 468,
-    width: 105,
-    height: 80,
-    color: palette.official,
-  },
-  {
-    boothNo: "3",
-    boothId: "SILVER-03",
-    boothType: "silver",
-    title: "Silver Booth",
-    size: "3 x 3",
-    x: 815,
-    y: 468,
-    width: 80,
-    height: 80,
-    color: palette.silver,
-  },
-  {
-    boothNo: "4",
-    boothId: "SILVER-04",
-    boothType: "silver",
-    title: "Silver Booth",
-    size: "3 x 3",
-    x: 895,
-    y: 468,
-    width: 80,
-    height: 80,
-    color: palette.silver,
-  },
-  {
-    boothNo: "5",
-    boothId: "SILVER-05",
-    boothType: "silver",
-    title: "Silver Booth",
-    size: "3 x 3",
-    x: 975,
-    y: 468,
-    width: 80,
-    height: 80,
-    color: palette.silver,
-  },
-  {
-    boothNo: "6",
-    boothId: "SILVER-06",
-    boothType: "silver",
-    title: "Silver Booth",
-    size: "3 x 3",
-    x: 1055,
-    y: 468,
-    width: 80,
-    height: 80,
-    color: palette.silver,
-  },
-  {
-    boothNo: "7",
-    boothId: "SILVER-07",
-    boothType: "silver",
-    title: "Silver Booth",
-    size: "3 x 3",
-    x: 1135,
-    y: 468,
-    width: 80,
-    height: 80,
-    color: palette.silver,
-  },
-  {
-    boothNo: "2",
-    boothId: "EXCLUSIVE-02",
-    boothType: "exclusive",
-    title: "Exclusive\nSponsor\nBooth",
-    size: "4 x 3",
-    x: 820,
-    y: 566,
-    width: 80,
-    height: 100,
-    color: palette.exclusive,
-  },
-  {
-    boothNo: "8",
-    boothId: "GOLD-08",
-    boothType: "gold",
-    title: "Gold Booth",
-    size: "3 x 3",
-    x: 930,
-    y: 566,
-    width: 80,
-    height: 72,
-    color: palette.gold,
-  },
-  {
-    boothNo: "9",
-    boothId: "SILVER-09",
-    boothType: "silver",
-    title: "Silver Booth",
-    size: "3 x 3",
-    x: 1010,
-    y: 566,
-    width: 80,
-    height: 72,
-    color: palette.silver,
-  },
-  {
-    boothNo: "10",
-    boothId: "SILVER-10",
-    boothType: "silver",
-    title: "Silver Booth",
-    size: "3 x 3",
-    x: 1090,
-    y: 566,
-    width: 80,
-    height: 72,
-    color: palette.silver,
-  },
-  {
-    boothNo: "11",
-    boothId: "SILVER-11",
-    boothType: "silver",
-    title: "Silver Booth",
-    size: "3 x 3",
-    x: 1170,
-    y: 566,
-    width: 80,
-    height: 72,
-    color: palette.silver,
-  },
-  {
-    boothNo: "12",
-    boothId: "GOLD-12",
-    boothType: "gold",
-    title: "Gold Booth",
-    size: "3 x 3",
-    x: 930,
-    y: 638,
-    width: 80,
-    height: 72,
-    color: palette.gold,
-  },
-  {
-    boothNo: "13",
-    boothId: "SILVER-13",
-    boothType: "silver",
-    title: "Silver Booth",
-    size: "3 x 3",
-    x: 1010,
-    y: 638,
-    width: 80,
-    height: 72,
-    color: palette.silver,
-  },
-  {
-    boothNo: "14",
-    boothId: "SILVER-14",
-    boothType: "silver",
-    title: "Silver Booth",
-    size: "3 x 3",
-    x: 1090,
-    y: 638,
-    width: 80,
-    height: 72,
-    color: palette.silver,
-  },
-  {
-    boothNo: "15",
-    boothId: "SILVER-15",
-    boothType: "silver",
-    title: "Silver Booth",
-    size: "3 x 3",
-    x: 1170,
-    y: 638,
-    width: 80,
-    height: 72,
-    color: palette.silver,
-  },
-  {
-    boothNo: "16",
-    boothId: "DIAMOND-16",
-    boothType: "diamond",
-    title: "Diamond\nSponsor\nBooth",
-    size: "4 x 3",
-    x: 1010,
-    y: 710,
-    width: 80,
-    height: 70,
-    color: palette.diamond,
-  },
-  {
-    boothNo: "17",
-    boothId: "SILVER-17",
-    boothType: "silver",
-    title: "Silver Booth",
-    size: "3 x 3",
-    x: 1090,
-    y: 710,
-    width: 80,
-    height: 70,
-    color: palette.silver,
-  },
-  {
-    boothNo: "18",
-    boothId: "SILVER-18",
-    boothType: "silver",
-    title: "Silver Booth",
-    size: "3 x 3",
-    x: 1170,
-    y: 710,
-    width: 80,
-    height: 70,
-    color: palette.silver,
-  },
+  makeBooth(1, "official", topRowX, topRowY, bigUnit, depth),
+  ...[3, 4, 5, 6, 7].map((no, index) => makeBooth(no, "silver", topRowX + bigUnit + index * unit, topRowY)),
+  makeBooth(2, "exclusive", topRowX, 712, unit, 146),
+  ...[8, 9, 10, 11].map((no, index) => makeBooth(no, index === 0 ? "gold" : "silver", gridX + index * unit, gridY)),
+  ...[12, 13, 14, 15].map((no, index) =>
+    makeBooth(no, index === 0 ? "gold" : "silver", gridX + index * unit, gridY + depth)
+  ),
 ];
+
+const pillars = [
+  [154, 66],
+  [1250, 98],
+  [1250, 382],
+  [1242, 470],
+  [358, 428],
+  [385, 496],
+  [418, 681],
+  [640, 702],
+  [1242, 622],
+  [1250, 705],
+  [1250, 966],
+  [960, 1014],
+  [1198, 1014],
+].map(([x, y]) => [sx(x), y]);
 
 function TextLines({
   x,
@@ -336,17 +202,17 @@ function FloorBooth({ booth, reservedInfo, onSelect }) {
         strokeWidth="2"
         filter="url(#boothShadow)"
       />
-      <rect x={x + 2} y={y + 3} width={width - 4} height="18" rx="5" fill={headerFill} />
+      <rect x={x + 3} y={y + 3} width={width - 6} height="22" rx="5" fill={headerFill} />
       {!isReserved && (
-        <text x={centerX} y={y + 15} textAnchor="middle" fontSize="7" fill={palette.text} fontWeight="800">
-          Booth no: {booth.boothNo}
+        <text x={centerX} y={y + 18} textAnchor="middle" fontSize="12" fill={palette.text} fontWeight="800">
+          Booth No. {booth.boothNo.padStart(2, "0")}
         </text>
       )}
 
       {isReserved ? (
         <>
-          <LockIcon x={centerX - 9} y={y + height / 2 - 20} size={18} />
-          <text x={centerX} y={y + height / 2 + 14} textAnchor="middle" fontSize="8" fill="#ffffff" fontWeight="800">
+          <LockIcon x={centerX - 13} y={y + height / 2 - 26} size={26} />
+          <text x={centerX} y={y + height / 2 + 18} textAnchor="middle" fontSize="12" fill="#ffffff" fontWeight="800">
             RESERVED
           </text>
           {showReservedTip && (
@@ -389,12 +255,12 @@ function FloorBooth({ booth, reservedInfo, onSelect }) {
         <>
           <TextLines
             x={centerX}
-            y={y + height / 2 - 4}
+            y={y + height / 2 - (booth.title.includes("\n") ? 2 : -4)}
             lines={booth.title}
-            fontSize={booth.title.includes("\n") ? 8 : 9}
-            lineHeight={10}
+            fontSize={booth.title.includes("\n") ? 9 : 10}
+            lineHeight={13}
           />
-          <text x={centerX} y={y + height - 10} textAnchor="middle" fontSize="8" fill={palette.text}>
+          <text x={centerX} y={y + height - 9} textAnchor="middle" fontSize="12" fill={palette.text}>
             {booth.size}
           </text>
         </>
@@ -403,12 +269,12 @@ function FloorBooth({ booth, reservedInfo, onSelect }) {
   );
 }
 
-function SeatBlock({ x, y, rows = 5, cols = 15 }) {
+function SeatBlock({ x, y, rows = 5, cols = 16, colGap = 20, rowGap = 22 }) {
   const seats = [];
 
   for (let row = 0; row < rows; row += 1) {
     for (let col = 0; col < cols; col += 1) {
-      seats.push({ x: x + col * 20, y: y + row * 20, key: `${row}-${col}` });
+      seats.push({ x: x + col * colGap, y: y + row * rowGap, key: `${row}-${col}` });
     }
   }
 
@@ -444,9 +310,17 @@ function RoundTable({ x, y }) {
   );
 }
 
-function DirectionLabel({ x, y, label }) {
+function DirectionLabel({ x, y, label, color = "#5b7cff" }) {
   return (
-    <text x={x} y={y} fontSize="12" fill="#5b7cff" fontWeight="800" transform={`rotate(-90, ${x}, ${y})`}>
+    <text
+      x={x}
+      y={y}
+      fontSize="12"
+      fill={color}
+      fontWeight="800"
+      textAnchor="middle"
+      transform={`rotate(90, ${x}, ${y})`}
+    >
       {label}
     </text>
   );
@@ -473,16 +347,20 @@ function ArrowPair({ x, y, direction = "right" }) {
 function EntranceDoorDetail() {
   return (
     <g>
-      <path d="M250 92 H212 V150 H250" fill="#ffffff" stroke={palette.wall} strokeWidth="8" />
-      <path d="M250 102 C222 102 222 122 250 122" stroke={palette.wall} strokeWidth="3" fill="none" />
-      <path d="M250 122 C222 122 222 142 250 142" stroke={palette.wall} strokeWidth="3" fill="none" />
-      <rect x="244" y="82" width="16" height="18" fill={palette.wall} />
-      <rect x="244" y="150" width="16" height="18" fill={palette.wall} />
+      {/* door opening in the left wall */}
+      <g transform={`translate(${leftWallX - 110} 0)`}>
+      <rect x="103" y="98" width="14" height="62" fill={palette.floor} />
+      <path d="M110 98 C86 98 86 128 110 128" stroke={palette.wall} strokeWidth="3" fill="none" />
+      <path d="M110 130 C86 130 86 160 110 160" stroke={palette.wall} strokeWidth="3" fill="none" />
+      <rect x="104" y="90" width="12" height="10" fill={palette.wall} />
+      <rect x="104" y="158" width="12" height="10" fill={palette.wall} />
+      <rect x="62" y="52" width="18" height="18" fill={palette.pillar} />
+      </g>
     </g>
   );
 }
 
-function ToiletIcon({ x, y, color = "#ff7c5b" }) {
+function ToiletIcon({ x, y, color = palette.pillar }) {
   return (
     <g fill={color}>
       <circle cx={x} cy={y} r="4" />
@@ -499,7 +377,7 @@ function AmenityBlock({ x, y, width, height, label, color }) {
   const [showTip, setShowTip] = useState(false);
   const tipWidth = 160;
   const tipHeight = 58;
-  const tipX = x + width / 2 - tipWidth / 2;
+  const tipX = x + width / 2 - tipWidth / 2 + 40;
   const tipY = y - tipHeight - 14;
 
   return (
@@ -526,8 +404,8 @@ function AmenityBlock({ x, y, width, height, label, color }) {
             points={`${x + width / 2 - 10},${tipY + tipHeight} ${x + width / 2 + 10},${tipY + tipHeight} ${x + width / 2},${tipY + tipHeight + 10}`}
             fill="#ffffff"
           />
-          <text x={x + width / 2} y={tipY + 35} textAnchor="middle" fontSize="14" fill={palette.text} fontWeight="700">
-            {label}
+          <text x={tipX + tipWidth / 2} y={tipY + 35} textAnchor="middle" fontSize="14" fill={palette.text} fontWeight="700">
+            {label.replace("\n", " ")}
           </text>
         </g>
       )}
@@ -558,35 +436,77 @@ function AmenityBlock({ x, y, width, height, label, color }) {
 function ExitDoorDetail() {
   return (
     <g>
-      <path
-        d="M492 448 H795 V648 H610 L512 550 V448 Z"
-        fill="#ffffff"
-        stroke="none"
-      />
-      <path
-        d="M512 578 H795 V648 H610 L512 550 Z"
-        fill="#ffffff"
-        stroke={palette.wall}
-        strokeWidth="8"
-      />
-      <path d="M492 452 V578" stroke={palette.wall} strokeWidth="8" fill="none" />
-      <path d="M492 520 H560" stroke={palette.wall} strokeWidth="8" fill="none" />
-      <path d="M492 472 C526 472 526 498 492 498" stroke={palette.wall} strokeWidth="3" fill="none" />
-      <path d="M492 498 C526 498 526 524 492 524" stroke={palette.wall} strokeWidth="3" fill="none" />
-      <rect x="492" y="448" width="18" height="22" fill={palette.wall} />
-      <rect x="492" y="572" width="18" height="26" fill={palette.wall} />
+      {/* exit opening in the left wall of Falcon B */}
+      <g transform={`translate(${exitWallX - 372} 0)`}>
+      <rect x="365" y="592" width="14" height="58" fill={palette.floor} />
+      <path d="M372 592 C398 592 398 620 372 620" stroke={palette.wall} strokeWidth="3" fill="none" />
+      <path d="M372 622 C398 622 398 650 372 650" stroke={palette.wall} strokeWidth="3" fill="none" />
+      <rect x="338" y="590" width="18" height="62" fill={palette.wall} />
+      </g>
+    </g>
+  );
+}
 
-      <path d="M598 640 H760" stroke={palette.wall} strokeWidth="6" fill="none" />
-      <path d="M600 662 V746 M688 662 V746 M760 662 V746" stroke={palette.wall} strokeWidth="5" />
-      <path d="M600 662 H760" stroke={palette.wall} strokeWidth="5" fill="none" />
-      <path d="M585 662 H775" stroke={palette.wall} strokeWidth="5" fill="none" />
-      <ToiletIcon x={646} y={698} />
-      <ToiletIcon x={724} y={698} />
-      <text x="646" y="740" textAnchor="middle" fontSize="10" fill="#ff7c5b" fontWeight="800">
+function RestroomBlock() {
+  return (
+    <g>
+      <path d={restroomPathD} fill={palette.floor} stroke={palette.wall} strokeWidth="10" />
+      <path
+        d={`M${sx(436)} 742 H${sx(600)} M${sx(436)} 734 V752 M${sx(600)} 734 V752`}
+        stroke={palette.wall}
+        strokeWidth="5"
+        fill="none"
+      />
+      <path d={`M${sx(518)} 742 V866`} stroke={palette.wall} strokeWidth="5" />
+      <ToiletIcon x={sx(476)} y={780} />
+      <ToiletIcon x={sx(580)} y={780} />
+      <text x={sx(476)} y="834" textAnchor="middle" fontSize="12" fill={palette.pillar} fontWeight="800">
         Women
       </text>
-      <text x="724" y="740" textAnchor="middle" fontSize="10" fill="#ff7c5b" fontWeight="800">
+      <text x={sx(580)} y="834" textAnchor="middle" fontSize="12" fill={palette.pillar} fontWeight="800">
         Men
+      </text>
+    </g>
+  );
+}
+
+function SideDoors() {
+  return (
+    <g transform={`translate(${rightWallX - 1264} 0)`}>
+      {[416, 568].map((y) => (
+        <g key={y}>
+          <rect x="1257" y={y} width="14" height="104" fill={palette.floor} />
+          <path d={`M1264 ${y} C1238 ${y} 1238 ${y + 34} 1264 ${y + 34}`} stroke={palette.wall} strokeWidth="3" fill="none" />
+          <rect x="1260" y={y + 36} width="12" height="32" fill={palette.wall} />
+          <path d={`M1264 ${y + 70} C1238 ${y + 70} 1238 ${y + 104} 1264 ${y + 104}`} stroke={palette.wall} strokeWidth="3" fill="none" />
+        </g>
+      ))}
+    </g>
+  );
+}
+
+function Stage() {
+  return (
+    <g transform={`translate(${rightWallX - 112} 145)`}>
+      <rect x="-14" y="124" width="14" height="50" fill="#5f6b7d" stroke="#111827" strokeWidth="1" />
+      <rect x="0" y="0" width="100" height="298" fill={palette.stage} stroke="#111827" strokeWidth="1.5" />
+      <TextLines x={38} y={118} lines={"Speaker,\nAwards\n& League"} fontSize={13} fill="#ffffff" lineHeight={15} />
+      <text x="38" y="164" textAnchor="middle" fontSize="13" fill="#ffffff">Stage</text>
+      <text x="38" y="188" textAnchor="middle" fontSize="13" fill="#ffffff">10 x 3</text>
+
+      <rect x="76" y="10" width="20" height="48" fill={palette.screen} stroke="#111827" />
+      <rect x="76" y="74" width="20" height="150" fill={palette.screen} stroke="#111827" />
+      <rect x="76" y="240" width="20" height="48" fill={palette.screen} stroke="#111827" />
+      <text x="86" y="34" textAnchor="middle" fontSize="6" fill="#ffffff" transform="rotate(-90 86 34)">
+        <tspan x="86" dy="-2">Side Screen</tspan>
+        <tspan x="86" dy="7">1.5w x 2.5h</tspan>
+      </text>
+      <text x="89" y="149" textAnchor="middle" fontSize="9" fill="#ffffff" transform="rotate(-90 89 149)">
+        Main Screen 6w x 2.5h
+      </text>
+      <text x="86" y="264" textAnchor="middle" fontSize="6" fill="#ffffff" transform="rotate(-90 86 264)">
+        <tspan x="86" dy="-2">Side Screen</tspan>
+        <tspan x="86" dy="7">1.5w x 2.5h</tspan>
       </text>
     </g>
   );
@@ -671,7 +591,7 @@ const FloorPlanDubai = () => {
           }}
         >
           <svg
-            viewBox="55 0 1285 845"
+            viewBox={`-6 30 ${viewWidth + 6} 1015`}
             width="100%"
             height="auto"
             role="img"
@@ -679,7 +599,7 @@ const FloorPlanDubai = () => {
             preserveAspectRatio="xMidYMin meet"
             style={{ display: "block", background: "#ffffff" }}
           >
-            <rect x="0" y="0" width="1360" height="930" fill="#ffffff" />
+            <rect x="-10" y="0" width={viewWidth + 20} height="1060" fill="#ffffff" />
             <defs>
               <clipPath id="floor-room-clip">
                 <path d={floorPathD} />
@@ -692,99 +612,61 @@ const FloorPlanDubai = () => {
               </filter>
             </defs>
 
-            <path
-              d={floorPathD}
-              fill="#ffffff"
-              stroke={palette.wall}
-              strokeWidth="10"
-            />
-            <g clipPath="url(#floor-room-clip)">
-              <rect x="55" y="0" width="1285" height="845" fill="#ffffff" />
-            </g>
-            <path d="M300 20 H1268" stroke={palette.wall} strokeWidth="18" />
-            <EntranceDoorDetail />
-            <path d="M250 206 L492 448" fill="none" stroke={palette.wall} strokeWidth="8" />
-            <path d="M492 448 H1270" stroke={palette.wallDark} strokeWidth="4" />
-            <ExitDoorDetail />
-            <rect x="470" y="458" width="34" height="9" fill="#6da8bd" />
-            <rect x="562" y="458" width="64" height="9" fill="#6da8bd" />
-
-            {[310, 1208, 1266, 480, 500, 780, 1260, 1267, 990].map((x, index) => {
-              const y = [30, 62, 368, 350, 410, 625, 282, 617, 790][index];
-              return (
-                <rect
-                  key={`marker-${index}`}
-                  x={x}
-                  y={y}
-                  width="11"
-                  height="11"
-                  fill="#ff7c5b"
-                  transform={`rotate(45 ${x + 5.5} ${y + 5.5})`}
-                />
-              );
-            })}
-
-            <DirectionLabel x="230" y="112" label="ENTRANCE" />
-            <ArrowPair x="210" y="85" />
-            <DirectionLabel x="472" y="527" label="EXIT" />
-            <ArrowPair x="470" y="509" direction="left" />
-
-            <g clipPath="url(#floor-room-clip)">
-              <g transform="translate(330 58)">
-                <SeatBlock x={0} y={0} rows={5} cols={17} />
-                <SeatBlock x={370} y={0} rows={5} cols={24} />
-                <SeatBlock x={0} y={120} rows={5} cols={17} />
-                <SeatBlock x={370} y={120} rows={5} cols={24} />
-                <SeatBlock x={118} y={240} rows={5} cols={13} />
-                <SeatBlock x={370} y={240} rows={5} cols={24} />
-              </g>
-            </g>
-            <path
-              d={floorPathD}
-              fill="none"
-              stroke={palette.wall}
-              strokeWidth="10"
-              pointerEvents="none"
-            />
-            <path
-              d="M492 448 H1270"
-              stroke={palette.wallDark}
-              strokeWidth="4"
-              pointerEvents="none"
-            />
+            {/* Room */}
+            <path d={floorPathD} fill={palette.floor} stroke={palette.wall} strokeWidth="10" strokeLinejoin="miter" />
+            <path d={`M${leftWallX + 40} 46 H${rightWallX}`} stroke={palette.wall} strokeWidth="16" />
+            <path d={`M${exitWallX} 547 H${rightWallX}`} stroke={palette.wallDark} strokeWidth="4" />
+            <RestroomBlock />
             <EntranceDoorDetail />
             <ExitDoorDetail />
+            <SideDoors />
 
-            <g transform="translate(1210 105)">
-              <rect x="0" y="0" width="82" height="300" fill={palette.stage} stroke="#111827" strokeWidth="1.5" />
-              <TextLines x={41} y={120} lines={"Speaker\nAwards\n& League\nStage"} fontSize={12} fill="#ffffff" lineHeight={14} />
-              <text x="41" y="185" textAnchor="middle" fontSize="11" fill="#ffffff">10 x 3</text>
-              <rect x="66" y="12" width="18" height="110" fill={palette.screen} stroke="#111827" />
-              <rect x="66" y="134" width="18" height="110" fill={palette.screen} stroke="#111827" />
-              <text x="78" y="79" textAnchor="middle" fontSize="7" fill="#ffffff" transform="rotate(-90 78 79)">
-                Side Screen 5W x 2.5H
-              </text>
-              <text x="78" y="190" textAnchor="middle" fontSize="8" fill="#ffffff" transform="rotate(-90 78 190)">
-                Main Screen 6W x 2.5H
-              </text>
+            {pillars.map(([x, y], index) => (
+              <rect
+                key={`pillar-${index}`}
+                x={x - 5.5}
+                y={y - 5.5}
+                width="11"
+                height="11"
+                fill={palette.pillar}
+                transform={`rotate(45 ${x} ${y})`}
+              />
+            ))}
+
+            <DirectionLabel x={leftWallX - 46} y="129" label="ENTRANCE" />
+            <ArrowPair x={leftWallX - 66} y="118" />
+            <DirectionLabel x={exitWallX - 25} y="621" label="EXIT" color={palette.text} />
+            <ArrowPair x={exitWallX - 44} y="610" direction="left" />
+
+            {/* Audience seating: 6 blocks x 5 rows x 18 seats */}
+            <g clipPath="url(#floor-room-clip)">
+              {[83, 235, 387].map((y) => (
+                <React.Fragment key={y}>
+                  <SeatBlock x={630} y={y} cols={18} colGap={28} />
+                  <SeatBlock x={1196} y={y} cols={18} colGap={28} />
+                </React.Fragment>
+              ))}
             </g>
 
-            <g transform="rotate(45 270 286)">
-              <rect x="214" y="269" width="112" height="70" fill="#f3f3f3" />
-              <rect x="214" y="269" width="112" height="34" fill={palette.photoWall} />
-              <text x="270" y="291" textAnchor="middle" fontSize="15" fill="#ffffff" fontWeight="800">
+            <Stage />
+
+            {/* Photo wall along the diagonal wall, outside the room */}
+            <g transform="translate(278 325) rotate(34.7)">
+              <rect x="-62" y="-6" width="124" height="56" fill="#f1f1f1" />
+              <rect x="-62" y="-32" width="124" height="26" fill={palette.photoWall} />
+              <text x="0" y="-14" textAnchor="middle" fontSize="14" fill="#ffffff" fontWeight="800">
                 Photo Wall
               </text>
             </g>
 
-            <AmenityBlock x={150} y={345} width={72} height={92} label="Cafe" color="#e91e63" />
-            <AmenityBlock x={150} y={522} width={72} height={92} label={"Cocktail\nLounge"} color="#6575dc" />
-            <RoundTable x="310" y="392" />
-            <RoundTable x="395" y="392" />
-            <RoundTable x="310" y="575" />
-            <RoundTable x="395" y="575" />
-            <RoundTable x="310" y="675" />
-            <RoundTable x="395" y="675" />
+            <AmenityBlock x={0} y={405} width={90} height={110} label="Cafe" color={palette.cafe} />
+            <AmenityBlock x={0} y={590} width={90} height={110} label={"Cocktail\nLounge"} color={palette.cocktail} />
+            <RoundTable x={sx(178)} y={470} />
+            <RoundTable x={sx(264)} y={470} />
+            <RoundTable x={sx(178)} y={668} />
+            <RoundTable x={sx(264)} y={668} />
+            <RoundTable x={sx(178)} y={771} />
+            <RoundTable x={sx(264)} y={771} />
 
             {boothList.map((booth) => (
               <FloorBooth
@@ -794,7 +676,6 @@ const FloorPlanDubai = () => {
                 onSelect={setSelectedBooth}
               />
             ))}
-
           </svg>
         </div>
       </div>
@@ -806,7 +687,6 @@ const FloorPlanDubai = () => {
           onReserve={handleReserve}
         />
       )}
-
     </>
   );
 };
